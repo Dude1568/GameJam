@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
-    [SerializeField] Transform gridOrigin;
     [SerializeField] List<Cell> cells;
     [SerializeField] DecisionCell DecisionCellPrefab;
     [SerializeField] Cell defaultCellPrefab;
@@ -17,6 +16,7 @@ public class GridManager : MonoBehaviour
 
     List<DecisionCell> DecisionCells = new List<DecisionCell>();
 
+    public Transform GridOrigin;
     public static GridManager Instance
     {
         get;
@@ -35,7 +35,7 @@ public class GridManager : MonoBehaviour
 
     IEnumerator GameStart()
     {
-        Cell entrance = Instantiate(entrancePrefab, gridOrigin);
+        Cell entrance = Instantiate(entrancePrefab, GridOrigin);
         entrance.Init(Vector2.zero);
         cells.Add(entrance);
         for (int i = 0; i < initialBuildToken; i++)
@@ -44,10 +44,11 @@ public class GridManager : MonoBehaviour
             isDecisionMade = false;
             yield return new WaitUntil(() => isDecisionMade == true);
         }
-        Placeable treasury = Instantiate(treasuryPrefab, gridOrigin);
+        Placeable treasury = Instantiate(treasuryPrefab, GridOrigin);
         isDecisionMade = false;
         while (!isDecisionMade)
         {
+            Debug.Log(treasury.CheckPlacmentRequirments());
             treasury.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (Input.GetMouseButtonDown(0) && treasury.CheckPlacmentRequirments())
             {
@@ -60,7 +61,7 @@ public class GridManager : MonoBehaviour
 
     void OnDecisionMade(DecisionCell decisionCell)
     {
-        Cell defaultCell = Instantiate(defaultCellPrefab, gridOrigin);
+        Cell defaultCell = Instantiate(defaultCellPrefab, GridOrigin);
         cells.Add(defaultCell);
         defaultCell.Init(decisionCell.Coordinates);
         foreach (Vector2 direction in decisionCell.WallsDirections)
@@ -92,7 +93,7 @@ public class GridManager : MonoBehaviour
             {
                 if ((DecisionCells.Count == 0) || !DecisionCells.Any(c => c.Coordinates == (cell.CoordinatesOnTheGrid + dir)))
                 {
-                    DecisionCell newDecisionCell = Instantiate(DecisionCellPrefab, gridOrigin);
+                    DecisionCell newDecisionCell = Instantiate(DecisionCellPrefab, GridOrigin);
                     newDecisionCell.Init(cell.CoordinatesOnTheGrid + dir);
                     newDecisionCell.OnCellClick += OnDecisionMade;
                     newDecisionCell.AddWallDirection(-dir);

@@ -5,28 +5,16 @@ using UnityEngine;
 public class Cell : MonoBehaviour
 {
     public bool IsEmpty;
-    Vector2 origin;
     [SerializeField] Transform leftWall;
     [SerializeField] Transform rightWall;
     [SerializeField] Transform upWall;
     [SerializeField] Transform downWall;
     public Vector2 CoordinatesOnTheGrid;
 
-
-    void Start()
-    {
-        origin = transform.localPosition;
-    }
-
     public void Init(Vector2 coordinates)
     {
         CoordinatesOnTheGrid = coordinates;
         transform.localPosition = coordinates;
-    }
-
-    public void ResetOrigins()
-    {
-        transform.localPosition = origin;
     }
 
     public bool IsCellUnderAvailable()
