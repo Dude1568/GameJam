@@ -23,4 +23,5 @@ public class EnemyStateController : MonoBehaviour
     public bool IsDead => currentState == EnemyState.DEAD;
     public bool IsAttacking => currentState == EnemyState.ATTACKING;
     public bool IsWalking => currentState == EnemyState.WALKING;
+    
 }
