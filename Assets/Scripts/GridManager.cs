@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NavMeshPlus.Components;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] Cell entrancePrefab;
     [SerializeField] int initialBuildToken;
     [SerializeField] Placeable treasuryPrefab;
+    [SerializeField] NavMeshSurface navMeshSurface;
     bool isDecisionMade;
 
     List<DecisionCell> DecisionCells = new List<DecisionCell>();
@@ -44,6 +46,9 @@ public class GridManager : MonoBehaviour
             isDecisionMade = false;
             yield return new WaitUntil(() => isDecisionMade == true);
         }
+        //yield return new WaitUntil(() => cells.All(c => c.GetComponent<BoxCollider2D>().isActiveAndEnabled));
+        yield return new WaitForSeconds(0.1f);
+        navMeshSurface.BuildNavMeshAsync();
         Placeable treasury = Instantiate(treasuryPrefab, GridOrigin);
         isDecisionMade = false;
         while (!isDecisionMade)
@@ -56,19 +61,37 @@ public class GridManager : MonoBehaviour
             }
             yield return null;
         }
-        
     }
 
     void OnDecisionMade(DecisionCell decisionCell)
     {
+        // Cell defaultCell = Instantiate(defaultCellPrefab, GridOrigin);
+        // cells.Add(defaultCell);
+        // defaultCell.Init(decisionCell.Coordinates);
+        // foreach (Vector2 direction in decisionCell.WallsDirections)
+        // {
+        //     defaultCell.TweakWall(direction, false);
+        //     Cell targetCell = cells.First(c => c.CoordinatesOnTheGrid == (defaultCell.CoordinatesOnTheGrid + direction));
+        //     targetCell.TweakWall(-direction, false);
+        // }
+        // DeleteDecisionCells();
+        // isDecisionMade = true;
+        StartCoroutine(CreateDefaultCell(decisionCell));
+    }
+
+    IEnumerator CreateDefaultCell(DecisionCell decisionCell)
+    {
         Cell defaultCell = Instantiate(defaultCellPrefab, GridOrigin);
+        yield return new WaitUntil(() => defaultCell.gameObject.activeInHierarchy);
         cells.Add(defaultCell);
         defaultCell.Init(decisionCell.Coordinates);
+        yield return new WaitUntil(() => (Vector2)defaultCell.transform.localPosition == decisionCell.Coordinates);
         foreach (Vector2 direction in decisionCell.WallsDirections)
         {
             defaultCell.TweakWall(direction, false);
             Cell targetCell = cells.First(c => c.CoordinatesOnTheGrid == (defaultCell.CoordinatesOnTheGrid + direction));
             targetCell.TweakWall(-direction, false);
+            yield return new WaitUntil(() => defaultCell.CheckWallState(direction, false) && targetCell.CheckWallState(-direction, false));
         }
         DeleteDecisionCells();
         isDecisionMade = true;
