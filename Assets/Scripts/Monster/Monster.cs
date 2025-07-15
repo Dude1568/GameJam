@@ -32,7 +32,6 @@ public abstract class Monster : MonoBehaviour
     void Start()
     {
         Init();
-        Activate();
     }
 
     virtual public void Init()
