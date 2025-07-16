@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Placeable : MonoBehaviour
 {
-    [SerializeField] SpriteRenderer spriteRenderer;
-    [SerializeField] BoxCollider2D placementCollider;
+    [SerializeField] protected SpriteRenderer spriteRenderer;
+    [SerializeField] protected BoxCollider2D placementCollider;
     public virtual void OnPlace()
     {
 
