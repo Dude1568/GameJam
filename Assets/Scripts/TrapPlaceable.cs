@@ -5,10 +5,11 @@ using UnityEngine;
 public class TrapPlaceable : Placeable
 {
     bool isTrapInTheWay = false;
-    List<Transform> trapsInCollider;
+    List<Transform> trapsInCollider = new List<Transform>();
     public override bool CheckPlacmentRequirments()
     {
-        return base.CheckPlacmentRequirments();
+        Debug.Log(isTrapInTheWay);
+        return base.CheckPlacmentRequirments() && (!isTrapInTheWay);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -25,8 +26,10 @@ public class TrapPlaceable : Placeable
         if (collision.CompareTag("Trap"))
         {
             trapsInCollider.Remove(collision.transform);
-            if(trapsInCollider.Count == 0)
+            if (trapsInCollider.Count == 0)
+            {
                 isTrapInTheWay = false;
+            }
         }
     }
 }
