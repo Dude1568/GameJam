@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1b8ead2ce4f9648bc65495b0561316, type: 3}
   m_Name: Spike Trap
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
-  cost: 0
+  prefab: {fileID: 1059706585717096895, guid: c714d8c46dd56524085d0f3c75878933, type: 3}
+  cost: 10
   description: 
   Type: 1

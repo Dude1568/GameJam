@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6964589727668277072}
   - component: {fileID: 4494647340327131106}
-  - component: {fileID: 5229796364017748135}
   - component: {fileID: 901864182677045112}
-  - component: {fileID: 2972422149440867390}
+  - component: {fileID: 7471803225422367597}
   m_Layer: 5
   m_Name: PlaceableObject
   m_TagString: Untagged
@@ -47,19 +46,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5537510100810912482}
   m_CullTransparentMesh: 1
---- !u!114 &5229796364017748135
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5537510100810912482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0080712159f7be4aab398752294625d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  placeablePrefab: {fileID: 2723311064397010640, guid: de0bfcf6d77da8049bee029fdca88738, type: 3}
 --- !u!114 &901864182677045112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90,7 +76,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 1
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &2972422149440867390
+--- !u!114 &7471803225422367597
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,6 +100,7 @@ GameObject:
   - component: {fileID: 2906529958415104188}
   - component: {fileID: 6275584713378925826}
   - component: {fileID: 2966904962401425446}
+  - component: {fileID: 5921294389367149890}
   m_Layer: 5
   m_Name: Shop Button
   m_TagString: Untagged
@@ -180,6 +167,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5921294389367149890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8224071333648243034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0080712159f7be4aab398752294625d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  placeablePrefab: {fileID: 2723311064397010640, guid: de0bfcf6d77da8049bee029fdca88738, type: 3}
 --- !u!1 &8890972787700162709
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1b8ead2ce4f9648bc65495b0561316, type: 3}
   m_Name: Adventerer
   m_EditorClassIdentifier: 
-  prefab: {fileID: 0}
+  prefab: {fileID: 2723311064397010640, guid: de0bfcf6d77da8049bee029fdca88738, type: 3}
   cost: 1
   description: placeholde rtill i get monsters used to spawn adventurer
   Type: 0

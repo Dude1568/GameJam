@@ -100,13 +100,16 @@ public class EnemyBehaviorController : MonoBehaviour
         }
         
     }
-    void SearchForPath()
+void SearchForPath()
+{
+    exploreTimer += Time.deltaTime;
+    if (exploreTimer < exploreInterval) return;
+
+    exploreTimer = 0f;
+
+    const int maxAttempts = 10;
+    for (int i = 0; i < maxAttempts; i++)
     {
-        exploreTimer += Time.deltaTime;
-        if (exploreTimer < exploreInterval) return;
-
-        exploreTimer = 0f;
-
         Vector3 randomDirection = Random.insideUnitCircle * searchRadius;
         Vector3 candidate = transform.position + randomDirection;
 
@@ -115,20 +118,28 @@ public class EnemyBehaviorController : MonoBehaviour
         {
             Vector3 destination = hit.position;
 
-            // Skip if too close to any visited point
+            bool tooClose = false;
             foreach (var visited in visitedPoints)
             {
                 if (Vector3.Distance(destination, visited) < detectionDistance)
                 {
-                    return; // too close — abandon this path
+                    tooClose = true;
+                    break;
                 }
             }
 
-            // Passed proximity check
-            visitedPoints.Add(destination);
-            SetTarget(destination);
+            if (!tooClose)
+            {
+                visitedPoints.Add(destination);
+                SetTarget(destination);
+                return; 
+            }
         }
     }
+
+    
+    Debug.LogWarning("Enemy failed to find valid exploration point after max attempts.");
+}
     void SetTarget(Vector3 target)
     {
         agent.ResetPath();
