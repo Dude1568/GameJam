@@ -322,6 +322,7 @@ MonoBehaviour:
   rightWall: {fileID: 6319571655708377077}
   upWall: {fileID: 1250056273198206156}
   downWall: {fileID: 2740381782252867858}
+  Floor: {fileID: 5116307493364716762}
   CoordinatesOnTheGrid: {x: 0, y: 0}
 --- !u!61 &5116307493364716762
 BoxCollider2D:

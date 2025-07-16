@@ -9,6 +9,7 @@ public class Cell : MonoBehaviour
     [SerializeField] Transform rightWall;
     [SerializeField] Transform upWall;
     [SerializeField] Transform downWall;
+    public Collider2D Floor;
     public Vector2 CoordinatesOnTheGrid;
 
     public void Init(Vector2 coordinates)

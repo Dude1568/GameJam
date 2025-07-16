@@ -16,6 +16,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] NavMeshSurface navMeshSurface;
     bool isDecisionMade;
 
+    public List<Cell> DefaultCells = new List<Cell>();
     List<DecisionCell> DecisionCells = new List<DecisionCell>();
 
     public Transform GridOrigin;
@@ -82,6 +83,7 @@ public class GridManager : MonoBehaviour
     IEnumerator CreateDefaultCell(DecisionCell decisionCell)
     {
         Cell defaultCell = Instantiate(defaultCellPrefab, GridOrigin);
+        DefaultCells.Add(defaultCell);
         yield return new WaitUntil(() => defaultCell.gameObject.activeInHierarchy);
         cells.Add(defaultCell);
         defaultCell.Init(decisionCell.Coordinates);
