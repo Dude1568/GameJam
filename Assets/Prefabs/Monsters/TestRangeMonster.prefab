@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 1355815550747416231}
   - component: {fileID: 135125049514448651}
   - component: {fileID: 6110325577139547565}
-  - component: {fileID: 1044659098417752481}
   - component: {fileID: 9046920050301900867}
   - component: {fileID: 1255971126689211512}
   - component: {fileID: 7010045173130557277}
-  - component: {fileID: 3266642323896279897}
+  - component: {fileID: -7939703900710577171}
+  - component: {fileID: 8775498910943610092}
   m_Layer: 0
-  m_Name: TestMonster
+  m_Name: TestRangeMonster
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.5754717, g: 0.1764418, b: 0.1764418, a: 1}
+  m_Color: {r: 0.30838373, g: 0.8490566, b: 0.6622943, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -135,30 +135,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1044659098417752481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 142831109774715338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99bc824afe9464a48bdd9faf1168ce6c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chaseSpeed: 1
-  patrolSpeed: 1
-  patrolDetectionRadius: 3
-  chaseDetectionRadius: 3
-  damage: 2
-  attackCooldown: 1
-  distanceBetweenEnemyToStop: 0.6
-  attackDistance: 1
-  navMeshAgent: {fileID: 9046920050301900867}
-  detectionCollider: {fileID: 1255971126689211512}
-  ExcludeRangeAbs: 1
-  animator: {fileID: 3266642323896279897}
 --- !u!195 &9046920050301900867
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -215,7 +191,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 3.52
 --- !u!114 &7010045173130557277
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -230,7 +206,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 0}
   placementCollider: {fileID: 6110325577139547565}
---- !u!95 &3266642323896279897
+--- !u!114 &-7939703900710577171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142831109774715338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de49df6409bc1cd49845d0d2984e00e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chaseSpeed: 2
+  patrolSpeed: 1
+  patrolDetectionRadius: 4
+  chaseDetectionRadius: 4
+  damage: 2
+  attackCooldown: 3
+  distanceBetweenEnemyToStop: 0
+  attackDistance: 20
+  navMeshAgent: {fileID: 9046920050301900867}
+  detectionCollider: {fileID: 1255971126689211512}
+  ExcludeRangeAbs: 1
+  animator: {fileID: 8775498910943610092}
+  spriteRenderer: {fileID: 135125049514448651}
+  projectileSpeed: 10
+  projectilePrefab: {fileID: 1355815550747416231, guid: ea4b9d455a88c7145aecfdc47e19a453, type: 3}
+--- !u!95 &8775498910943610092
 Animator:
   serializedVersion: 5
   m_ObjectHideFlags: 0
