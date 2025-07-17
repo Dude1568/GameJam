@@ -16,7 +16,7 @@ public class Testscript : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GoldTracker.GainGold(10);
+            GoldTracker.GainGold(1000);
             Debug.Log("gain gold");
             
         }

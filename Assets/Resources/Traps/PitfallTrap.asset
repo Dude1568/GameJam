@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f1b8ead2ce4f9648bc65495b0561316, type: 3}
-  m_Name: Spike Trap
+  m_Name: PitfallTrap
   m_EditorClassIdentifier: 
-  prefab: {fileID: -8357820954228962304, guid: c714d8c46dd56524085d0f3c75878933, type: 3}
-  cost: 10
+  prefab: {fileID: 1387212572085893347, guid: 7a125a3af1d0b0c49a8b452aec1a8176, type: 3}
+  cost: 20
   description: 
   Type: 1

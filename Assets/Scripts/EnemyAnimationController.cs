@@ -14,8 +14,8 @@ public class EnemyAnimationController : MonoBehaviour
 
     private void UpdateAnimation(EnemyState state)
     {
-        anim.SetBool("isWalking", state == EnemyState.WALKING);
-        anim.SetBool("isAttacking", state == EnemyState.ATTACKING);
+        anim.SetBool("IsWalking", state == EnemyState.WALKING);
+        anim.SetBool("IsAttacking", state == EnemyState.ATTACKING);
 
         if (state == EnemyState.DEAD)
             anim.SetTrigger("Die");

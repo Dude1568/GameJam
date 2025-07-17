@@ -16,10 +16,19 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        if (health <= 0 && !stateController.IsDead)
-        {
-            stateController.SetState(EnemyState.DEAD);
-            StartCoroutine(Die());
+        
+        if (health <= 0 )
+        {if (stateController != null)
+            {
+
+                stateController.SetState(EnemyState.DEAD);
+                StartCoroutine(Die());
+            }
+            else
+            {
+                StartCoroutine(Die());
+            }
+
         }
     }
 

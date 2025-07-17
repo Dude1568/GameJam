@@ -14,7 +14,7 @@ public class TrapPlaceable : Placeable
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Trap"))
+        if (collision.CompareTag("Trap")||collision.CompareTag("Barricade"))
         {
             trapsInCollider.Add(collision.transform);
             isTrapInTheWay = true;
@@ -23,7 +23,7 @@ public class TrapPlaceable : Placeable
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Trap"))
+        if (collision.CompareTag("Trap")||collision.CompareTag("Barricade"))
         {
             trapsInCollider.Remove(collision.transform);
             if (trapsInCollider.Count == 0)
