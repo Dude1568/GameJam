@@ -14,6 +14,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] int initialBuildToken;
     [SerializeField] Placeable treasuryPrefab;
     [SerializeField] NavMeshSurface navMeshSurface;
+    [SerializeField] float cellSpacing = 1f; // <-- added
+
     bool isDecisionMade;
 
     public List<Cell> DefaultCells = new List<Cell>();
@@ -39,7 +41,7 @@ public class GridManager : MonoBehaviour
     IEnumerator GameStart()
     {
         Cell entrance = Instantiate(entrancePrefab, GridOrigin);
-        entrance.Init(Vector2.zero);
+        entrance.Init(Vector2.zero, cellSpacing); // <-- modified
         cells.Add(entrance);
         for (int i = 0; i < initialBuildToken; i++)
         {
@@ -86,8 +88,8 @@ public class GridManager : MonoBehaviour
         DefaultCells.Add(defaultCell);
         yield return new WaitUntil(() => defaultCell.gameObject.activeInHierarchy);
         cells.Add(defaultCell);
-        defaultCell.Init(decisionCell.Coordinates);
-        yield return new WaitUntil(() => (Vector2)defaultCell.transform.localPosition == decisionCell.Coordinates);
+        defaultCell.Init(decisionCell.Coordinates, cellSpacing); // <-- modified
+        yield return new WaitUntil(() => (Vector2)defaultCell.transform.localPosition == decisionCell.Coordinates * cellSpacing); // <-- modified
         foreach (Vector2 direction in decisionCell.WallsDirections)
         {
             defaultCell.TweakWall(direction, false);
@@ -119,7 +121,7 @@ public class GridManager : MonoBehaviour
                 if ((DecisionCells.Count == 0) || !DecisionCells.Any(c => c.Coordinates == (cell.CoordinatesOnTheGrid + dir)))
                 {
                     DecisionCell newDecisionCell = Instantiate(DecisionCellPrefab, GridOrigin);
-                    newDecisionCell.Init(cell.CoordinatesOnTheGrid + dir);
+                    newDecisionCell.Init(cell.CoordinatesOnTheGrid + dir, cellSpacing); // <-- modified
                     newDecisionCell.OnCellClick += OnDecisionMade;
                     newDecisionCell.AddWallDirection(-dir);
                     DecisionCells.Add(newDecisionCell);

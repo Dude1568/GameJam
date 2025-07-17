@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
 
 [System.Serializable]
@@ -36,11 +37,13 @@ public class WaveSpawner : MonoBehaviour
         Debug.Log("Spawning Wave: " + wave.waveName);
         isSpawning = true;
         waveReady = false;
-
+            
         for (int i = 0; i < wave.enemyCount; i++)
         {
+            
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            Instantiate(wave.enemyPrefab, spawnPoint.position, Quaternion.identity);
+            UnityEngine.Vector3 door =spawnPoint.position *UnityEngine.Vector2.right * 4;
+            Instantiate(wave.enemyPrefab,spawnPoint.position , UnityEngine.Quaternion.identity);
             yield return new WaitForSeconds(wave.spawnInterval);
         }
 

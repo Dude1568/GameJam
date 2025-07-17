@@ -12,10 +12,10 @@ public class Cell : MonoBehaviour
     public Collider2D Floor;
     public Vector2 CoordinatesOnTheGrid;
 
-    public void Init(Vector2 coordinates)
+    public void Init(Vector2 coordinates, float spacing = 1f)
     {
         CoordinatesOnTheGrid = coordinates;
-        transform.localPosition = coordinates;
+        transform.localPosition = coordinates * spacing;
     }
 
     public bool IsCellUnderAvailable()

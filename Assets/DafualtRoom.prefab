@@ -8007,7 +8007,7 @@ GameObject:
   - component: {fileID: 7529024069521351569}
   - component: {fileID: -9134043079144490261}
   m_Layer: 0
-  m_Name: Room
+  m_Name: DafualtRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

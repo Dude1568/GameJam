@@ -15,11 +15,11 @@ public class EnemyBehaviorController : MonoBehaviour
     NavMeshAgent agent;
     bool SEARCHING = true;
     
-    public float searchRadius = 5f;
-    public float exploreInterval = 2f;
+    [SerializeField] float searchRadius = 5f;
+    [SerializeField] float exploreInterval = 2f;
     private float exploreTimer;
     private List<Vector3> visitedPoints = new List<Vector3>();
-    float detectionDistance = 1.5f;
+    [SerializeField]float detectionDistance = 1.5f;
     bool pathBlocked=false;
     EnemyAttack attack;
     private void Awake()
@@ -137,7 +137,7 @@ public class EnemyBehaviorController : MonoBehaviour
 
         exploreTimer = 0f;
 
-        const int maxAttempts = 10;
+        const int maxAttempts = 30;
         for (int i = 0; i < maxAttempts; i++)
         {
             Vector3 randomDirection = Random.insideUnitCircle * searchRadius;
@@ -161,8 +161,8 @@ public class EnemyBehaviorController : MonoBehaviour
                 if (!tooClose)
                 {
                     visitedPoints.Add(destination);
-                    target = destination;
-                    SetTarget(target);
+                     
+                    SetTarget(destination);
                     return;
                 }
             }
@@ -181,7 +181,7 @@ public class EnemyBehaviorController : MonoBehaviour
     void AttackBlockingBarricade()
     {
         List<GameObject> obstacles = FindBarricades();
-        Vector3 nearest = new Vector3(100000f, 100000f, 0.2f);
+        Vector3 nearest = treasure.transform.position;
         GameObject attackTarget=null;
         foreach (GameObject barricade in obstacles)
         {
@@ -192,6 +192,7 @@ public class EnemyBehaviorController : MonoBehaviour
                 {
                     attackTarget = barricade;
                     setAttackTarget(attackTarget);
+                    target = attackTarget.transform.position;
                 }
             }
         }
@@ -218,8 +219,8 @@ public class EnemyBehaviorController : MonoBehaviour
     }
     void SetTarget(Vector3 target)
     {
-        agent.ResetPath();
+        this.target = target;
         agent.SetDestination(target);
-        
+        Debug.Log("setting target "+target);
     }
 }

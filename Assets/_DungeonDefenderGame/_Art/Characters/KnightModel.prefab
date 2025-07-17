@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: -7577102676294709327}
   - component: {fileID: -1337201348746885468}
   - component: {fileID: -5927859391242383084}
-  - component: {fileID: 6331239592426516007}
   - component: {fileID: 4285328112608123605}
   - component: {fileID: 1229247873229294149}
   - component: {fileID: 5316114117564597663}
@@ -38,7 +37,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.8587, y: 0.6798, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -157,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a46c5fd965ac9040beb9004ac303094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: -170
+  health: 20
 --- !u!114 &-5927859391242383084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,23 +172,9 @@ MonoBehaviour:
   player: {fileID: 0}
   isInRange: 0
   target: {x: 0, y: 0, z: 0}
-  searchRadius: 5
-  exploreInterval: 2
---- !u!114 &6331239592426516007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2408683707494011358}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e5c6c85abd582d44830901e01abac62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationTrigger:
-    m_PersistentCalls:
-      m_Calls: []
+  searchRadius: 22
+  exploreInterval: 1
+  detectionDistance: 10
 --- !u!195 &4285328112608123605
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -199,16 +184,16 @@ NavMeshAgent:
   m_GameObject: {fileID: 2408683707494011358}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.29
-  m_Speed: 1
-  m_Acceleration: 2
+  m_Radius: 1
+  m_Speed: 7.5
+  m_Acceleration: 40
   avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0.1
+  m_AngularSpeed: 450
+  m_StoppingDistance: 0.4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 7.54
+  m_Height: 7
   m_BaseOffset: 4.8
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -244,7 +229,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.12762356, y: -1.0836488}
+  m_Offset: {x: -0.0054951906, y: -1.2973733}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -255,7 +240,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.2696533, y: 7.432703}
+  m_Size: {x: 5.0253963, y: 7.005254}
   m_EdgeRadius: 0
 --- !u!50 &5316114117564597663
 Rigidbody2D:

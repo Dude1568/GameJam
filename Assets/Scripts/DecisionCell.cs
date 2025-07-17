@@ -9,10 +9,10 @@ public class DecisionCell : MonoBehaviour, IPointerClickHandler
     public event Action<DecisionCell> OnCellClick;
     public Vector2 Coordinates;
     public List<Vector2> WallsDirections = new List<Vector2>();
-    public void Init(Vector2 coord)
+    public void Init(Vector2 coord, float spacing = 1f)
     {
         Coordinates = coord;
-        transform.localPosition = coord;
+        transform.localPosition = coord * spacing;
     }
 
     public void AddWallDirection(Vector2 dir)
