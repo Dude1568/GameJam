@@ -20,14 +20,21 @@ public abstract class Monster : MonoBehaviour
     [SerializeField] protected float patrolSpeed;
     [SerializeField] protected float patrolDetectionRadius;
     [SerializeField] protected float chaseDetectionRadius;
-    [SerializeField] protected float abilityCooldown;
+    [SerializeField] protected int damage;
+    [SerializeField] protected float attackCooldown;
     [SerializeField] protected float distanceBetweenEnemyToStop;
+    [SerializeField] protected float attackDistance;
     [SerializeField] protected NavMeshAgent navMeshAgent;
     [SerializeField] CircleCollider2D detectionCollider;
     [SerializeField] int ExcludeRangeAbs;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected SpriteRenderer spriteRenderer;
     protected List<Adventerer> adventurersInRange = new List<Adventerer>();
-    bool isAggro;
-    Transform target;
+    protected Transform target;
+    protected Collider2D floorThatWasSpawnedOn;
+    protected bool isAggro;
+    protected bool isAbilityCycleActive = false;
+    protected Coroutine abilityCycle;
 
     void Start()
     {
@@ -43,6 +50,8 @@ public abstract class Monster : MonoBehaviour
 
     public void Activate()
     {
+        floorThatWasSpawnedOn = Physics2D.Raycast(transform.position, Vector2.zero, float.MaxValue, 1<<6).collider;
+        navMeshAgent.enabled = true;
         StartCoroutine(Process());
     }
 
@@ -53,12 +62,17 @@ public abstract class Monster : MonoBehaviour
         {
             while (!isAggro)
             {
-                yield return new WaitUntil(() => navMeshAgent.remainingDistance < 0.3f || isAggro);
                 MovePatrol();
+                yield return new WaitUntil(() => (navMeshAgent.remainingDistance < 0.3f) || isAggro);
             }
             while (isAggro)
             {
                 MoveAggro();
+                if (!isAbilityCycleActive)
+                {
+                    abilityCycle = StartCoroutine(AttackCycle());
+                    isAbilityCycleActive = true;
+                }
                 yield return null;
             }
         }
@@ -71,6 +85,7 @@ public abstract class Monster : MonoBehaviour
             if (adventurersInRange.Count == 0)
             {
                 navMeshAgent.autoBraking = false;
+                navMeshAgent.stoppingDistance = distanceBetweenEnemyToStop;
                 isAggro = true;
                 target = other.transform;
                 navMeshAgent.speed = chaseSpeed;
@@ -89,11 +104,23 @@ public abstract class Monster : MonoBehaviour
             adventurersInRange.Remove(adventurer);
             if (adventurersInRange.Count == 0)
             {
+                if (isAbilityCycleActive)
+                {
+                    StopCoroutine(abilityCycle);
+                    isAbilityCycleActive = false;
+                    abilityCycle = null;
+                }
                 SetDestination(other.transform.position);
                 navMeshAgent.autoBraking = true;
                 navMeshAgent.speed = patrolSpeed;
+                navMeshAgent.stoppingDistance = 0;
                 isAggro = false;
                 detectionCollider.radius = patrolDetectionRadius;
+                target = null;
+            }
+            else
+            {
+                target = adventurersInRange.First().transform;
             }
         }
     }
@@ -103,16 +130,28 @@ public abstract class Monster : MonoBehaviour
         NavMeshHit hit;
         var randomNum = Enumerable.Range(-2, 5).Where(x => (x <= -ExcludeRangeAbs) || (ExcludeRangeAbs <= x)).ToArray();
         NavMesh.SamplePosition(new Vector3(transform.position.x + randomNum[UnityEngine.Random.Range(0, randomNum.Length)], transform.position.y + randomNum[UnityEngine.Random.Range(0, randomNum.Length)]), out hit, 5f, NavMesh.AllAreas);
-        return hit.position;
+        return floorThatWasSpawnedOn.ClosestPoint(hit.position);;
     }
     virtual protected void MovePatrol()
     {
         Vector3 point = GetPatrolPoint();
         SetDestination(point);
+        animator.SetBool("IsWalking", true);
     }
     virtual protected void MoveAggro()
     {
-        SetDestination(target.position + ((transform.position - target.position).normalized * distanceBetweenEnemyToStop));
+        if ((transform.position - target.position).magnitude > distanceBetweenEnemyToStop)
+        {
+            Debug.Log("IsWalking");
+            animator.SetBool("IsWalking", true);
+            SetDestination(target.position);
+        }
+        else
+        {
+            animator.SetBool("IsWalking", false);
+            Debug.Log("nuhuh");
+        }
+        //SetDestination(target.position + ((transform.position - target.position).normalized * distanceBetweenEnemyToStop));
     }
 
 
@@ -147,19 +186,25 @@ public abstract class Monster : MonoBehaviour
         {
             navMeshAgent.SetDestination(targetPos);
         }
+        if (targetPos.x < transform.position.x)
+            spriteRenderer.flipX = true;
+        else
+            spriteRenderer.flipX = false;
     }
 
-    virtual protected void ActivateAbility()
+    virtual protected void Attack()
     {
-
+        target.GetComponent<EnemyHealth>().TakeDamage(damage);
+        animator.SetTrigger("OnAttacking");
     }
 
-    virtual protected IEnumerator AbilityCycle()
+    virtual protected IEnumerator AttackCycle()
     {
-        while (true)
+        while(true)
         {
-            yield return new WaitForSeconds(abilityCooldown);
-            ActivateAbility();
+            yield return new WaitForSeconds(attackCooldown);
+            yield return new WaitUntil(() => (transform.position - target.position).magnitude <= attackDistance);
+            Attack();
         }
     }
 }
