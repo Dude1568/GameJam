@@ -252,7 +252,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  feedbackPS: {fileID: 0}
+  feedbackPS: {fileID: 2820499131243841027, guid: 7e82192b9ad867c4882ab0ddefa89454, type: 3}
   targetOffset: {x: 0, y: -0.15}
 --- !u!50 &-8253539558796772143
 Rigidbody2D:
