@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 1387212572085893347}
   - component: {fileID: 5503530063936080862}
   - component: {fileID: -8253539558796772143}
-  - component: {fileID: -7111800329562191665}
+  - component: {fileID: 5685951975520164039}
   m_Layer: 0
-  m_Name: PitfallTrap
+  m_Name: PitfallTrap 1
   m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.5, y: 0.5, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -281,7 +281,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!58 &-7111800329562191665
+--- !u!58 &5685951975520164039
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
