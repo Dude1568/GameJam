@@ -499,13 +499,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d8d9846f8214d4c9ab51b6aaafbf52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waves:
-  - waveName: 1
-    enemyPrefab: {fileID: 2408683707494011358, guid: d9b78ec5abf0e014790c775291097654, type: 3}
-    enemyCount: 3
-    spawnInterval: 2
+  gameState: 1
+  enemyTypes:
+  - enemyPrefab: {fileID: 2408683707494011358, guid: d9b78ec5abf0e014790c775291097654, type: 3}
+    spawnRatio: 0.6666667
+  - enemyPrefab: {fileID: 3824861269462096609, guid: ff661b5de0ee56c4aae9602d14355ec3, type: 3}
+    spawnRatio: 0.33333334
   spawnPoints:
   - {fileID: 1621790714}
+  baseEnemyCount: 3
+  enemyGrowthRate: 1.5
+  spawnInterval: 0.5
 --- !u!1 &1199756563
 GameObject:
   m_ObjectHideFlags: 0
@@ -1013,6 +1017,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2637626480898418369, guid: caa8ad45dbecb0641b22c098d682da33, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2637626480898418369, guid: caa8ad45dbecb0641b22c098d682da33, type: 3}
+      propertyPath: m_TagString
+      value: UI
+      objectReference: {fileID: 0}
     - target: {fileID: 3555103837164881024, guid: caa8ad45dbecb0641b22c098d682da33, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1123,7 +1135,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7566818345435505001, guid: caa8ad45dbecb0641b22c098d682da33, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -232.46523
+      value: -224.95218
       objectReference: {fileID: 0}
     - target: {fileID: 8177945542236447674, guid: caa8ad45dbecb0641b22c098d682da33, type: 3}
       propertyPath: m_Name

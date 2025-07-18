@@ -13,7 +13,7 @@ public class EnemyBehaviorController : MonoBehaviour
     public bool isInRange;
     public Vector3 target;
     NavMeshAgent agent;
-    bool SEARCHING = true;
+    public bool SEARCHING = true;
 
    [SerializeField] float searchRadius = 5f;
     float currentSearchRadius;
@@ -43,7 +43,7 @@ public class EnemyBehaviorController : MonoBehaviour
             float playerDistance = Vector3.Distance(transform.position, player.transform.position);
             float treasureDistance = Vector3.Distance(transform.position, treasure.transform.position);
             NavMeshPath pathToTreasure;
-            // Priority: Player > Treasure
+            // Priority: Player > Treasure 
             if (playerDistance < detectionDistance) // <-- Adjust detection range
             {
                 SEARCHING = false;
@@ -62,10 +62,24 @@ public class EnemyBehaviorController : MonoBehaviour
             }
             else if (playerDistance > detectionDistance && treasureDistance > detectionDistance && SEARCHING)
             {
-                SEARCHING = true;
+                
                 SearchForPath();
             }
+            if (!SEARCHING && !isInRange )
+            {
+                // If both are out of detection range, resume searching
+                if (playerDistance > detectionDistance && treasureDistance > detectionDistance)
+                {
+                    SEARCHING = true;
+                    SetTarget(treasure.transform.position);
+                    Debug.Log("[Fallback] Target lost. Resuming search.");
+                }
+            }
 
+
+
+
+            //handles state control
             if (!stateController.IsDead && !stateController.IsAttacking)
             {
                 if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
@@ -121,24 +135,18 @@ public class EnemyBehaviorController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("exited");
-        if (collision.gameObject == player)
+        if (collision.gameObject == player||collision.gameObject.CompareTag("Barricade"))
         {
+            
+            SEARCHING = true;
             isInRange = false;
             if (!stateController.IsDead)
             {
-                agent.isStopped = false;
                 SetTarget(treasure.transform.position);
+                
 
             }
-
         }
-        else if (collision.gameObject.CompareTag("Barricade"))
-        {
-            stateController.SetState(EnemyState.IDLE);
-        }
-
-
     }
 
     bool HasPathToTreasure(out NavMeshPath path)
@@ -149,16 +157,16 @@ public class EnemyBehaviorController : MonoBehaviour
         //Debug.Log($"[PathToTreasure] Success: {success}, Status: {path.status}, " +
          //       $"From: {transform.position}, To: {treasure.transform.position}");
         bool DoesPath = success && path.status == NavMeshPathStatus.PathComplete;
-        Debug.Log(DoesPath);
+        //Debug.Log(DoesPath);
         return DoesPath;
     }
     void SearchForPath()
     {
+        Debug.Log("searching" + this);
         exploreTimer += Time.deltaTime;
         if (exploreTimer < exploreInterval) return;
 
-       if (agent.hasPath && agent.remainingDistance > agent.stoppingDistance && 
-        (attack.currentTarget == null || attack.currentTarget.activeInHierarchy))
+       if (agent.hasPath && agent.remainingDistance > agent.stoppingDistance*2)
     return;
         exploreTimer = 2f; // reset timer
 
@@ -188,7 +196,7 @@ public class EnemyBehaviorController : MonoBehaviour
 
                 if (!tooClose)
                 {
-                    Debug.Log($"[Explore] Found point: {destination}");
+                   // Debug.Log($"[Explore] Found point: {destination}");
                     visitedPoints.Add(destination);
                     SetTarget(destination);
                     agent.SetDestination(destination);
