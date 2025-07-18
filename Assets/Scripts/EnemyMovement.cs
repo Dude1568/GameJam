@@ -45,10 +45,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void freeze(bool Freeze)
     {
-        Debug.Log(Freeze.ToString());
-        agent.isStopped = Freeze;
-        agent.Warp(transform.position);  
-        agent.SetDestination(behavior.target);
+        agent.isStopped = Freeze; 
         isFrozen = Freeze;
     }
 }

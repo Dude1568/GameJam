@@ -35,7 +35,7 @@ public class ShopSection : MonoBehaviour
             
             // Instantiate the Shop Button prefab
             GameObject newButton = Instantiate(shopButton, transform);
-            Debug.Log($"shopbutton: ",newButton);
+            //Debug.Log($"shopbutton: ",newButton);
             if (newButton)
             {
 

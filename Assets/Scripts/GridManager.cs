@@ -56,7 +56,7 @@ public class GridManager : MonoBehaviour
         isDecisionMade = false;
         while (!isDecisionMade)
         {
-            Debug.Log(treasury.CheckPlacmentRequirments());
+            //Debug.Log(treasury.CheckPlacmentRequirments());
             treasury.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (Input.GetMouseButtonDown(0) && treasury.CheckPlacmentRequirments())
             {

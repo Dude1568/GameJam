@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    private GameObject currentTarget;
+     public GameObject currentTarget{ get; private set; }
 
     public void SetTarget(GameObject target)
     {

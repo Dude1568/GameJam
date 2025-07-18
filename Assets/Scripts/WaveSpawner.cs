@@ -34,7 +34,7 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
-        Debug.Log("Spawning Wave: " + wave.waveName);
+        //Debug.Log("Spawning Wave: " + wave.waveName);
         isSpawning = true;
         waveReady = false;
             
@@ -42,7 +42,7 @@ public class WaveSpawner : MonoBehaviour
         {
             
             Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
-            UnityEngine.Vector3 door =spawnPoint.position *UnityEngine.Vector2.right * 4;
+            UnityEngine.Vector3 door = new UnityEngine.Vector2 (spawnPoint.position.x+8,spawnPoint.position.y);
             Instantiate(wave.enemyPrefab,spawnPoint.position , UnityEngine.Quaternion.identity);
             yield return new WaitForSeconds(wave.spawnInterval);
         }
@@ -53,7 +53,7 @@ public class WaveSpawner : MonoBehaviour
 
         if (currentWaveIndex >= waves.Count)
         {
-            Debug.Log("All waves completed!");
+//            Debug.Log("All waves completed!");
         }
         else
         {

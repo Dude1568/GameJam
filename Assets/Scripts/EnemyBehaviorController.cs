@@ -14,14 +14,15 @@ public class EnemyBehaviorController : MonoBehaviour
     public Vector3 target;
     NavMeshAgent agent;
     bool SEARCHING = true;
-    
-    [SerializeField] float searchRadius = 5f;
+
+   [SerializeField] float searchRadius = 5f;
+    float currentSearchRadius;
     [SerializeField] float exploreInterval = 2f;
     private float exploreTimer;
     private List<Vector3> visitedPoints = new List<Vector3>();
-    [SerializeField]float detectionDistance = 1.5f;
-    bool pathBlocked=false;
+    [SerializeField] float detectionDistance = 1.5f;
     EnemyAttack attack;
+
     private void Awake()
     {
         attack = GetComponent<EnemyAttack>();
@@ -35,37 +36,33 @@ public class EnemyBehaviorController : MonoBehaviour
 
     }
 
-   void Update()
-{
-
+    void Update()
+    {
         if (!stateController.IsDead)
         {
             float playerDistance = Vector3.Distance(transform.position, player.transform.position);
             float treasureDistance = Vector3.Distance(transform.position, treasure.transform.position);
             NavMeshPath pathToTreasure;
-            if (!HasPathToTreasure(out pathToTreasure))
-            {
-                AttackBlockingBarricade();
-            }
             // Priority: Player > Treasure
             if (playerDistance < detectionDistance) // <-- Adjust detection range
             {
                 SEARCHING = false;
                 SetTarget(player.transform.position);
-            }
-            else if (playerDistance > detectionDistance && treasureDistance > detectionDistance)
-            {
-                SEARCHING = true;
-                SearchForPath();
+                agent.SetDestination(player.transform.position);
             }
             else if (treasureDistance < detectionDistance)
             {
                 SEARCHING = false;
                 SetTarget(treasure.transform.position);
+                agent.SetDestination(treasure.transform.position);
             }
-
-            else if (SEARCHING)
+            else if (!HasPathToTreasure(out pathToTreasure))
             {
+                AttackBlockingBarricade();
+            }
+            else if (playerDistance > detectionDistance && treasureDistance > detectionDistance && SEARCHING)
+            {
+                SEARCHING = true;
                 SearchForPath();
             }
 
@@ -81,13 +78,20 @@ public class EnemyBehaviorController : MonoBehaviour
                     stateController.SetState(EnemyState.WALKING);
                 }
             }
+            else if (stateController.IsAttacking)
+            {
+                if (attack.currentTarget == null)
+                {
+                    stateController.SetState(EnemyState.IDLE);
+                }
+            }
 
-            
+
         }
-}
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("entered");
+        
         if (collision.gameObject == player)
         {
             isInRange = true;
@@ -95,9 +99,10 @@ public class EnemyBehaviorController : MonoBehaviour
         }
         else if (collision.gameObject.CompareTag("Barricade"))
         {
+            attack.SetTarget(collision.gameObject);
             stateController.SetState(EnemyState.ATTACKING);
         }
-        
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
@@ -106,6 +111,11 @@ public class EnemyBehaviorController : MonoBehaviour
         {
             isInRange = true;
 
+        }
+        else if (collision.gameObject.CompareTag("Barricade"))
+        {
+            attack.attack(collision.gameObject);
+            stateController.SetState(EnemyState.ATTACKING);
         }
     }
 
@@ -122,36 +132,54 @@ public class EnemyBehaviorController : MonoBehaviour
 
             }
 
-        }else if (collision.gameObject.CompareTag("Barricade"))
+        }
+        else if (collision.gameObject.CompareTag("Barricade"))
         {
             stateController.SetState(EnemyState.IDLE);
         }
-        
-        
+
+
+    }
+
+    bool HasPathToTreasure(out NavMeshPath path)
+    {
+        path = new NavMeshPath();
+        bool success = NavMesh.CalculatePath(new Vector3 (transform.position.x,transform.position.y,0), treasure.transform.position, NavMesh.AllAreas, path);
+
+        //Debug.Log($"[PathToTreasure] Success: {success}, Status: {path.status}, " +
+         //       $"From: {transform.position}, To: {treasure.transform.position}");
+        bool DoesPath = success && path.status == NavMeshPathStatus.PathComplete;
+        Debug.Log(DoesPath);
+        return DoesPath;
     }
     void SearchForPath()
     {
-        
         exploreTimer += Time.deltaTime;
         if (exploreTimer < exploreInterval) return;
 
-        exploreTimer = 0f;
+       if (agent.hasPath && agent.remainingDistance > agent.stoppingDistance && 
+        (attack.currentTarget == null || attack.currentTarget.activeInHierarchy))
+    return;
+        exploreTimer = 2f; // reset timer
 
-        const int maxAttempts = 30;
+        int maxAttempts = 100;
+        bool foundDestination = false;
+
         for (int i = 0; i < maxAttempts; i++)
         {
-            Vector3 randomDirection = Random.insideUnitCircle * searchRadius;
-            Vector3 candidate = transform.position + randomDirection;
+            Vector2 random2D = Random.insideUnitCircle * currentSearchRadius;
+            Vector3 candidate = new Vector3(transform.position.x + random2D.x, transform.position.y + random2D.y, transform.position.z);
 
             NavMeshHit hit;
-            if (NavMesh.SamplePosition(candidate, out hit, 2f, NavMesh.AllAreas))
+            if (NavMesh.SamplePosition(candidate, out hit, 5f, NavMesh.AllAreas))
             {
                 Vector3 destination = hit.position;
+
 
                 bool tooClose = false;
                 foreach (var visited in visitedPoints)
                 {
-                    if (Vector3.Distance(destination, visited) < detectionDistance)
+                    if (Vector3.Distance(destination, visited) < searchRadius)
                     {
                         tooClose = true;
                         break;
@@ -160,29 +188,41 @@ public class EnemyBehaviorController : MonoBehaviour
 
                 if (!tooClose)
                 {
+                    Debug.Log($"[Explore] Found point: {destination}");
                     visitedPoints.Add(destination);
-                     
                     SetTarget(destination);
-                    return;
+                    agent.SetDestination(destination);
+                    foundDestination = true;
+                    break;
                 }
             }
+            else
+            {
+                //Debug.Log($"[Explore] Failed to find NavMesh near: {candidate}");
+            }
         }
+   
+            if (!foundDestination&&currentSearchRadius < 80)
+            {
+                currentSearchRadius *= 1.5f;
+
+            }
+            else
+            {
+                currentSearchRadius = searchRadius; // Reset to default 
+            }
+        
+        
+    }
 
 
-        Debug.LogWarning("Enemy failed to find valid exploration point after max attempts.");
-    }
-    bool HasPathToTreasure(out NavMeshPath path)
-    {
-        path = new NavMeshPath();
-        return NavMesh.CalculatePath(transform.position, treasure.transform.position, NavMesh.AllAreas, path)
-            && path.status == NavMeshPathStatus.PathComplete;
-    }
 
     void AttackBlockingBarricade()
     {
+        Debug.Log("destroy the obstacles");
         List<GameObject> obstacles = FindBarricades();
         Vector3 nearest = treasure.transform.position;
-        GameObject attackTarget=null;
+        GameObject attackTarget = null;
         foreach (GameObject barricade in obstacles)
         {
             if (Vector3.Distance(barricade.transform.position, gameObject.transform.position) < Vector3.Distance(nearest, gameObject.transform.position))
@@ -193,10 +233,11 @@ public class EnemyBehaviorController : MonoBehaviour
                     attackTarget = barricade;
                     setAttackTarget(attackTarget);
                     target = attackTarget.transform.position;
+                    agent.SetDestination(attackTarget.transform.position);
                 }
             }
         }
-        agent.SetDestination(nearest);
+
 
 
     }
@@ -220,7 +261,17 @@ public class EnemyBehaviorController : MonoBehaviour
     void SetTarget(Vector3 target)
     {
         this.target = target;
-        agent.SetDestination(target);
-        Debug.Log("setting target "+target);
+        //Debug.Log("setting target " + target);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, searchRadius);
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, currentSearchRadius);
+
+
     }
 }
