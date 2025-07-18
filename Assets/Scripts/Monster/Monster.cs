@@ -29,7 +29,7 @@ public abstract class Monster : MonoBehaviour
     [SerializeField] int ExcludeRangeAbs;
     [SerializeField] protected Animator animator;
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    protected List<Adventerer> adventurersInRange = new List<Adventerer>();
+    protected List<Transform> adventurersInRange = new List<Transform>();
     protected Transform target;
     protected Collider2D floorThatWasSpawnedOn;
     protected bool isAggro;
@@ -46,11 +46,16 @@ public abstract class Monster : MonoBehaviour
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
         detectionCollider.radius = patrolDetectionRadius;
+        navMeshAgent.enabled = true;
+        transform.position = (Vector2)transform.position;
+        Debug.Log(transform.position);
     }
 
     public void Activate()
     {
-        floorThatWasSpawnedOn = Physics2D.Raycast(transform.position, Vector2.zero, float.MaxValue, 1<<6).collider;
+        Debug.Log((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition));
+        floorThatWasSpawnedOn = Physics2D.Raycast((Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, int.MaxValue, 1<<6).collider;
+        Debug.Log(floorThatWasSpawnedOn.name);
         navMeshAgent.enabled = true;
         StartCoroutine(Process());
     }
@@ -91,8 +96,8 @@ public abstract class Monster : MonoBehaviour
                 navMeshAgent.speed = chaseSpeed;
                 detectionCollider.radius = chaseDetectionRadius;
             }
-            Adventerer adventurer = other.GetComponent<Adventerer>();
-            adventurersInRange.Add(adventurer);
+            adventurersInRange.Add(other.transform);
+            //Debug.Log($"Entered {other.name}");
         }
     }
 
@@ -100,8 +105,8 @@ public abstract class Monster : MonoBehaviour
     {
         if (other.transform.CompareTag("Enemy"))
         {
-            Adventerer adventurer = other.GetComponent<Adventerer>();
-            adventurersInRange.Remove(adventurer);
+            adventurersInRange.Remove(other.transform);
+            //Debug.Log($"Removed {other.name}");
             if (adventurersInRange.Count == 0)
             {
                 if (isAbilityCycleActive)
@@ -130,7 +135,7 @@ public abstract class Monster : MonoBehaviour
         NavMeshHit hit;
         var randomNum = Enumerable.Range(-2, 5).Where(x => (x <= -ExcludeRangeAbs) || (ExcludeRangeAbs <= x)).ToArray();
         NavMesh.SamplePosition(new Vector3(transform.position.x + randomNum[UnityEngine.Random.Range(0, randomNum.Length)], transform.position.y + randomNum[UnityEngine.Random.Range(0, randomNum.Length)]), out hit, 5f, NavMesh.AllAreas);
-        return floorThatWasSpawnedOn.ClosestPoint(hit.position);;
+        return floorThatWasSpawnedOn.ClosestPoint(hit.position);
     }
     virtual protected void MovePatrol()
     {
@@ -149,7 +154,7 @@ public abstract class Monster : MonoBehaviour
         else
         {
             animator.SetBool("IsWalking", false);
-            Debug.Log("nuhuh");
+                Debug.Log("nuhuh");
         }
         //SetDestination(target.position + ((transform.position - target.position).normalized * distanceBetweenEnemyToStop));
     }

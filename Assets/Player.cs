@@ -7,6 +7,8 @@ public class PlayerMovement2D : MonoBehaviour
 
     private Rigidbody2D rb;
     private Vector2 movement;
+    [SerializeField] Animator playerAnimator;
+    [SerializeField] SpriteRenderer spriteRenderer;
 
     void Awake()
     {
@@ -27,6 +29,17 @@ public class PlayerMovement2D : MonoBehaviour
             movement.x -= 1;
 
         movement.Normalize(); // keep speed consistent diagonally
+        if (movement != Vector2.zero)
+        {
+            playerAnimator.SetBool("IsWalking", true);
+            if (movement.x <= 0)
+                spriteRenderer.flipX = true;
+            else
+                spriteRenderer.flipX = false;
+        }
+        else
+            playerAnimator.SetBool("IsWalking", false);
+
     }
 
     void FixedUpdate()
