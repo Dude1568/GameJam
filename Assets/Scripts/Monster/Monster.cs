@@ -46,7 +46,6 @@ public abstract class Monster : MonoBehaviour
     {
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
-        navMeshAgent.enabled = true;
         transform.position = (Vector2)transform.position;
         Debug.Log(transform.position);
     }
