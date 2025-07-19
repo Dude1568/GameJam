@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 8574292246365876540}
   - component: {fileID: 6195488131349322632}
   - component: {fileID: 2539313440920460556}
-  - component: {fileID: 1692964642046033953}
+  - component: {fileID: 1936344081423958595}
   m_Layer: 0
-  m_Name: FireBall
+  m_Name: Adventerer FIreball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4873,9 +4873,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b375b19f30f067b468d81a5bff0e8347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectiletype: 0
+  projectiletype: 1
   damage: 3
---- !u!58 &1692964642046033953
+--- !u!58 &1936344081423958595
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

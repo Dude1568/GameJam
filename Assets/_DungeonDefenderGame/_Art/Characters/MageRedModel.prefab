@@ -193,7 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 3
-  projectile: {fileID: 142831109774715338, guid: ea4b9d455a88c7145aecfdc47e19a453, type: 3}
+  projectile: {fileID: 3527326070292875987, guid: 4d708d92395a36a4eb5e8341b0082ea3, type: 3}
   projectileSpeed: 10
 --- !u!195 &-7445221000613400091
 NavMeshAgent:

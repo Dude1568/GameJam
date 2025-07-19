@@ -46,7 +46,9 @@ public class EnemyHealth : MonoBehaviour
 
         // Wait for animation to finish 
         yield return new WaitForSeconds(2f);
+        if(gameObject.CompareTag("Enemy"))
         GetComponent<AdventurerItems>().SpawnItemsByCost();
+        if(!gameObject.CompareTag("Player"))
         Destroy(gameObject);
     }
 }
