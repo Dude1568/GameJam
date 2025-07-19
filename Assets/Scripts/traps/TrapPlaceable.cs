@@ -14,13 +14,19 @@ public class TrapPlaceable : Placeable
     }
     public override bool CheckPlacmentRequirments()
     {
-        Debug.Log(isTrapInTheWay);
-        return base.CheckPlacmentRequirments() && (!isTrapInTheWay);
+        bool baseValid = base.CheckPlacmentRequirments();
+        bool trapValid = !isTrapInTheWay;
+        
+        bool finalResult = baseValid && trapValid;
+
+        spriteRenderer.color = finalResult ? Color.white : Color.red;
+        return finalResult;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Trap")||collision.CompareTag("Barricade"))
+        Debug.Log(gameObject.name);
+        if (collision.CompareTag("Trap") || collision.CompareTag("Barricade"))
         {
             trapsInCollider.Add(collision.transform);
             isTrapInTheWay = true;
