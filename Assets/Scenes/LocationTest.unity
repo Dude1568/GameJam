@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0080712159f7be4aab398752294625d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeablePrefab: {fileID: 3617233988977365786, guid: 5cfc2037bccf10d4ea3ad8454f6bb7aa, type: 3}
+  placeablePrefab: {fileID: 7919730782276588721, guid: 0475f576da55a7048913ef903ff13318, type: 3}
 --- !u!114 &522310637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -474,7 +474,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0080712159f7be4aab398752294625d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeablePrefab: {fileID: 3617233988977365786, guid: 5cfc2037bccf10d4ea3ad8454f6bb7aa, type: 3}
+  placeablePrefab: {fileID: 7010045173130557277, guid: 9e1ec9d9c85cab046969dc4543ed97eb, type: 3}
 --- !u!114 &975554727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,7 +655,7 @@ MonoBehaviour:
   initialBuildToken: 5
   treasuryPrefab: {fileID: 3617233988977365786, guid: d39d6cf02a1a74242a47a8f9689b88b9, type: 3}
   navMeshSurface: {fileID: 1654740876}
-  testMonsterPrefab: {fileID: 0}
+  DefaultCells: []
   GridOrigin: {fileID: 1621790714}
 --- !u!4 &1428222764
 Transform:
@@ -1135,7 +1135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0080712159f7be4aab398752294625d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  placeablePrefab: {fileID: 3617233988977365786, guid: 5cfc2037bccf10d4ea3ad8454f6bb7aa, type: 3}
+  placeablePrefab: {fileID: 5615856001968840660, guid: 5cfc2037bccf10d4ea3ad8454f6bb7aa, type: 3}
 --- !u!114 &1936384127
 MonoBehaviour:
   m_ObjectHideFlags: 0
