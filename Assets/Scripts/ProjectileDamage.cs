@@ -27,6 +27,7 @@ public class ProjectileDamage : MonoBehaviour
         if (collision.CompareTag("Monster") || collision.CompareTag("Player") || collision.CompareTag("Barricade"))
         {
             collision.GetComponent<EnemyHealth>().TakeDamage(damage);
+            gameObject.Destroy();
         }
         else if (collision.gameObject.layer == 7)
         {
@@ -38,6 +39,7 @@ public class ProjectileDamage : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<EnemyHealth>().TakeDamage(damage);
+            gameObject.Destroy();
         }
         else if (collision.gameObject.layer == 7)
         {
