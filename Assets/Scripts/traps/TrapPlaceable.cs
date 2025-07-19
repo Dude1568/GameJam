@@ -6,6 +6,12 @@ public class TrapPlaceable : Placeable
 {
     bool isTrapInTheWay = false;
     List<Transform> trapsInCollider = new List<Transform>();
+
+    public override void OnPlace()
+    {
+        base.OnPlace();
+        GetComponent<Trap>().IsActive = true;
+    }
     public override bool CheckPlacmentRequirments()
     {
         Debug.Log(isTrapInTheWay);
