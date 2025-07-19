@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,18 +19,18 @@ public abstract class Monster : MonoBehaviour
 {
     [SerializeField] protected float chaseSpeed;
     [SerializeField] protected float patrolSpeed;
-    [SerializeField] protected float patrolDetectionRadius;
     [SerializeField] protected float chaseDetectionRadius;
     [SerializeField] protected int damage;
     [SerializeField] protected float attackCooldown;
     [SerializeField] protected float distanceBetweenEnemyToStop;
     [SerializeField] protected float attackDistance;
     [SerializeField] protected NavMeshAgent navMeshAgent;
-    [SerializeField] CircleCollider2D detectionCollider;
+    [SerializeField] int patrolRadius = 10;
     [SerializeField] int ExcludeRangeAbs;
     [SerializeField] protected Animator animator;
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    protected List<Transform> adventurersInRange = new List<Transform>();
+    [SerializeField]protected List<Transform> adventurersInRange = new List<Transform>();
+    List<Transform> allAdventerurers=new List<Transform>();
     protected Transform target;
     protected Collider2D floorThatWasSpawnedOn;
     protected bool isAggro;
@@ -45,7 +46,6 @@ public abstract class Monster : MonoBehaviour
     {
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
-        detectionCollider.radius = patrolDetectionRadius;
         navMeshAgent.enabled = true;
         transform.position = (Vector2)transform.position;
         Debug.Log(transform.position);
@@ -68,7 +68,7 @@ public abstract class Monster : MonoBehaviour
             while (!isAggro)
             {
                 MovePatrol();
-                yield return new WaitUntil(() => (navMeshAgent.remainingDistance < 0.3f) || isAggro);
+                yield return new WaitUntil(() => (navMeshAgent.remainingDistance < distanceBetweenEnemyToStop) || isAggro);
             }
             while (isAggro)
             {
@@ -82,31 +82,73 @@ public abstract class Monster : MonoBehaviour
             }
         }
     }
-
-    virtual protected void OnTriggerEnter2D(Collider2D other)
+    void OnEnable()
     {
-        if (other.transform.CompareTag("Enemy"))
+        WaveSpawner.RAIDACTIVE += FindAllAdventerers;
+    }
+
+    void OnDisable()
+    {
+        WaveSpawner.RAIDACTIVE -= FindAllAdventerers;
+    }
+    void FindAllAdventerers(GameObject enemy)
+    {
+        allAdventerurers.Add(enemy.transform);
+    }
+    void FixedUpdate()
+    {
+        CleanAndSortAdventurers();
+        allAdventerurers.RemoveAll(t => t == null);
+        foreach (Transform adventurer in allAdventerurers)
+        {
+            float adventurerDistance = Vector3.Distance(transform.position, adventurer.position);
+
+            if (adventurerDistance < chaseDetectionRadius)
+            {
+                AddAdventurer(adventurer);
+            }
+            else
+            {
+                adventurersInRange.Remove(adventurer);
+            }
+        }
+        
+        NoTargetCheck();
+    }
+
+    void CleanAndSortAdventurers()
+    {
+        // Remove nulls
+        adventurersInRange.RemoveAll(t => t == null);
+        // Sort by distance to this object
+        adventurersInRange.Sort((a, b) =>
+        {
+            float distA = Vector3.Distance(transform.position, a.position);
+            float distB = Vector3.Distance(transform.position, b.position);
+            return distA.CompareTo(distB);
+        });
+    }
+    protected void AddAdventurer(Transform adventurer)
+    {
+        if (adventurer.CompareTag("Enemy"))
         {
             if (adventurersInRange.Count == 0)
             {
                 navMeshAgent.autoBraking = false;
                 navMeshAgent.stoppingDistance = distanceBetweenEnemyToStop;
                 isAggro = true;
-                target = other.transform;
+                target = adventurer;
                 navMeshAgent.speed = chaseSpeed;
-                detectionCollider.radius = chaseDetectionRadius;
             }
-            adventurersInRange.Add(other.transform);
-            //Debug.Log($"Entered {other.name}");
+
+            if (!adventurersInRange.Contains(adventurer))
+                adventurersInRange.Add(adventurer);
         }
     }
 
-    virtual protected void OnTriggerExit2D(Collider2D other)
+    protected void NoTargetCheck()
     {
-        if (other.transform.CompareTag("Enemy"))
-        {
-            adventurersInRange.Remove(other.transform);
-            //Debug.Log($"Removed {other.name}");
+
             if (adventurersInRange.Count == 0)
             {
                 if (isAbilityCycleActive)
@@ -115,27 +157,41 @@ public abstract class Monster : MonoBehaviour
                     isAbilityCycleActive = false;
                     abilityCycle = null;
                 }
-                SetDestination(other.transform.position);
+
+
                 navMeshAgent.autoBraking = true;
                 navMeshAgent.speed = patrolSpeed;
-                navMeshAgent.stoppingDistance = 0;
+                ;
                 isAggro = false;
-                detectionCollider.radius = patrolDetectionRadius;
                 target = null;
             }
             else
             {
-                target = adventurersInRange.First().transform;
+                target = adventurersInRange.First();
             }
-        }
+        
     }
 
     Vector3 GetPatrolPoint()
     {
         NavMeshHit hit;
-        var randomNum = Enumerable.Range(-2, 5).Where(x => (x <= -ExcludeRangeAbs) || (ExcludeRangeAbs <= x)).ToArray();
-        NavMesh.SamplePosition(new Vector3(transform.position.x + randomNum[UnityEngine.Random.Range(0, randomNum.Length)], transform.position.y + randomNum[UnityEngine.Random.Range(0, randomNum.Length)]), out hit, 5f, NavMesh.AllAreas);
-        return floorThatWasSpawnedOn.ClosestPoint(hit.position);
+
+        var randomOffsets = Enumerable.Range(-patrolRadius, patrolRadius * 2 + 1)
+            .Where(x => Mathf.Abs(x) >= ExcludeRangeAbs)
+            .ToArray();
+
+        if (randomOffsets.Length == 0)
+            return transform.position;
+
+        int offsetX = randomOffsets[UnityEngine.Random.Range(0, randomOffsets.Length)];
+        int offsetY = randomOffsets[UnityEngine.Random.Range(0, randomOffsets.Length)];
+
+        Vector3 samplePoint = new Vector3(transform.position.x + offsetX, transform.position.y + offsetY, 0);
+
+        if (NavMesh.SamplePosition(samplePoint, out hit, 5f, NavMesh.AllAreas))
+            return floorThatWasSpawnedOn.ClosestPoint(hit.position);
+        else
+            return transform.position; // fallback
     }
     virtual protected void MovePatrol()
     {
@@ -145,17 +201,20 @@ public abstract class Monster : MonoBehaviour
     }
     virtual protected void MoveAggro()
     {
+        NoTargetCheck();
+        if (target == null)
+            return;
         if ((transform.position - target.position).magnitude > distanceBetweenEnemyToStop)
-        {
-            Debug.Log("IsWalking");
-            animator.SetBool("IsWalking", true);
-            SetDestination(target.position);
-        }
-        else
-        {
-            animator.SetBool("IsWalking", false);
+            {
+                Debug.Log("IsWalking");
+                animator.SetBool("IsWalking", true);
+                SetDestination(target.position);
+            }
+            else
+            {
+                animator.SetBool("IsWalking", false);
                 Debug.Log("nuhuh");
-        }
+            }
         //SetDestination(target.position + ((transform.position - target.position).normalized * distanceBetweenEnemyToStop));
     }
 
@@ -200,7 +259,7 @@ public abstract class Monster : MonoBehaviour
     virtual protected void Attack()
     {
         target.GetComponent<EnemyHealth>().TakeDamage(damage);
-        animator.SetTrigger("OnAttacking");
+        
     }
 
     virtual protected IEnumerator AttackCycle()
@@ -208,8 +267,8 @@ public abstract class Monster : MonoBehaviour
         while(true)
         {
             yield return new WaitForSeconds(attackCooldown);
-            yield return new WaitUntil(() => (transform.position - target.position).magnitude <= attackDistance);
-            Attack();
+            yield return new WaitUntil(() => target!=null &&(transform.position - target.position).magnitude <= attackDistance);
+            animator.SetTrigger("OnAttacking");
         }
     }
 }

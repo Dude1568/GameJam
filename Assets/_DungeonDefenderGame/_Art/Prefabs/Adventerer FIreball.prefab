@@ -4874,7 +4874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectiletype: 1
-  damage: 3
+  damage: 1
 --- !u!58 &1936344081423958595
 CircleCollider2D:
   m_ObjectHideFlags: 0

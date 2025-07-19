@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5027533059372524897}
   - component: {fileID: 6303926147316751049}
   - component: {fileID: 225837312190623102}
-  - component: {fileID: 8482223340515622786}
   - component: {fileID: 7919730782276588721}
   - component: {fileID: 6372568480502580261}
   - component: {fileID: -3490767725543456318}
@@ -151,17 +150,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chaseSpeed: 3
   patrolSpeed: 3
-  patrolDetectionRadius: 20
   chaseDetectionRadius: 20
   damage: 2
-  attackCooldown: 3
-  distanceBetweenEnemyToStop: 4
+  attackCooldown: 1
+  distanceBetweenEnemyToStop: 3
   attackDistance: 4.2
   navMeshAgent: {fileID: 225837312190623102}
-  detectionCollider: {fileID: 8482223340515622786}
+  patrolRadius: 10
   ExcludeRangeAbs: 1
   animator: {fileID: 6372568480502580261}
   spriteRenderer: {fileID: 4286020963110652297}
+  adventurersInRange: []
 --- !u!195 &225837312190623102
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -184,41 +183,6 @@ NavMeshAgent:
   m_BaseOffset: 4
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!58 &8482223340515622786
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8715401943379548026}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 10
 --- !u!114 &7919730782276588721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,7 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a46c5fd965ac9040beb9004ac303094, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 20
 --- !u!114 &-5629947252434061914
 MonoBehaviour:
   m_ObjectHideFlags: 0

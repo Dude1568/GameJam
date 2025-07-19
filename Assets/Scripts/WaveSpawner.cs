@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class WaveEnemy
 
 public class WaveSpawner : MonoBehaviour
 {
+    public static event Action<GameObject> RAIDACTIVE;
     private enum WaveSpawnerState { SPAWNING, ACTIVERAID, BUILDING }
     [SerializeField] private WaveSpawnerState gameState = WaveSpawnerState.BUILDING;
 
@@ -68,16 +70,17 @@ public class WaveSpawner : MonoBehaviour
         for (int i = 0; i < totalEnemies; i++)
         {
             GameObject enemyToSpawn = ChooseEnemyType();
-            Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
+            Transform spawnPoint = spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)];
             GameObject enemy = Instantiate(enemyToSpawn, spawnPoint.position, Quaternion.identity);
             aliveEnemies.Add(enemy);
-
+            RAIDACTIVE?.Invoke(enemy);
             yield return new WaitForSeconds(spawnInterval);
         }
 
         isSpawning = false;
         currentWave++;
         gameState = WaveSpawnerState.ACTIVERAID;
+        
         Debug.Log("Wave spawned! Fight off the enemies.");
     }
 
@@ -86,7 +89,7 @@ public class WaveSpawner : MonoBehaviour
         float totalWeight = 0f;
         foreach (var e in enemyTypes) totalWeight += e.spawnRatio;
 
-        float randomPoint = Random.value * totalWeight;
+        float randomPoint = UnityEngine.Random.value * totalWeight;
         float current = 0f;
 
         foreach (var enemy in enemyTypes)

@@ -44,14 +44,20 @@ public class EnemyBehaviorController : MonoBehaviour
         {
             float playerDistance = Vector3.Distance(transform.position, player.transform.position);
             float treasureDistance = Vector3.Distance(transform.position, treasure.transform.position);
-
+            monsters = new List<Monster>();
             foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))
             {
-                monsters.Add(monster.GetComponent<Monster>());
+                if (monster != null)
+                {
+                    Monster m = monster.GetComponent<Monster>();
+                    if (m != null)
+                        monsters.Add(m);
+                }
             }
+
             float closestMonsterDistance = float.MaxValue;
             Monster closestMonster = null;
-
+            monsters.RemoveAll(m => m == null || m.gameObject == null);
             foreach (Monster monster in monsters)
             {
                 if (monster == null || monster.gameObject == null) 
