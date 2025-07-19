@@ -5,8 +5,8 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public int health = 5;
-
     private EnemyStateController stateController;
+    [SerializeField] ParticleSystem diePS;
 
     private void Awake()
     {
@@ -50,9 +50,10 @@ public class EnemyHealth : MonoBehaviour
         {
             GetComponent<AdventurerItems>().SpawnItemsByCost();
         }
-        if (!gameObject.CompareTag("Player"))
+        else if (!gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
+        else if(diePS != null) { Instantiate(diePS,transform.position,Quaternion.identity); }
     }
 }
