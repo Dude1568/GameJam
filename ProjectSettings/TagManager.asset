@@ -19,7 +19,7 @@ TagManager:
   - UI
   - Floor
   - Wall
-  - 
+  - characters
   - 
   - 
   - 
@@ -46,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Characters
+    uniqueID: 3726846215
     locked: 0

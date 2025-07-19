@@ -10,7 +10,7 @@ public class EnemyAttack : MonoBehaviour
         currentTarget = target;
     }
     [SerializeField] int damage;
-    public void attack(GameObject attacked)
+    public virtual void Attack(GameObject attacked)
     {
         attacked = currentTarget;
         EnemyHealth attackedHealth = attacked.GetComponent<EnemyHealth>();
