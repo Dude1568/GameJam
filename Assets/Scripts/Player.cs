@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 public class PlayerMovement2D : MonoBehaviour
@@ -20,10 +21,11 @@ public class PlayerMovement2D : MonoBehaviour
     public NavMeshAgent agent;
     bool isAttackReady = true;
     Coroutine attackCoroutine;
+    EnemyStateController state;
 
     void Awake()
     {
-
+        state =GetComponent<EnemyStateController>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
@@ -41,7 +43,7 @@ public class PlayerMovement2D : MonoBehaviour
 
         movement = movement.normalized;
 
-        if (movement != Vector2.zero)
+        if (movement != Vector2.zero && !state.IsDead)
         {
             Vector3 currentNavPos = new Vector3(transform.position.x, transform.position.y, 0);
 
@@ -78,7 +80,7 @@ public class PlayerMovement2D : MonoBehaviour
  
         if (enemiesInRange.Count > 0)
         {
-            if (attackCoroutine == null)
+            if (attackCoroutine == null&&!state.IsDead)
                 attackCoroutine = StartCoroutine(AttackCycle());
         }
         else

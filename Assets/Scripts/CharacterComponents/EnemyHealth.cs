@@ -44,7 +44,7 @@ public class EnemyHealth : MonoBehaviour
         if (movement != null)
             movement.freeze(true);
 
-        // Wait for animation to finish 
+        // Wait for animation to finish d
         yield return new WaitForSeconds(2f);
         if (gameObject.CompareTag("Enemy"))
         {
