@@ -40,6 +40,7 @@ public class TestRangeMonster : Monster
 
     IEnumerator RangeAttack()
     {
+        animator.SetTrigger("OnAttacking");
         Transform projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity, GridManager.Instance.GridOrigin);
         Vector3 enemyPosAtTheMoment = target.transform.position;
         while ((projectile.transform.position - enemyPosAtTheMoment).magnitude > 0.1f)
