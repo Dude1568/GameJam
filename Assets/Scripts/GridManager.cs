@@ -41,11 +41,13 @@ public class GridManager : MonoBehaviour
     IEnumerator GameStart()
     {
         Cell entrance = Instantiate(entrancePrefab, GridOrigin);
+        navMeshSurface.BuildNavMeshAsync();
         entrance.Init(Vector2.zero, cellSpacing); // <-- modified
         cells.Add(entrance);
         for (int i = 0; i < initialBuildToken; i++)
         {
             CreateDecisionCells();
+            navMeshSurface.BuildNavMeshAsync();
             isDecisionMade = false;
             yield return new WaitUntil(() => isDecisionMade == true);
         }

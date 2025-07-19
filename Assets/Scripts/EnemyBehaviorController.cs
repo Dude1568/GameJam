@@ -162,18 +162,17 @@ public class EnemyBehaviorController : MonoBehaviour
     {
         isInRange = true;
         SEARCHING = true;
-        
+        agent.isStopped = true;
         if (other == player)
         {
             Debug.Log("attacking"+other.name);
-            agent.isStopped = true;
             attack.SetTarget(other);
             stateController.SetState(EnemyState.ATTACKING);
         }
         else if (other.CompareTag("Barricade") || other.CompareTag("Monster"))
         {
             Debug.Log("attacking"+other.name);
-            agent.isStopped = true;
+            
             attack.SetTarget(other);
             stateController.SetState(EnemyState.ATTACKING);
         }
@@ -186,6 +185,7 @@ public class EnemyBehaviorController : MonoBehaviour
         if (!stateController.IsDead)
         {
             SetTarget(treasure.transform.position);
+            
         }
     }
 
