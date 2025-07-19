@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3266642323896279897}
   m_Layer: 0
   m_Name: TestMonster
-  m_TagString: Untagged
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,6 +159,7 @@ MonoBehaviour:
   detectionCollider: {fileID: 1255971126689211512}
   ExcludeRangeAbs: 1
   animator: {fileID: 3266642323896279897}
+  spriteRenderer: {fileID: 0}
 --- !u!195 &9046920050301900867
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -9,6 +9,7 @@ TagManager:
   - Trap
   - Barricade
   - UI
+  - Monster
   layers:
   - Default
   - TransparentFX

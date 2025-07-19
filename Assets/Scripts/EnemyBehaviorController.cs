@@ -22,6 +22,8 @@ public class EnemyBehaviorController : MonoBehaviour
     private List<Vector3> visitedPoints = new List<Vector3>();
     [SerializeField] float detectionDistance = 1.5f;
     EnemyAttack attack;
+    [SerializeField] float attackDistance;
+    List<Monster> monsters = new List<Monster>();
 
     private void Awake()
     {
@@ -42,13 +44,53 @@ public class EnemyBehaviorController : MonoBehaviour
         {
             float playerDistance = Vector3.Distance(transform.position, player.transform.position);
             float treasureDistance = Vector3.Distance(transform.position, treasure.transform.position);
+
+            foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))
+            {
+                monsters.Add(monster.GetComponent<Monster>());
+            }
+            float closestMonsterDistance = float.MaxValue;
+            Monster closestMonster = null;
+
+            foreach (Monster monster in monsters)
+            {
+                if (monster == null || monster.gameObject == null) 
+                    continue;
+
+                float distance = Vector3.Distance(transform.position, monster.transform.position);
+
+                if (distance < closestMonsterDistance)
+                {
+                    closestMonsterDistance = distance;
+                    closestMonster = monster;
+                }
+            }
+
+            // Final result: only use closestMonster if it's valid
+            if (closestMonster != null)
+            {
+                Debug.Log("Closest monster: " + closestMonster.name + " at distance: " + closestMonsterDistance);
+            }
+            else
+            {
+                closestMonsterDistance = 10000;
+                Debug.Log("No alive monsters found.");
+            }
+
             NavMeshPath pathToTreasure;
-            // Priority: Player > Treasure 
-            if (playerDistance < detectionDistance) // <-- Adjust detection range
+            // Priority: Player >Monster> Treasure 
+            if (playerDistance < detectionDistance) 
             {
                 SEARCHING = false;
                 SetTarget(player.transform.position);
                 agent.SetDestination(player.transform.position);
+            }
+            else if (closestMonsterDistance < detectionDistance)
+            {
+                SEARCHING = false;
+                SetTarget(closestMonster.transform.position);
+                agent.SetDestination(closestMonster.transform.position);
+                attack.SetTarget(closestMonster.gameObject);
             }
             else if (treasureDistance < detectionDistance)
             {
@@ -62,7 +104,7 @@ public class EnemyBehaviorController : MonoBehaviour
             }
             else if (playerDistance > detectionDistance && treasureDistance > detectionDistance && SEARCHING)
             {
-                
+
                 SearchForPath();
             }
             if (!SEARCHING && !isInRange )
@@ -76,6 +118,19 @@ public class EnemyBehaviorController : MonoBehaviour
                 }
             }
 
+            if (closestMonsterDistance<attackDistance || playerDistance<attackDistance)
+            {
+                if (closestMonsterDistance < playerDistance)
+                    EnemyClose(closestMonster.gameObject);
+                else
+                    EnemyClose(player);
+
+                
+            }
+            else
+            {
+                EnemyFar();
+            }
 
 
 
@@ -103,49 +158,34 @@ public class EnemyBehaviorController : MonoBehaviour
 
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    void EnemyClose(GameObject other)
     {
+        isInRange = true;
+        SEARCHING = true;
         
-        if (collision.gameObject == player)
+        if (other == player)
         {
-            isInRange = true;
-
-        }
-        else if (collision.gameObject.CompareTag("Barricade"))
-        {
-            attack.SetTarget(collision.gameObject);
+            Debug.Log("attacking"+other.name);
+            agent.isStopped = true;
+            attack.SetTarget(other);
             stateController.SetState(EnemyState.ATTACKING);
         }
-
-    }
-
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        if (collision.gameObject == player && !isAttacking)
+        else if (other.CompareTag("Barricade") || other.CompareTag("Monster"))
         {
-            isInRange = true;
-
-        }
-        else if (collision.gameObject.CompareTag("Barricade"))
-        {
-            attack.attack(collision.gameObject);
+            Debug.Log("attacking"+other.name);
+            agent.isStopped = true;
+            attack.SetTarget(other);
             stateController.SetState(EnemyState.ATTACKING);
         }
     }
-
-    private void OnTriggerExit2D(Collider2D collision)
+    void EnemyFar()
     {
-        if (collision.gameObject == player||collision.gameObject.CompareTag("Barricade"))
+        isInRange = false;
+        SEARCHING = true;
+        agent.isStopped=false;
+        if (!stateController.IsDead)
         {
-            
-            SEARCHING = true;
-            isInRange = false;
-            if (!stateController.IsDead)
-            {
-                SetTarget(treasure.transform.position);
-                
-
-            }
+            SetTarget(treasure.transform.position);
         }
     }
 
