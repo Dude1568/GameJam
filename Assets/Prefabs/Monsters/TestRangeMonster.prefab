@@ -79,8 +79,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.30838373, g: 0.8490566, b: 0.6622943, a: 1}
+  m_Sprite: {fileID: -1908039062, guid: 62eaf34e513c80043a20a2305470ce42, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -126,7 +126,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 5.001221, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343081e9d2662af4e895bfef31894cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 135125049514448651}
   placementCollider: {fileID: 6110325577139547565}
 --- !u!114 &-7939703900710577171
 MonoBehaviour:
@@ -218,21 +218,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de49df6409bc1cd49845d0d2984e00e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 2
-  patrolSpeed: 1
-  patrolDetectionRadius: 4
-  chaseDetectionRadius: 4
+  chaseSpeed: 5
+  patrolSpeed: 5
+  chaseDetectionRadius: 30
   damage: 2
-  attackCooldown: 3
+  attackCooldown: 1
   distanceBetweenEnemyToStop: 0
   attackDistance: 20
   navMeshAgent: {fileID: 9046920050301900867}
-  detectionCollider: {fileID: 1255971126689211512}
+  patrolRadius: 30
   ExcludeRangeAbs: 1
   animator: {fileID: 8775498910943610092}
   spriteRenderer: {fileID: 135125049514448651}
-  projectileSpeed: 10
-  projectilePrefab: {fileID: 1355815550747416231, guid: ea4b9d455a88c7145aecfdc47e19a453, type: 3}
+  adventurersInRange: []
+  projectileSpeed: 30
+  projectilePrefab: {fileID: 269954363455932820, guid: 6641221ea610004448e4115d98b27068, type: 3}
 --- !u!95 &8775498910943610092
 Animator:
   serializedVersion: 5
@@ -243,7 +243,7 @@ Animator:
   m_GameObject: {fileID: 142831109774715338}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 135b97f94cf3f6a4c98338fb20c2f477, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using VHierarchy.Libs;
 
 public class ProjectileDamage : MonoBehaviour
 {
@@ -27,11 +26,11 @@ public class ProjectileDamage : MonoBehaviour
         if (collision.CompareTag("Monster") || collision.CompareTag("Player") || collision.CompareTag("Barricade"))
         {
             collision.GetComponent<EnemyHealth>().TakeDamage(damage);
-            gameObject.Destroy();
+            Destroy(gameObject);
         }
         else if (collision.gameObject.layer == 7)
         {
-            gameObject.Destroy();
+            Destroy(gameObject);
         }
     }
     void DamageAdventerers(Collider2D collision)
@@ -39,11 +38,11 @@ public class ProjectileDamage : MonoBehaviour
         if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<EnemyHealth>().TakeDamage(damage);
-            gameObject.Destroy();
+            Destroy(gameObject);
         }
         else if (collision.gameObject.layer == 7)
         {
-            gameObject.Destroy();
+            Destroy(gameObject);
         }
     }
 }

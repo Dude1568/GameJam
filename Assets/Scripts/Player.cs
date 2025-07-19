@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 public class PlayerMovement2D : MonoBehaviour
@@ -20,10 +21,11 @@ public class PlayerMovement2D : MonoBehaviour
     public NavMeshAgent agent;
     bool isAttackReady = true;
     Coroutine attackCoroutine;
+    EnemyStateController state;
 
     void Awake()
     {
-
+        state =GetComponent<EnemyStateController>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
@@ -41,7 +43,7 @@ public class PlayerMovement2D : MonoBehaviour
 
         movement = movement.normalized;
 
-        if (movement != Vector2.zero)
+        if (movement != Vector2.zero && !state.IsDead)
         {
             Vector3 currentNavPos = new Vector3(transform.position.x, transform.position.y, 0);
 
@@ -60,28 +62,30 @@ public class PlayerMovement2D : MonoBehaviour
 
 
     }
-
-
-
-
-    void OnTriggerEnter2D(Collider2D other)
+    
+ void FixedUpdate()
     {
-        if (other.CompareTag("Enemy"))
-        {
-            if (enemiesInRange.Count == 0)
-                attackCoroutine = StartCoroutine(AttackCycle());
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemiesInRange.Clear();
 
-            enemiesInRange.Add(other.transform);
+        foreach (GameObject enemy in allEnemies)
+        {
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            if (distance <= attackRadius)
+            {
+                enemiesInRange.Add(enemy.transform);
+            }
         }
-    }
 
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy"))
+ 
+        if (enemiesInRange.Count > 0)
         {
-            enemiesInRange.Remove(other.transform);
-            if (enemiesInRange.Count == 0 && attackCoroutine != null)
+            if (attackCoroutine == null&&!state.IsDead)
+                attackCoroutine = StartCoroutine(AttackCycle());
+        }
+        else
+        {
+            if (attackCoroutine != null)
             {
                 StopCoroutine(attackCoroutine);
                 attackCoroutine = null;
@@ -90,15 +94,22 @@ public class PlayerMovement2D : MonoBehaviour
     }
     void Attack()
     {
+        StartCoroutine(StartCooldown());
         if (enemiesInRange.Count == 0)
+        {
+            StopCoroutine(AttackCycle());
+
             return;
+        }
         if (enemiesInRange[0].transform.position.x < transform.position.x)
             spriteRenderer.flipX = true;
+            
         else
             spriteRenderer.flipX = false;
+
         enemiesInRange[0].GetComponent<EnemyHealth>().TakeDamage(damage);
-        playerAnimator.SetTrigger("OnAttacking");
-        StartCoroutine(StartCooldown());
+        
+        
     }
 
     IEnumerator StartCooldown()
@@ -112,8 +123,10 @@ public class PlayerMovement2D : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil(() => isAttackReady);
+            playerAnimator.SetTrigger("OnAttacking");
             isAttackReady = false;
-            Attack();
+            
+            
         }
     }
 }

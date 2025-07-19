@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 933161570736706765}
   - component: {fileID: -7517235393097250447}
   - component: {fileID: -962999406509053969}
+  - component: {fileID: -5751666889129925604}
   m_Layer: 0
   m_Name: MageModel
   m_TagString: Enemy
@@ -268,3 +269,19 @@ NavMeshAgent:
   m_BaseOffset: 4.8
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-5751666889129925604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3824861269462096609}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da86e54a9fe24c8478f2d3b0de7e86b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleItems: []
+  adventurerValue: 45
+  maxItemDistance: 3
+  ItemPool: 1

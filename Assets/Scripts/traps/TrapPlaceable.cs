@@ -10,7 +10,7 @@ public class TrapPlaceable : Placeable
     public override void OnPlace()
     {
         base.OnPlace();
-        GetComponent<Trap>().IsActive = true;
+        GetComponent<Trap>().enabled = true;
     }
     public override bool CheckPlacmentRequirments()
     {
