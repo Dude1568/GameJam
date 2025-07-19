@@ -322,9 +322,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da86e54a9fe24c8478f2d3b0de7e86b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleItems:
-  - {fileID: 6755937915949444330, guid: f0c9e61186225244fa3173bab7f66dfb, type: 3}
-  - {fileID: 6755937915949444330, guid: 51697a0ebe1436c489652820b183ab5e, type: 3}
-  - {fileID: 6755937915949444330, guid: 76c48d4e20c7c3c45be6d21b782c270c, type: 3}
+  possibleItems: []
   adventurerValue: 10
   maxItemDistance: 3

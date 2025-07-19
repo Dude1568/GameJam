@@ -1,14 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class AdventurerItems : MonoBehaviour
 {
+    enum ItemType {KnightItem,WizardItem}
     [SerializeField] List<Item> possibleItems;
     [SerializeField] int adventurerValue;
     [SerializeField] int maxItemDistance;
-
+    [SerializeField]ItemType ItemPool;
+    void Start()
+    {
+        adventurerValue = Random.Range(5, 45);
+        if (ItemPool == ItemType.KnightItem)
+        {
+            possibleItems = new List<Item>(Resources.LoadAll<Item>("KnightLoot"));
+            
+        }
+        else
+        {
+            possibleItems = new List<Item>(Resources.LoadAll<Item>("WizardLoot"));
+        }
+    }
     public void SpawnItemsByCost()
     {
         List<Item> items = new List<Item>();

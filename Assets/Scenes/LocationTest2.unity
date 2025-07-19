@@ -617,7 +617,7 @@ MonoBehaviour:
     spawnRatio: 0.33333334
   spawnPoints:
   - {fileID: 1621790714}
-  baseEnemyCount: 10
+  baseEnemyCount: 3
   enemyGrowthRate: 1.5
   spawnInterval: 0.5
 --- !u!1 &1386755853

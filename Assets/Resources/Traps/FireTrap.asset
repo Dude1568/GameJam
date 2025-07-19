@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f1b8ead2ce4f9648bc65495b0561316, type: 3}
   m_Name: FireTrap
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3552400376591220200, guid: 543086f5154d83943bf3212ff3c2b92f, type: 3}
-  cost: 10
+  prefab: {fileID: 7263828431896091891, guid: 543086f5154d83943bf3212ff3c2b92f, type: 3}
+  cost: 15
   description: 
   Type: 1
