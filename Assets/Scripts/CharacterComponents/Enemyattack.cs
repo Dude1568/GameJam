@@ -14,6 +14,7 @@ public class EnemyAttack : MonoBehaviour
     {
         attacked = currentTarget;
         EnemyHealth attackedHealth = attacked.GetComponent<EnemyHealth>();
+        if (attackedHealth!=null)
         attackedHealth.TakeDamage(damage);
     }
 }

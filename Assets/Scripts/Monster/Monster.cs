@@ -258,6 +258,7 @@ public abstract class Monster : MonoBehaviour
 
     virtual protected void Attack()
     {
+        if(target!=null)
         target.GetComponent<EnemyHealth>().TakeDamage(damage);
         
     }

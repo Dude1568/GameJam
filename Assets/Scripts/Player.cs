@@ -60,28 +60,30 @@ public class PlayerMovement2D : MonoBehaviour
 
 
     }
-
-
-
-
-    void OnTriggerEnter2D(Collider2D other)
+    
+ void FixedUpdate()
     {
-        if (other.CompareTag("Enemy"))
-        {
-            if (enemiesInRange.Count == 0)
-                attackCoroutine = StartCoroutine(AttackCycle());
+        GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemiesInRange.Clear();
 
-            enemiesInRange.Add(other.transform);
+        foreach (GameObject enemy in allEnemies)
+        {
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            if (distance <= attackRadius)
+            {
+                enemiesInRange.Add(enemy.transform);
+            }
         }
-    }
 
-
-    void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Enemy"))
+ 
+        if (enemiesInRange.Count > 0)
         {
-            enemiesInRange.Remove(other.transform);
-            if (enemiesInRange.Count == 0 && attackCoroutine != null)
+            if (attackCoroutine == null)
+                attackCoroutine = StartCoroutine(AttackCycle());
+        }
+        else
+        {
+            if (attackCoroutine != null)
             {
                 StopCoroutine(attackCoroutine);
                 attackCoroutine = null;
@@ -90,15 +92,22 @@ public class PlayerMovement2D : MonoBehaviour
     }
     void Attack()
     {
+        StartCoroutine(StartCooldown());
         if (enemiesInRange.Count == 0)
+        {
+            StopCoroutine(AttackCycle());
+
             return;
+        }
         if (enemiesInRange[0].transform.position.x < transform.position.x)
             spriteRenderer.flipX = true;
+            
         else
             spriteRenderer.flipX = false;
+
         enemiesInRange[0].GetComponent<EnemyHealth>().TakeDamage(damage);
-        playerAnimator.SetTrigger("OnAttacking");
-        StartCoroutine(StartCooldown());
+        
+        
     }
 
     IEnumerator StartCooldown()
@@ -112,8 +121,10 @@ public class PlayerMovement2D : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil(() => isAttackReady);
+            playerAnimator.SetTrigger("OnAttacking");
             isAttackReady = false;
-            Attack();
+            
+            
         }
     }
 }

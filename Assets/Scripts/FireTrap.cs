@@ -22,7 +22,7 @@ public class FireTrap : Trap
 
     public override void Trigger(GameObject target)
     {
-        if (!IsActive)
+        if (!gameObject.activeSelf)
             return;
         if (!burnParticleSystems[0].isPlaying)
                 foreach (ParticleSystem particleSystem in burnParticleSystems)
