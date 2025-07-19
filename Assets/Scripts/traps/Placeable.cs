@@ -19,8 +19,10 @@ public class Placeable : MonoBehaviour
             && GridManager.Instance.DefaultCells.Any(c => c.Floor.bounds.Contains(placementCollider.bounds.center + new Vector3(-placementCollider.size.x * placementCollider.transform.localScale.x, placementCollider.size.y * placementCollider.transform.localScale.y) * 0.5f))
             && GridManager.Instance.DefaultCells.Any(c => c.Floor.bounds.Contains(placementCollider.bounds.center + new Vector3(-placementCollider.size.x * placementCollider.transform.localScale.x, -placementCollider.size.y * placementCollider.transform.localScale.y) * 0.5f)))
         {
+            spriteRenderer.color = Color.white;
             return true;
         }
+        spriteRenderer.color = Color.red;
         return false;
     }
 }

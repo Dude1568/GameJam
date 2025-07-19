@@ -14,7 +14,8 @@ public class SpikeTrap : Trap
 
     public override void Trigger(GameObject target)
     {
-        
+        if (!IsActive)
+            return;
         var health = target.GetComponent<EnemyHealth>();
         if (health != null)
         {
