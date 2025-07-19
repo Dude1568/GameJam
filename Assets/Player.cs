@@ -54,13 +54,13 @@ public class PlayerMovement2D : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Enemy"))
-        {
-            if (enemiesInRange.Count == 0)
             {
-                attackCoroutine = StartCoroutine(AttackCycle());
+                if (enemiesInRange.Count == 0)
+                {
+                    attackCoroutine = StartCoroutine(AttackCycle());
+                }
+                enemiesInRange.Add(other.transform);
             }
-            enemiesInRange.Add(other.transform);
-        }
     }
 
     void OnTriggerExit2D(Collider2D other)
@@ -78,11 +78,13 @@ public class PlayerMovement2D : MonoBehaviour
 
     void Attack()
     {
-        enemiesInRange[0].GetComponent<EnemyHealth>().TakeDamage(damage);
+        if (enemiesInRange.Count == 0)
+            return;
         if (enemiesInRange[0].transform.position.x < transform.position.x)
             spriteRenderer.flipX = true;
         else
             spriteRenderer.flipX = false;
+        enemiesInRange[0].GetComponent<EnemyHealth>().TakeDamage(damage);
         playerAnimator.SetTrigger("OnAttacking");
         StartCoroutine(StartCooldown());
     }

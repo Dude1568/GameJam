@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 5316114117564597663}
   - component: {fileID: 5360393432934423552}
   - component: {fileID: 1921577868965453008}
+  - component: {fileID: -7871797704392013938}
   m_Layer: 0
   m_Name: KnightModel
   m_TagString: Enemy
@@ -296,3 +297,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+--- !u!114 &-7871797704392013938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2408683707494011358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6308ddbeb93a93746893e1468a52840c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleItems:
+  - {fileID: 6755937915949444330, guid: f0c9e61186225244fa3173bab7f66dfb, type: 3}
+  - {fileID: 6755937915949444330, guid: 51697a0ebe1436c489652820b183ab5e, type: 3}
+  - {fileID: 6755937915949444330, guid: 76c48d4e20c7c3c45be6d21b782c270c, type: 3}
+  adventurerValue: 15
+  maxItemDistance: 8
