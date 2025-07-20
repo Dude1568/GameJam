@@ -19,12 +19,13 @@ public class PlaceableIcon : MonoBehaviour, IPointerClickHandler
     }
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (!itemHeld && GoldTracker.gold >= cost)
+        if (!itemHeld)
         {
             itemHeld = true;
             placeable = Instantiate(placeablePrefab, GridManager.Instance.GridOrigin);
+            placeable.cost = cost;
             StartCoroutine(PlacingProcess(placeable));
-            GoldTracker.SpendGold(cost);
+            
         }
 
 
@@ -33,22 +34,34 @@ public class PlaceableIcon : MonoBehaviour, IPointerClickHandler
 
     IEnumerator PlacingProcess(Placeable currentPlaceable)
     {
-        bool isDone = false;
-        while (!isDone)
+        while (true)
         {
             currentPlaceable.transform.position = (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
             if (Input.GetMouseButtonDown(0) && currentPlaceable.CheckPlacmentRequirments())
             {
-                isDone = true;
-                currentPlaceable.OnPlace();
-                itemHeld = false;
+                currentPlaceable.OnPlace(); // Deduct gold here
+
+                if (GoldTracker.gold >= currentPlaceable.cost)
+                {
+                    currentPlaceable = Instantiate(placeablePrefab, GridManager.Instance.GridOrigin);
+                    currentPlaceable.cost = cost;
+                }
+                else
+                {
+                    Debug.Log("Out of gold, exiting placement mode.");
+                    itemHeld = false;
+                    break;
+                }
             }
-            if (Input.GetMouseButtonDown(1))
+
+            if (Input.GetMouseButtonDown(1)) // Right-click cancels
             {
                 Destroy(currentPlaceable.gameObject);
-                isDone = true;
                 itemHeld = false;
+                break;
             }
+
             yield return null;
         }
     }

@@ -185,6 +185,7 @@ public class EnemyBehaviorController : MonoBehaviour
     }
     void EnemyFar()
     {
+        stateController.SetState(EnemyState.IDLE);
         isInRange = false;
         SEARCHING = true;
         agent.isStopped=false;

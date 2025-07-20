@@ -178,7 +178,7 @@ MonoBehaviour:
   searchRadius: 10
   exploreInterval: 1
   detectionDistance: 10
-  attackDistance: 3
+  attackDistance: 4
 --- !u!195 &4285328112608123605
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -325,3 +325,4 @@ MonoBehaviour:
   possibleItems: []
   adventurerValue: 10
   maxItemDistance: 3
+  ItemPool: 0
