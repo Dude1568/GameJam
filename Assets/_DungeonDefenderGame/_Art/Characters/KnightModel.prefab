@@ -160,6 +160,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 20
   diePS: {fileID: 0}
+  flashDuration: 0.1
+  flashCount: 3
 --- !u!114 &-5927859391242383084
 MonoBehaviour:
   m_ObjectHideFlags: 0
