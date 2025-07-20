@@ -20,7 +20,7 @@ public class DecisionCell : MonoBehaviour, IPointerClickHandler
 
     public void AddWallDirection(Vector2 dir)
     {
-        Instantiate(imagePrefab, transform.position + (Vector3)(dir * spacing), Quaternion.identity, transform);
+        Instantiate(imagePrefab, transform.position + (Vector3)(dir * (spacing-2)), Quaternion.identity, transform);
         WallsDirections.Add(dir);
     }
 
