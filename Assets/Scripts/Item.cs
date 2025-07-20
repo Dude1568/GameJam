@@ -21,23 +21,25 @@ public class Item : MonoBehaviour
             TreasureCheck(other);
 
         }
-        Destroy(gameObject);
+        
     }
     void TreasureCheck(Collider2D other)
     {
             if (gameObject.CompareTag("Treasure"))
             {
-                
-                if (other.gameObject.CompareTag("Enemy"))
-                {
-                    EnemyBehaviorController.KEYHOLDER = other.gameObject;
-                    KeyTaken.Invoke();
-                }
-                else if (other.CompareTag("Player"))
-                {
-                    KeyReturned?.Invoke();
-                    
-                }
+
+            if (other.gameObject.CompareTag("Enemy"))
+            {
+                EnemyBehaviorController.KEYHOLDER = other.gameObject;
+                KeyTaken.Invoke();
+                Destroy(gameObject);
+            }
+            else if (other.CompareTag("Player"))
+            {
+                KeyReturned?.Invoke();
+                Destroy(gameObject);
+
+            }
                 
             }
     }

@@ -330,7 +330,7 @@ public class EnemyBehaviorController : MonoBehaviour
     {
         Debug.Log("key beingTaken");
         KEYBEINGTAKEN = true;
-        while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance + .1f)
+        while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance )
             yield return null;
 
         yield return new WaitForSeconds(2f);
@@ -359,7 +359,7 @@ public class EnemyBehaviorController : MonoBehaviour
     {
         if (KEYHOLDER == null) return;
 
-        float distanceFromKeyholder = 6f;
+        float distanceFromKeyholder = 10f;
         float angle = UnityEngine.Random.Range(0f, 2f * Mathf.PI);
         Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * distanceFromKeyholder;
         Vector3 targetPosition = KEYHOLDER.transform.position + offset;
