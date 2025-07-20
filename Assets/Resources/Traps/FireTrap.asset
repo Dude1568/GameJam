@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7263828431896091891, guid: 543086f5154d83943bf3212ff3c2b92f, type: 3}
   cost: 15
-  description: 
+  description: Firepit as hot as hell itself. Makes me miss home.
   Type: 1

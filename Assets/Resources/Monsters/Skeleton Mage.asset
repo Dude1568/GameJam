@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 7010045173130557277, guid: 5af6c8bf591199949b341e32841dbccc, type: 3}
   cost: 20
-  description: 
+  description: Skeleton Mage why just kill'em when u can shoot at em!!!
   Type: 0

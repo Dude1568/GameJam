@@ -14,5 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 1387212572085893347, guid: 7a125a3af1d0b0c49a8b452aec1a8176, type: 3}
   cost: 20
-  description: 
+  description: Time Tested Killing Machine sad you cannot get their loot all the
+    way down there though.
   Type: 1
