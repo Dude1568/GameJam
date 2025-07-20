@@ -17,10 +17,16 @@ public class Placeable : MonoBehaviour
 
     public virtual bool CheckPlacmentRequirments()
     {
+        RaycastHit2D hit2D = Physics2D.Raycast(transform.position, Vector2.zero, int.MaxValue, 1 << 7);
+        Debug.DrawRay(transform.position, Vector2.zero, Color.magenta, 10f);
+        Debug.Log(hit2D.collider == null);
+        if (hit2D.collider != null)
+            return false;
+
         if (cost <= GoldTracker.gold)
-            canAfford = true;
-        else
-            canAfford = false;
+                canAfford = true;
+            else
+                canAfford = false;
         if (GridManager.Instance.DefaultCells.Any(c => c.Floor.bounds.Contains(placementCollider.bounds.center + new Vector3(placementCollider.size.x * placementCollider.transform.localScale.x, placementCollider.size.y * placementCollider.transform.localScale.y) * 0.5f))
                 && GridManager.Instance.DefaultCells.Any(c => c.Floor.bounds.Contains(placementCollider.bounds.center + new Vector3(placementCollider.size.x * placementCollider.transform.localScale.x, -placementCollider.size.y * placementCollider.transform.localScale.y) * 0.5f))
                 && GridManager.Instance.DefaultCells.Any(c => c.Floor.bounds.Contains(placementCollider.bounds.center + new Vector3(-placementCollider.size.x * placementCollider.transform.localScale.x, placementCollider.size.y * placementCollider.transform.localScale.y) * 0.5f))
