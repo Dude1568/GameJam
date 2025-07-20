@@ -46,7 +46,6 @@ public abstract class Monster : MonoBehaviour
     {
         navMeshAgent.updateRotation = false;
         navMeshAgent.updateUpAxis = false;
-        navMeshAgent.enabled = true;
         transform.position = (Vector2)transform.position;
         Debug.Log(transform.position);
     }
@@ -265,11 +264,12 @@ public abstract class Monster : MonoBehaviour
 
     virtual protected IEnumerator AttackCycle()
     {
-        while(true)
+        while (true)
         {
             yield return new WaitForSeconds(attackCooldown);
-            yield return new WaitUntil(() => target!=null &&(transform.position - target.position).magnitude <= attackDistance);
+            yield return new WaitUntil(() => target != null && (transform.position - target.position).magnitude <= attackDistance);
             animator.SetTrigger("OnAttacking");
+            Attack();
         }
     }
 }

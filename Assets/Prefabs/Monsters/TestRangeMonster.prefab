@@ -142,7 +142,7 @@ NavMeshAgent:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142831109774715338}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 1
@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 343081e9d2662af4e895bfef31894cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 0}
+  spriteRenderer: {fileID: 135125049514448651}
   placementCollider: {fileID: 6110325577139547565}
   cost: 0
   canAfford: 0
@@ -220,21 +220,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de49df6409bc1cd49845d0d2984e00e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 2
-  patrolSpeed: 1
-  chaseDetectionRadius: 4
+  chaseSpeed: 5
+  patrolSpeed: 5
+  chaseDetectionRadius: 30
   damage: 2
-  attackCooldown: 3
+  attackCooldown: 1
   distanceBetweenEnemyToStop: 0
   attackDistance: 20
   navMeshAgent: {fileID: 9046920050301900867}
-  patrolRadius: 10
+  patrolRadius: 30
   ExcludeRangeAbs: 1
   animator: {fileID: 8775498910943610092}
   spriteRenderer: {fileID: 135125049514448651}
   adventurersInRange: []
-  projectileSpeed: 10
-  projectilePrefab: {fileID: 269954363455932820, guid: cb3a772e8673d1c43a0da948bdec2098, type: 3}
+  projectileSpeed: 30
+  projectilePrefab: {fileID: 269954363455932820, guid: 6641221ea610004448e4115d98b27068, type: 3}
 --- !u!95 &8775498910943610092
 Animator:
   serializedVersion: 5
