@@ -16,7 +16,6 @@ GameObject:
   - component: {fileID: 5223258586920836533}
   - component: {fileID: -293811378212836625}
   - component: {fileID: 878223715208691133}
-  - component: {fileID: 4298716722563056976}
   m_Layer: 0
   m_Name: barricade
   m_TagString: Barricade
@@ -77,9 +76,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -568121081
-  m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -1164473604, guid: 805eb1ee9a790a1469184d332df1be2f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -151,7 +150,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 1074325694648174055}
   placementCollider: {fileID: 8359839836088544080}
   cost: 0
-  canAfford: 0
 --- !u!208 &910850503284496408
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -181,7 +179,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxUses: 1
-  IsActive: 0
   navMeshObstacle: {fileID: 910850503284496408}
 --- !u!114 &-293811378212836625
 MonoBehaviour:
@@ -226,15 +223,3 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &4298716722563056976
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907274802323104181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 392812827c97a26489eea4a5784f2372, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -106,6 +106,7 @@ public class PlayerMovement2D : MonoBehaviour
     }
     void Attack()
     {
+        if (state.IsDead) return;
         StartCoroutine(StartCooldown());
         if (enemiesInRange.Count == 0)
         {
@@ -135,6 +136,7 @@ public class PlayerMovement2D : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil(() => isAttackReady);
+            if (state.IsDead) yield break;
             playerAnimator.SetTrigger("OnAttacking");
             isAttackReady = false;
             

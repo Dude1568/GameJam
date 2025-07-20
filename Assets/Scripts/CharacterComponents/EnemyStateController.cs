@@ -12,6 +12,7 @@ public class EnemyStateController : MonoBehaviour
 
     public void SetState(EnemyState newState)
     {
+        if(currentState == EnemyState.DEAD) { return; } 
         if (currentState != newState)
         {
             currentState = newState;

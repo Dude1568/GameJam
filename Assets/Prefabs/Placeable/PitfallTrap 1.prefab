@@ -77,7 +77,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 92c3b1a3afd59af4e8f6cf7d5d17da8a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -148,6 +148,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 6304409733381781550}
   placementCollider: {fileID: 9209442338383451753}
+  cost: 0
 --- !u!114 &5503530063936080862
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxUses: 1
-  IsActive: 0
   fallDuration: 2
   fallRotation: -540
   finalScale: 0.05
