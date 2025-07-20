@@ -55,6 +55,7 @@ public class WaveSpawner : MonoBehaviour
             gameState = WaveSpawnerState.BUILDING;
             waveReady = true;
             GridManager.Instance.InBetweenWaveProcess();
+            buttons.gameObject.SetActive(true);
             Debug.Log("All enemies defeated! Press Enter to start next wave.");
         }
     }
