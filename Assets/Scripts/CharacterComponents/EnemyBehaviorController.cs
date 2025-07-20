@@ -13,6 +13,7 @@ public class EnemyBehaviorController : MonoBehaviour
     [SerializeField] Transform spawnpoint;
     static public bool KEYFOUND;
     static public GameObject KEYHOLDER;
+    static bool KEYBEINGTAKEN = false;
     private EnemyStateController stateController;
     public GameObject player;
     private GameObject treasure;
@@ -121,11 +122,17 @@ public class EnemyBehaviorController : MonoBehaviour
                     SetTarget(treasure.transform.position);
                     agent.SetDestination(treasure.transform.position);
                     //take key
-                    takingKey = StartCoroutine(TakeKey());
+                    if (!KEYFOUND && !KEYBEINGTAKEN && takingKey == null)
+                    {
+                        takingKey = StartCoroutine(TakeKey());
+                    }
                 }
                 else
                 {
-                    SetTarget(KEYHOLDER.transform.position);
+                    if (KEYHOLDER)
+                    {
+                        SetTarget(KEYHOLDER.transform.position);
+                    }
                     agent.SetDestination(treasure.transform.position);
                     ProtectKeyholder();
 
@@ -311,6 +318,7 @@ public class EnemyBehaviorController : MonoBehaviour
 
     IEnumerator TakeKey()
     {
+        KEYBEINGTAKEN = true;
         while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance + .5)
             yield return null;
 
@@ -325,7 +333,7 @@ public class EnemyBehaviorController : MonoBehaviour
         }
 
 
-
+        KEYBEINGTAKEN = false;
         yield break;
     }
     IEnumerator Escape()
