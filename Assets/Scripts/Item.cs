@@ -10,6 +10,7 @@ public class Item : MonoBehaviour
     public static event Action KeyTaken;
     void OnTriggerEnter2D(Collider2D other)
     {
+        Debug.Log("treasure touched" + gameObject.name);
         if (other.CompareTag("Player"))
         {
             TreasureCheck(other);
