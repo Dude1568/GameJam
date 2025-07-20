@@ -10,7 +10,7 @@ public class TreasureScript : MonoBehaviour
     [SerializeField] Sprite OpenedChest;
     [SerializeField] Sprite Closedchest;
     SpriteRenderer spriteRenderer;
-    public static event Action ChangeTreasure;
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -29,25 +29,18 @@ public class TreasureScript : MonoBehaviour
 
     void OpenChest()
     {
-        SetToUntagged();
+ 
         spriteRenderer.sprite = OpenedChest;
         
     }
     void CloseChest()
     {
-        SetToTreasure();
+     
+        EnemyBehaviorController.KEYFOUND = false;
+        EnemyBehaviorController.KEYHOLDER = null;
         spriteRenderer.sprite = Closedchest;
-        if(GameObject.FindGameObjectsWithTag("Enemy").Length >0)
-        ChangeTreasure.Invoke();
-    }
-    
-    public void SetToTreasure()
-    {
-        gameObject.tag = "Treasure";
+        
+        
     }
 
-    public void SetToUntagged()
-    {
-        gameObject.tag = "Untagged";
-    }
 }
