@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -10,9 +11,11 @@ public class EnemyHealth : MonoBehaviour
     SpriteRenderer spriteRenderer;
     public float flashDuration = 0.1f;
     public int flashCount = 3;
+    GameObject key;
 
     private void Awake()
     {
+        key = Resources.Load<GameObject>("key");
         spriteRenderer = GetComponent<SpriteRenderer>();
         stateController = GetComponent<EnemyStateController>();
     }
@@ -23,6 +26,10 @@ public class EnemyHealth : MonoBehaviour
         StartCoroutine(FlashRed());
         if (health <= 0)
         {
+            if (gameObject == EnemyBehaviorController.KEYHOLDER)
+            {
+                DropKey();
+            }
             if (stateController != null)
             {
 
@@ -66,7 +73,7 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject);
         }
     }
-        IEnumerator FlashRed()
+    IEnumerator FlashRed()
     {
         Color originalColor = spriteRenderer.color;
 
@@ -77,6 +84,18 @@ public class EnemyHealth : MonoBehaviour
             spriteRenderer.color = originalColor;
             yield return new WaitForSeconds(flashDuration);
         }
+    }
+    void DropKey()
+    {
+        float maxDropDistance = 3f;
+        float angle = Random.Range(0f, Mathf.PI * 2f);
+        float radius = maxDropDistance;
+        Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
+        Vector2 dropPosition = (Vector2)transform.position + offset;
+
+        Instantiate(key, dropPosition, Quaternion.identity);
+        EnemyBehaviorController.KEYFOUND = false;
+        EnemyBehaviorController.KEYHOLDER = null;
     }
 
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3617233988977365786}
   - component: {fileID: 4762418168151389357}
   - component: {fileID: 3526183491502295096}
+  - component: {fileID: 809076004146474803}
   m_Layer: 0
   m_Name: Treasury
   m_TagString: Treasure
@@ -101,6 +102,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 2475111852227193152}
   placementCollider: {fileID: 4762418168151389357}
+  cost: 0
+  canAfford: 0
 --- !u!61 &4762418168151389357
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -162,3 +165,15 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 0, y: 0, z: 0}
   m_TimeToStationary: 0.5
+--- !u!114 &809076004146474803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7992333455657135274}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3019cc4f04307304b927f541c7188d8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

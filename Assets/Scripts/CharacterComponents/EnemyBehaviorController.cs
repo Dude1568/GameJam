@@ -5,8 +5,12 @@ using System.IO;
 using Unity.VisualScripting;
 using System.Collections;
 
+
 public class EnemyBehaviorController : MonoBehaviour
 {
+    [SerializeField] Transform spawnpoint;
+    static public bool KEYFOUND;
+    static public GameObject KEYHOLDER;
     private EnemyStateController stateController;
     public GameObject player;
     private GameObject treasure;
@@ -16,7 +20,7 @@ public class EnemyBehaviorController : MonoBehaviour
     NavMeshAgent agent;
     public bool SEARCHING = true;
 
-   [SerializeField] float searchRadius = 5f;
+    [SerializeField] float searchRadius = 5f;
     float currentSearchRadius;
     [SerializeField] float exploreInterval = 2f;
     private float exploreTimer;
@@ -26,9 +30,11 @@ public class EnemyBehaviorController : MonoBehaviour
     [SerializeField] float attackDistance;
     List<Monster> monsters = new List<Monster>();
     Coroutine barricadeRoutine;
-
+    Coroutine takingKey;
     private void Awake()
     {
+
+        spawnpoint = GameObject.FindGameObjectWithTag("Respawn").transform;
         attack = GetComponent<EnemyAttack>();
         agent = GetComponent<NavMeshAgent>();
         stateController = GetComponent<EnemyStateController>();
@@ -37,140 +43,157 @@ public class EnemyBehaviorController : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         treasure = GameObject.FindGameObjectWithTag("Treasure");
         target = treasure.transform.position;
-
+        //fix weird z
+        agent.updateRotation = false;
+        agent.updateUpAxis = false;
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
     }
 
     void Update()
     {
+        if (takingKey != null)
+            return;
         if (!stateController.IsDead)
-        {
-            float playerDistance = Vector3.Distance(transform.position, player.transform.position);
-            float treasureDistance = Vector3.Distance(transform.position, treasure.transform.position);
-            monsters = new List<Monster>();
-            foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))
             {
-                if (monster != null)
+                float playerDistance = Vector3.Distance(transform.position, player.transform.position);
+                float treasureDistance = Vector3.Distance(transform.position, treasure.transform.position);
+                monsters = new List<Monster>();
+                foreach (GameObject monster in GameObject.FindGameObjectsWithTag("Monster"))
                 {
-                    Monster m = monster.GetComponent<Monster>();
-                    if (m != null)
-                        monsters.Add(m);
+                    if (monster != null)
+                    {
+                        Monster m = monster.GetComponent<Monster>();
+                        if (m != null)
+                            monsters.Add(m);
+                    }
                 }
-            }
 
-            float closestMonsterDistance = float.MaxValue;
-            Monster closestMonster = null;
-            monsters.RemoveAll(m => m == null || m.gameObject == null);
-            foreach (Monster monster in monsters)
-            {
-                if (monster == null || monster.gameObject == null)
-                    continue;
-
-                float distance = Vector3.Distance(transform.position, monster.transform.position);
-
-                if (distance < closestMonsterDistance)
+                float closestMonsterDistance = float.MaxValue;
+                Monster closestMonster = null;
+                monsters.RemoveAll(m => m == null || m.gameObject == null);
+                foreach (Monster monster in monsters)
                 {
-                    closestMonsterDistance = distance;
-                    closestMonster = monster;
+                    if (monster == null || monster.gameObject == null)
+                        continue;
+
+                    float distance = Vector3.Distance(transform.position, monster.transform.position);
+
+                    if (distance < closestMonsterDistance)
+                    {
+                        closestMonsterDistance = distance;
+                        closestMonster = monster;
+                    }
                 }
-            }
 
-            // Final result: only use closestMonster if it's valid
-            if (closestMonster != null)
-            {
-                Debug.Log("Closest monster: " + closestMonster.name + " at distance: " + closestMonsterDistance);
-            }
-            else
-            {
-                closestMonsterDistance = 10000;
-                Debug.Log("No alive monsters found.");
-            }
-
-            NavMeshPath pathToTreasure;
-            // Priority: Player >Monster> Treasure 
-            if (playerDistance < detectionDistance)
-            {
-                SEARCHING = false;
-                SetTarget(player.transform.position);
-                agent.SetDestination(player.transform.position);
-            }
-            else if (closestMonsterDistance < detectionDistance)
-            {
-                SEARCHING = false;
-                SetTarget(closestMonster.transform.position);
-                agent.SetDestination(closestMonster.transform.position);
-                attack.SetTarget(closestMonster.gameObject);
-            }
-            else if (treasureDistance < detectionDistance)
-            {
-                SEARCHING = false;
-                SetTarget(treasure.transform.position);
-                agent.SetDestination(treasure.transform.position);
-            }
-            else if (!HasPathToTreasure(out pathToTreasure))
-            {
-                if (!blocked && barricadeRoutine == null)
+                // Final result: only use closestMonster if it's valid
+                if (closestMonster != null)
                 {
-                    barricadeRoutine = StartCoroutine(AttackBlockingBarricade());
+                    Debug.Log("Closest monster: " + closestMonster.name + " at distance: " + closestMonsterDistance);
                 }
-            }
-            else if (playerDistance > detectionDistance && treasureDistance > detectionDistance && SEARCHING)
-            {
-
-                SearchForPath();
-            }
-            if (!SEARCHING && !isInRange)
-            {
-                // If both are out of detection range, resume searching
-                if (playerDistance > detectionDistance && treasureDistance > detectionDistance)
-                {
-                    SEARCHING = true;
-                    SetTarget(treasure.transform.position);
-                    Debug.Log("[Fallback] Target lost. Resuming search.");
-                }
-            }
-
-            if (closestMonsterDistance < attackDistance ||playerDistance < attackDistance)
-            {
-                if (closestMonsterDistance < playerDistance)
-                    EnemyClose(closestMonster.gameObject);
                 else
-                    EnemyClose(player);
-
-
-            }
-            else if(!blocked)
-            {
-                EnemyFar();
-            }
-
-
-
-            //handles state control
-            if (!stateController.IsDead && !stateController.IsAttacking&& !blocked)
-            {
-                if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
                 {
-                    if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                    closestMonsterDistance = 10000;
+                    Debug.Log("No alive monsters found.");
+                }
+
+                NavMeshPath pathToTreasure;
+                // Priority: Player >Monster> Treasure 
+                if (playerDistance < detectionDistance && gameObject != KEYHOLDER)
+                {
+                    SEARCHING = false;
+                    SetTarget(player.transform.position);
+                    agent.SetDestination(player.transform.position);
+                }
+                else if (closestMonsterDistance < detectionDistance && gameObject != KEYHOLDER)
+                {
+                    SEARCHING = false;
+                    SetTarget(closestMonster.transform.position);
+                    agent.SetDestination(closestMonster.transform.position);
+                    attack.SetTarget(closestMonster.gameObject);
+                }
+                else if (treasureDistance < detectionDistance || (KEYHOLDER != null && Vector3.Distance(KEYHOLDER.transform.position, gameObject.transform.position) < detectionDistance))
+                {
+                    SEARCHING = false;
+                    if (!KEYFOUND)
+                    {
+                        SetTarget(treasure.transform.position);
+                        agent.SetDestination(treasure.transform.position);
+                        //take key
+                        takingKey = StartCoroutine(TakeKey());
+                    }
+                    else
+                    {
+                        SetTarget(KEYHOLDER.transform.position);
+                        agent.SetDestination(treasure.transform.position);
+                        ProtectKeyholder();
+
+                    }
+                }
+                else if (!HasPathToTreasure(out pathToTreasure))
+                {
+                    if (!blocked && barricadeRoutine == null)
+                    {
+                        barricadeRoutine = StartCoroutine(AttackBlockingBarricade());
+                    }
+                }
+                else if (playerDistance > detectionDistance && ((treasureDistance > detectionDistance && !KEYFOUND) || KEYFOUND) && SEARCHING)
+                {
+
+                    SearchForPath();
+                }
+                if (!SEARCHING && !isInRange)
+                {
+                    // If both are out of detection range, resume searching
+                    if (playerDistance > detectionDistance && treasureDistance > detectionDistance)
+                    {
+                        SEARCHING = true;
+                        if (!KEYFOUND)
+                            SetTarget(treasure.transform.position);
+
+                        Debug.Log("[Fallback] Target lost. Resuming search.");
+                    }
+                }
+                // catch to set a enemy as a target if in distance to attack
+                if ((closestMonsterDistance < attackDistance || playerDistance < attackDistance) && gameObject != KEYHOLDER)
+                {
+                    if (closestMonsterDistance < playerDistance)
+                        EnemyClose(closestMonster.gameObject);
+                    else
+                        EnemyClose(player);
+                }
+                else if (!blocked)
+                {
+                    EnemyFar();
+                }
+
+
+
+                //handles state control
+                if (!stateController.IsDead && !stateController.IsAttacking && !blocked)
+                {
+                    if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+                    {
+                        if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
+                            stateController.SetState(EnemyState.IDLE);
+                    }
+                    else
+                    {
+                        stateController.SetState(EnemyState.WALKING);
+                    }
+                }
+                else if (stateController.IsAttacking)
+                {
+                    if (attack.currentTarget == null)
+                    {
                         stateController.SetState(EnemyState.IDLE);
+                    }
                 }
-                else
-                {
-                    stateController.SetState(EnemyState.WALKING);
-                }
-            }
-            else if (stateController.IsAttacking)
-            {
-                if (attack.currentTarget == null)
-                {
-                    stateController.SetState(EnemyState.IDLE);
-                }
-            }
 
-        }
+            }
     }
     void EnemyClose(GameObject other)
     {
-            StopAllCoroutines();
+        StopAllCoroutines();
         isInRange = true;
         SEARCHING = true;
         agent.isStopped = true;
@@ -186,7 +209,7 @@ public class EnemyBehaviorController : MonoBehaviour
         //else if (other.CompareTag("Barricade") || other.CompareTag("Monster"))
         //{
         //    Debug.Log("attacking"+other.name);
-            
+
         //    attack.SetTarget(other);
         //    stateController.SetState(EnemyState.ATTACKING);
         //}
@@ -200,11 +223,12 @@ public class EnemyBehaviorController : MonoBehaviour
     {
         isInRange = false;
         SEARCHING = true;
-        agent.isStopped=false;
+        agent.isStopped = false;
         setAttackTarget(null);
         if (!stateController.IsDead)
         {
-            SetTarget(treasure.transform.position);
+            if (!KEYFOUND)
+                SetTarget(treasure.transform.position);
 
         }
     }
@@ -212,10 +236,10 @@ public class EnemyBehaviorController : MonoBehaviour
     bool HasPathToTreasure(out NavMeshPath path)
     {
         path = new NavMeshPath();
-        bool success = NavMesh.CalculatePath(new Vector3 (transform.position.x,transform.position.y,0), treasure.transform.position, NavMesh.AllAreas, path);
+        bool success = NavMesh.CalculatePath(new Vector3(transform.position.x, transform.position.y, 0), treasure.transform.position, NavMesh.AllAreas, path);
 
         //Debug.Log($"[PathToTreasure] Success: {success}, Status: {path.status}, " +
-         //       $"From: {transform.position}, To: {treasure.transform.position}");
+        //       $"From: {transform.position}, To: {treasure.transform.position}");
         bool DoesPath = success && path.status == NavMeshPathStatus.PathComplete;
         //Debug.Log(DoesPath);
         return DoesPath;
@@ -226,8 +250,8 @@ public class EnemyBehaviorController : MonoBehaviour
         exploreTimer += Time.deltaTime;
         if (exploreTimer < exploreInterval) return;
 
-       if (agent.hasPath && agent.remainingDistance > agent.stoppingDistance*2)
-    return;
+        if (agent.hasPath && agent.remainingDistance > agent.stoppingDistance * 2)
+            return;
         exploreTimer = 2f; // reset timer
 
         int maxAttempts = 100;
@@ -256,7 +280,7 @@ public class EnemyBehaviorController : MonoBehaviour
 
                 if (!tooClose)
                 {
-                   // Debug.Log($"[Explore] Found point: {destination}");
+                    // Debug.Log($"[Explore] Found point: {destination}");
                     visitedPoints.Add(destination);
                     SetTarget(destination);
                     agent.SetDestination(destination);
@@ -269,21 +293,55 @@ public class EnemyBehaviorController : MonoBehaviour
                 //Debug.Log($"[Explore] Failed to find NavMesh near: {candidate}");
             }
         }
-   
-            if (!foundDestination&&currentSearchRadius < 80)
-            {
-                currentSearchRadius *= 1.5f;
 
-            }
-            else
-            {
-                currentSearchRadius = searchRadius; // Reset to default 
-            }
-        
-        
+        if (!foundDestination && currentSearchRadius < 80)
+        {
+            currentSearchRadius *= 1.5f;
+
+        }
+        else
+        {
+            currentSearchRadius = searchRadius; // Reset to default 
+        }
+
+
     }
 
+    IEnumerator TakeKey()
+    {
+        while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance + .5)
+            yield return null;
 
+        yield return new WaitForSeconds(2f);
+        if (KEYHOLDER == null)
+        {
+            Debug.Log("Took key");
+            KEYHOLDER = gameObject;
+            KEYFOUND = true;
+            takingKey=StartCoroutine(Escape());
+        }
+        
+       
+
+        yield break;
+    }
+    IEnumerator Escape()
+    {
+        Debug.Log("escaping");
+        agent.SetDestination(spawnpoint.position);
+        yield return new WaitUntil(() => Vector3.Distance(transform.position, spawnpoint.position) < 4f);
+            Debug.Log("GameOver");
+        
+    }
+    void ProtectKeyholder()
+    {    if (KEYHOLDER == null) return;
+
+        float distanceFromKeyholder = 6f; 
+        float angle = Random.Range(0f, 2f * Mathf.PI);
+        Vector3 offset = new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * distanceFromKeyholder;
+        Vector3 targetPosition = KEYHOLDER.transform.position + offset;
+        agent.SetDestination(targetPosition);
+    }
 
     IEnumerator AttackBlockingBarricade()
     {
@@ -309,9 +367,9 @@ public class EnemyBehaviorController : MonoBehaviour
         {
             setAttackTarget(attackTarget);
             target = attackTarget.transform.position;
-            while(agent.pathPending)
+            while (agent.pathPending)
                 yield return null;
-            while (agent.remainingDistance >1.5)
+            while (agent.remainingDistance > 1.5)
                 yield return null;
             Debug.Log("reached obstacle");
             while (attackTarget != null)
