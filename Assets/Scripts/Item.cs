@@ -23,7 +23,7 @@ public class Item : MonoBehaviour
     }
     void TreasureCheck(Collider2D other)
     {
-            if (!gameObject.CompareTag("Treasure"))
+            if (gameObject.CompareTag("Treasure"))
             {
                 EnemyBehaviorController.KEYFOUND = other.CompareTag("Player");
                 if(other.gameObject.CompareTag("Enemy"))

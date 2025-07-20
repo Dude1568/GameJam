@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using System;
 
 public class EnemyHealth : MonoBehaviour
 {
+    public static event Action ChangeTreasure;
     public int health = 5;
     private EnemyStateController stateController;
     [SerializeField] ParticleSystem diePS;
@@ -88,7 +90,7 @@ public class EnemyHealth : MonoBehaviour
     void DropKey()
     {
         float maxDropDistance = 3f;
-        float angle = Random.Range(0f, Mathf.PI * 2f);
+        float angle = UnityEngine.Random.Range(0f, Mathf.PI * 2f);
         float radius = maxDropDistance;
         Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
         Vector2 dropPosition = (Vector2)transform.position + offset;

@@ -177,3 +177,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3019cc4f04307304b927f541c7188d8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OpenedChest: {fileID: 1721947819, guid: 805eb1ee9a790a1469184d332df1be2f, type: 3}
+  Closedchest: {fileID: -881271182, guid: 805eb1ee9a790a1469184d332df1be2f, type: 3}
