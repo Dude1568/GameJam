@@ -174,19 +174,27 @@ public class EnemyBehaviorController : MonoBehaviour
         isInRange = true;
         SEARCHING = true;
         agent.isStopped = true;
-        if (other == player)
-        {
-            Debug.Log("attacking"+other.name);
-            attack.SetTarget(other);
-            stateController.SetState(EnemyState.ATTACKING);
-        }
-        else if (other.CompareTag("Barricade") || other.CompareTag("Monster"))
-        {
-            Debug.Log("attacking"+other.name);
+
+        attack.SetTarget(other);
+        stateController.SetState(EnemyState.ATTACKING);
+        //if (other == player)
+        //{
+        //    Debug.Log("attacking"+other.name);
+        //    attack.SetTarget(other);
+        //    stateController.SetState(EnemyState.ATTACKING);
+        //}
+        //else if (other.CompareTag("Barricade") || other.CompareTag("Monster"))
+        //{
+        //    Debug.Log("attacking"+other.name);
             
-            attack.SetTarget(other);
-            stateController.SetState(EnemyState.ATTACKING);
-        }
+        //    attack.SetTarget(other);
+        //    stateController.SetState(EnemyState.ATTACKING);
+        //}
+    }
+
+    public void AttackAnimationTriggerMethod()
+    {
+        attack.Attack(attack.currentTarget);
     }
     void EnemyFar()
     {
