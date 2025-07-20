@@ -66,6 +66,7 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator SpawnWave(int waveNumber)
     {
+        buttons.gameObject.SetActive(false);
         buildMenu.SetActive(false);
         isSpawning = true;
         waveReady = false;
