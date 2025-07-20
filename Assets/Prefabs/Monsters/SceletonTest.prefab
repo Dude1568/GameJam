@@ -197,6 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 4286020963110652297}
   placementCollider: {fileID: 5027533059372524897}
+  cost: 15
 --- !u!95 &6372568480502580261
 Animator:
   serializedVersion: 5
@@ -231,6 +232,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 20
+  diePS: {fileID: 0}
+  flashDuration: 0.1
+  flashCount: 3
 --- !u!114 &-5629947252434061914
 MonoBehaviour:
   m_ObjectHideFlags: 0

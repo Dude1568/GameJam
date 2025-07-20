@@ -17,7 +17,7 @@ public class TrapPlaceable : Placeable
         bool baseValid = base.CheckPlacmentRequirments();
         bool trapValid = !isTrapInTheWay;
         
-        bool finalResult = baseValid && trapValid&&canAfford;
+        bool finalResult = baseValid && trapValid;
 
         spriteRenderer.color = finalResult ? Color.white : Color.red;
         return finalResult;
