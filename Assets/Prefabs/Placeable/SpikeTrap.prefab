@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 9a6608a613c37c14998eb826c6aa1aef, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -146,7 +146,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxUses: 3
-  IsActive: 0
   damage: 10
 --- !u!114 &-8357820954228962304
 MonoBehaviour:
@@ -162,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 8196423480758661270}
   placementCollider: {fileID: 7715089158369508063}
+  cost: 0
 --- !u!50 &7647869428994932682
 Rigidbody2D:
   serializedVersion: 4

@@ -19516,7 +19516,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -2
   m_Sprite: {fileID: -53522611, guid: 805eb1ee9a790a1469184d332df1be2f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -19541,7 +19541,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxUses: 5
-  IsActive: 0
   burnParticleSystems:
   - {fileID: 2488400539781898757}
   - {fileID: 6977501709378560986}
@@ -19564,6 +19563,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1564443021890222917}
   placementCollider: {fileID: 6841239906139379964}
+  cost: 0
 --- !u!61 &6841239906139379964
 BoxCollider2D:
   m_ObjectHideFlags: 0
