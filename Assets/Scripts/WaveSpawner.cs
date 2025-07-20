@@ -13,8 +13,8 @@ public class WaveEnemy
 public class WaveSpawner : MonoBehaviour
 {
     public static event Action<GameObject> RAIDACTIVE;
-    private enum WaveSpawnerState { SPAWNING, ACTIVERAID, BUILDING }
-    [SerializeField] private WaveSpawnerState gameState = WaveSpawnerState.BUILDING;
+    public enum WaveSpawnerState { SPAWNING, ACTIVERAID, BUILDING }
+    public static WaveSpawnerState gameState = WaveSpawnerState.BUILDING;
 
     public List<WaveEnemy> enemyTypes;
     public Transform[] spawnPoints;
@@ -54,6 +54,7 @@ public class WaveSpawner : MonoBehaviour
 
             gameState = WaveSpawnerState.BUILDING;
             waveReady = true;
+            GridManager.Instance.InBetweenWaveProcess();
             Debug.Log("All enemies defeated! Press Enter to start next wave.");
         }
     }

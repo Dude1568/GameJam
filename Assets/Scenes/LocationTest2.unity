@@ -1256,6 +1256,14 @@ PrefabInstance:
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5734333660038424043, guid: 954e543f5a4ba844c95453431ac14bcb, type: 3}
+      propertyPath: ExpansionCost
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734333660038424043, guid: 954e543f5a4ba844c95453431ac14bcb, type: 3}
+      propertyPath: expansionCost
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5734333660038424043, guid: 954e543f5a4ba844c95453431ac14bcb, type: 3}
       propertyPath: entrancePrefab
       value: 
       objectReference: {fileID: 7187915124305566724, guid: 05ee5fcf88bdcd94eb0b0b941bbab400, type: 3}
@@ -1927,6 +1935,10 @@ PrefabInstance:
       propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6261173039437417242, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6297506942054713617, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2072,7 +2084,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d8d9846f8214d4c9ab51b6aaafbf52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 1
   enemyTypes:
   - enemyPrefab: {fileID: 2408683707494011358, guid: d9b78ec5abf0e014790c775291097654, type: 3}
     spawnRatio: 0.6666667

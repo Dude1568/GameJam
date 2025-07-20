@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -20,7 +21,9 @@ public class DecisionCell : MonoBehaviour, IPointerClickHandler
 
     public void AddWallDirection(Vector2 dir)
     {
-        Instantiate(imagePrefab, transform.position + (Vector3)(dir * (spacing-2)), Quaternion.identity, transform);
+        Transform expansionImage = Instantiate(imagePrefab, transform.position + (Vector3)(dir * (spacing-2)), Quaternion.identity, transform);
+        if(!GridManager.Instance.IsGameStart)
+            expansionImage.GetComponentInChildren<TMP_Text>().text = GridManager.Instance.ExpansionCost.ToString();
         WallsDirections.Add(dir);
     }
 

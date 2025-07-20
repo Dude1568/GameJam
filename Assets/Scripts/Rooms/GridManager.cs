@@ -22,8 +22,10 @@ public class GridManager : MonoBehaviour
     public List<Cell> DefaultCells = new List<Cell>();
     List<DecisionCell> DecisionCells = new List<DecisionCell>();
 
+    public int ExpansionCost;
     public Transform GridOrigin;
     Placeable treasury;
+    public bool IsGameStart = true;
     public static GridManager Instance
     {
         get;
@@ -57,6 +59,7 @@ public class GridManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         navMeshSurface.BuildNavMeshAsync();
         yield return PlaceTreasure();
+        IsGameStart = false;
     }
 
     public void OnPlaceTreasureButton()
@@ -86,6 +89,24 @@ public class GridManager : MonoBehaviour
         buttons.gameObject.SetActive(true);
     }
 
+    public void InBetweenWaveProcess()
+    {
+        StartCoroutine(BetweenWavesProcess());
+    }
+
+    IEnumerator BetweenWavesProcess()
+    {
+        while (WaveSpawner.gameState == WaveSpawner.WaveSpawnerState.BUILDING)
+        {
+            isDecisionMade = false;
+            CreateDecisionCells();
+            yield return new WaitUntil(() => isDecisionMade || (WaveSpawner.gameState != WaveSpawner.WaveSpawnerState.BUILDING));
+            yield return new WaitForSeconds(0.1f);
+            navMeshSurface.BuildNavMeshAsync();
+        }
+        DeleteDecisionCells();
+    }
+
     void OnDecisionMade(DecisionCell decisionCell)
     {
         // Cell defaultCell = Instantiate(defaultCellPrefab, GridOrigin);
@@ -99,6 +120,11 @@ public class GridManager : MonoBehaviour
         // }
         // DeleteDecisionCells();
         // isDecisionMade = true;
+        if(!IsGameStart)
+            if (GoldTracker.gold < ExpansionCost)
+                return;
+            else
+                GoldTracker.SpendGold(ExpansionCost);
         StartCoroutine(CreateDefaultCell(decisionCell));
     }
 
