@@ -14,6 +14,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] int initialBuildToken;
     [SerializeField] Placeable treasuryPrefab;
     [SerializeField] NavMeshSurface navMeshSurface;
+    [SerializeField] Transform buttons;
     [SerializeField] float cellSpacing = 1f; // <-- added
 
     bool isDecisionMade;
@@ -22,6 +23,7 @@ public class GridManager : MonoBehaviour
     List<DecisionCell> DecisionCells = new List<DecisionCell>();
 
     public Transform GridOrigin;
+    Placeable treasury;
     public static GridManager Instance
     {
         get;
@@ -54,7 +56,22 @@ public class GridManager : MonoBehaviour
         //yield return new WaitUntil(() => cells.All(c => c.GetComponent<BoxCollider2D>().isActiveAndEnabled));
         yield return new WaitForSeconds(0.1f);
         navMeshSurface.BuildNavMeshAsync();
-        Placeable treasury = Instantiate(treasuryPrefab, GridOrigin);
+        yield return PlaceTreasure();
+    }
+
+    public void OnPlaceTreasureButton()
+    {
+        StartCoroutine(PlaceTreasure());
+    }
+
+    IEnumerator PlaceTreasure()
+    {
+        if (treasury != null)
+        {
+            Destroy(treasury.gameObject);
+            buttons.gameObject.SetActive(false);
+        }
+        treasury = Instantiate(treasuryPrefab, GridOrigin);
         isDecisionMade = false;
         while (!isDecisionMade)
         {
@@ -66,6 +83,7 @@ public class GridManager : MonoBehaviour
             }
             yield return null;
         }
+        buttons.gameObject.SetActive(true);
     }
 
     void OnDecisionMade(DecisionCell decisionCell)

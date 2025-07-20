@@ -27,6 +27,7 @@ public class WaveSpawner : MonoBehaviour
     public float enemyGrowthRate = 1.5f;
     public float spawnInterval = 0.5f;
     private GameObject buildMenu;
+    [SerializeField] Transform buttons;
     private List<GameObject> aliveEnemies = new List<GameObject>();
     void Awake()
     {
@@ -55,6 +56,11 @@ public class WaveSpawner : MonoBehaviour
             waveReady = true;
             Debug.Log("All enemies defeated! Press Enter to start next wave.");
         }
+    }
+
+    public void StartWave()
+    {
+        StartCoroutine(SpawnWave(currentWave));
     }
 
     IEnumerator SpawnWave(int waveNumber)
