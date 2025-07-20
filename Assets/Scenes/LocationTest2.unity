@@ -122,17 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!114 &41423598 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7343735309490054982, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
-  m_PrefabInstance: {fileID: 934541922}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &201580735
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +275,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 37503997835695933, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
       propertyPath: m_fontSize
-      value: 65.7
+      value: 65.55
       objectReference: {fileID: 0}
     - target: {fileID: 325109402983497603, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -490,7 +479,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7343735309490054982, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
       propertyPath: m_fontSize
-      value: 65.7
+      value: 65.55
       objectReference: {fileID: 0}
     - target: {fileID: 8926078495327237647, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
       propertyPath: m_AnchorMax.y
@@ -581,7 +570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0d9692e7fdcb874d9cb87021f794230, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  goldText: {fileID: 41423598}
+  goldText: {fileID: 0}
 --- !u!4 &967100491
 Transform:
   m_ObjectHideFlags: 0
@@ -869,7 +858,7 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_UseGeometry: 0
+  m_UseGeometry: 1
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
   m_IgnoreNavMeshObstacle: 1
@@ -1377,6 +1366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 10
+  diePS: {fileID: 0}
 --- !u!114 &5457726484670497039
 MonoBehaviour:
   m_ObjectHideFlags: 0
