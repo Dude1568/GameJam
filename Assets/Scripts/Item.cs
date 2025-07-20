@@ -7,34 +7,38 @@ public class Item : MonoBehaviour
 {
     public int Value;
     public static event Action KeyReturned;
+    public static event Action KeyTaken;
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
             TreasureCheck(other);
             GoldTracker.GainGold(Value);
-            Destroy(gameObject);
+
         }
         if (other.CompareTag("Enemy"))
         {
             TreasureCheck(other);
 
         }
+        Destroy(gameObject);
     }
     void TreasureCheck(Collider2D other)
     {
             if (gameObject.CompareTag("Treasure"))
             {
-                EnemyBehaviorController.KEYFOUND = other.CompareTag("Player");
-                if(other.gameObject.CompareTag("Enemy"))
+                
+                if (other.gameObject.CompareTag("Enemy"))
                 {
                     EnemyBehaviorController.KEYHOLDER = other.gameObject;
+                    KeyTaken.Invoke();
                 }
-                else if(other.CompareTag("Player"))
+                else if (other.CompareTag("Player"))
                 {
                     KeyReturned?.Invoke();
+                    
                 }
-                Destroy(gameObject);
+                
             }
     }
 }

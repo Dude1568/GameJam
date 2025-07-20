@@ -117,25 +117,35 @@ public class EnemyBehaviorController : MonoBehaviour
             else if (treasureDistance < detectionDistance || (KEYHOLDER != null && Vector3.Distance(KEYHOLDER.transform.position, gameObject.transform.position) < detectionDistance))
             {
                 SEARCHING = false;
-                if (!KEYFOUND)
-                {
-                    SetTarget(treasure.transform.position);
-                    agent.SetDestination(treasure.transform.position);
-                    //take key
-                    if (!KEYFOUND && !KEYBEINGTAKEN && takingKey == null)
-                    {
-                        takingKey = StartCoroutine(TakeKey());
-                    }
-                }
-                else
+                if (KEYFOUND)
                 {
                     if (KEYHOLDER)
                     {
                         SetTarget(KEYHOLDER.transform.position);
+                        ProtectKeyholder();
                     }
-                    agent.SetDestination(treasure.transform.position);
-                    ProtectKeyholder();
+                    else
+                    {
+                        if (!KEYHOLDER && KEYFOUND)
+                        {
+                            agent.SetDestination(GameObject.FindGameObjectWithTag("Key").transform.position);
+                            takingKey = StartCoroutine(TakeKey());
+                        }
+                    }
 
+                }
+                else
+                {
+                    if (!KEYHOLDER && !KEYFOUND&& !KEYBEINGTAKEN)
+                    {
+                        SetTarget(treasure.transform.position);
+                        agent.SetDestination(treasure.transform.position);
+                        takingKey = StartCoroutine(TakeKey());
+                    }
+                    else if(takingKey != null)
+                    {
+                        
+                    }
                 }
             }
             else if (!HasPathToTreasure(out pathToTreasure))
@@ -318,8 +328,9 @@ public class EnemyBehaviorController : MonoBehaviour
 
     IEnumerator TakeKey()
     {
+        Debug.Log("key beingTaken");
         KEYBEINGTAKEN = true;
-        while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance + .5)
+        while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance + .1f)
             yield return null;
 
         yield return new WaitForSeconds(2f);
@@ -430,18 +441,5 @@ public class EnemyBehaviorController : MonoBehaviour
 
 
     }
-    private void OnEnable()
-    {
-        EnemyHealth.ChangeTreasure += treasureUpdate;
-        TreasureScript.ChangeTreasure += treasureUpdate;
-    }
-    private void OnDisable()
-    {
-        TreasureScript.ChangeTreasure -= treasureUpdate;
-        EnemyHealth.ChangeTreasure -= treasureUpdate; 
-    }
-    void treasureUpdate()
-    {
-        treasure = GameObject.FindGameObjectWithTag("Treasure");
-    }
+
 }

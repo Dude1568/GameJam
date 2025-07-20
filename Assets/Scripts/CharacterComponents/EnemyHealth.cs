@@ -96,7 +96,6 @@ public class EnemyHealth : MonoBehaviour
         Vector2 dropPosition = (Vector2)transform.position + offset;
 
         Instantiate(key, dropPosition, Quaternion.identity);
-        EnemyBehaviorController.KEYFOUND = false;
         EnemyBehaviorController.KEYHOLDER = null;
     }
 
