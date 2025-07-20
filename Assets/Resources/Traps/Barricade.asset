@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prefab: {fileID: 3007144536281994664, guid: 83bfce73ffc21e7409a97c1deffdc811, type: 3}
   cost: 5
-  description: 
+  description: A simple barrel useful as a barrier even if it is fragile.
   Type: 1

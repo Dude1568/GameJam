@@ -7,18 +7,23 @@ public class EnemyHealth : MonoBehaviour
     public int health = 5;
     private EnemyStateController stateController;
     [SerializeField] ParticleSystem diePS;
+    SpriteRenderer spriteRenderer;
+    public float flashDuration = 0.1f;
+    public int flashCount = 3;
 
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
         stateController = GetComponent<EnemyStateController>();
     }
 
     public void TakeDamage(int damage)
     {
         health -= damage;
-        
-        if (health <= 0 )
-        {if (stateController != null)
+        StartCoroutine(FlashRed());
+        if (health <= 0)
+        {
+            if (stateController != null)
             {
 
                 stateController.SetState(EnemyState.DEAD);
@@ -61,4 +66,17 @@ public class EnemyHealth : MonoBehaviour
             Destroy(gameObject);
         }
     }
+        IEnumerator FlashRed()
+    {
+        Color originalColor = spriteRenderer.color;
+
+        for (int i = 0; i < flashCount; i++)
+        {
+            spriteRenderer.color = Color.red;
+            yield return new WaitForSeconds(flashDuration);
+            spriteRenderer.color = originalColor;
+            yield return new WaitForSeconds(flashDuration);
+        }
+    }
+
 }

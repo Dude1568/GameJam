@@ -46,6 +46,11 @@ public class ShopSection : MonoBehaviour
             {
                 icon.placeablePrefab = purchasableItem.prefab;
             }
+            string desc=purchasableItem.description;
+            if (desc!=null)
+            {
+                icon.descriptionText=desc;
+            }
             TextMeshProUGUI price;
             price =newButton.GetComponentInChildren<TextMeshProUGUI>();
 

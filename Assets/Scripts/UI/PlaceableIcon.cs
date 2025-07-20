@@ -6,16 +6,21 @@ using UnityEngine.EventSystems;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 using System;
-public class PlaceableIcon : MonoBehaviour, IPointerClickHandler
+public class PlaceableIcon : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, IPointerExitHandler
 {
+    [TextArea]
+    public string descriptionText;  // This comes from your shop data
+
+
     public Placeable placeablePrefab;
     Placeable placeable;
-    static bool itemHeld=false;
+    static bool itemHeld = false;
     int cost;
     void Start()
     {
+
         cost = Int32.Parse(GetComponentInChildren<TextMeshProUGUI>().text);
-        Debug.Log("cost "+cost.ToString());
+        Debug.Log("cost " + cost.ToString());
     }
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -25,7 +30,7 @@ public class PlaceableIcon : MonoBehaviour, IPointerClickHandler
             placeable = Instantiate(placeablePrefab, GridManager.Instance.GridOrigin);
             placeable.cost = cost;
             StartCoroutine(PlacingProcess(placeable));
-            
+
         }
 
 
@@ -64,5 +69,18 @@ public class PlaceableIcon : MonoBehaviour, IPointerClickHandler
 
             yield return null;
         }
+    }
+    
+
+
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        TooltipManager.Instance.Show(descriptionText);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        TooltipManager.Instance.Hide();
     }
 }

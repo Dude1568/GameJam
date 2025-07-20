@@ -15,10 +15,12 @@ public class PauseManager : MonoBehaviour
             TogglePause();
         }
     }
+    public static bool IsGamePaused { get; private set; }
 
     private void TogglePause()
     {
         isPaused = !isPaused;
+        IsGamePaused = isPaused;
 
         Time.timeScale = isPaused ? 0f : 1f;
 
@@ -26,7 +28,17 @@ public class PauseManager : MonoBehaviour
         pauseMenuObject.SetActive(isPaused);
 
         TogglePhysics(isPaused);
+        ToggleAnimators(isPaused);
     }
+
+    private void ToggleAnimators(bool pause)
+    {
+        foreach (Animator animator in FindObjectsOfType<Animator>())
+        {
+            animator.enabled = !pause;
+        }
+    }
+
 
     private void TogglePhysics(bool pause)
     {
