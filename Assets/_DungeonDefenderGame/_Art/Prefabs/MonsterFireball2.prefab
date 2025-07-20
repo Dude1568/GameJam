@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2539313440920460556}
   - component: {fileID: 1936344081423958595}
   m_Layer: 0
-  m_Name: Adventerer FIreball
+  m_Name: MonsterFireball2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3527326070292875987}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.73, y: 4.83, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -53,7 +53,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 0
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -174,7 +174,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 3
       scalar: 0.5
-      minScalar: 0
+      minScalar: 0.5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -227,7 +227,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 0.4253732, b: 0, a: 1}
-      maxColor: {r: 1, g: 0.62205034, b: 0, a: 1}
+      maxColor: {r: 0.20796163, g: 0.49056602, b: 0.16429335, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -608,7 +608,7 @@ ParticleSystem:
         m_RotationOrder: 4
     randomizeRotationDirection: 0
     gravitySource: 0
-    maxNumParticles: 20
+    maxNumParticles: 40
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 1
@@ -874,7 +874,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 40
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -4873,8 +4873,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b375b19f30f067b468d81a5bff0e8347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectiletype: 1
-  damage: 1
+  projectiletype: 0
+  damage: 3
   impactPS: {fileID: 8194992990867289333, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
 --- !u!58 &1936344081423958595
 CircleCollider2D:

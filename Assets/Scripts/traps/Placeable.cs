@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Placeable : MonoBehaviour
 {
@@ -9,10 +10,19 @@ public class Placeable : MonoBehaviour
     [SerializeField] protected BoxCollider2D placementCollider;
     public int cost;
     public bool canAfford;
+    bool isPlaced = false;
+
+    void Update()
+    {
+        if(!isPlaced)
+            CheckPlacmentRequirments();
+    }
+
     public virtual void OnPlace()
     {
+        isPlaced = true;
+        spriteRenderer.color = Color.white;
         GoldTracker.SpendGold(cost);
-
     }
 
     public virtual bool CheckPlacmentRequirments()
@@ -21,8 +31,16 @@ public class Placeable : MonoBehaviour
         Debug.DrawRay(transform.position, Vector2.zero, Color.magenta, 10f);
         Debug.Log(hit2D.collider == null);
         if (hit2D.collider != null)
+        {
+            spriteRenderer.color = Color.red;
             return false;
-
+        }
+        NavMeshHit hit;
+        if (!NavMesh.SamplePosition(transform.position, out hit, 0.1f, NavMesh.AllAreas))
+        {
+            spriteRenderer.color = Color.red;
+            return false;
+        }
         if (cost <= GoldTracker.gold)
                 canAfford = true;
             else

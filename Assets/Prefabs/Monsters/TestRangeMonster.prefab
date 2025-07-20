@@ -233,8 +233,8 @@ MonoBehaviour:
   animator: {fileID: 8775498910943610092}
   spriteRenderer: {fileID: 135125049514448651}
   adventurersInRange: []
-  projectileSpeed: 30
-  projectilePrefab: {fileID: 269954363455932820, guid: 6641221ea610004448e4115d98b27068, type: 3}
+  projectileSpeed: 20
+  projectilePrefab: {fileID: 269954363455932820, guid: 9ee160652436e7b4d9a952343d61c2dd, type: 3}
 --- !u!95 &8775498910943610092
 Animator:
   serializedVersion: 5

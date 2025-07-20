@@ -4764,7 +4764,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.22049615, g: 0.4339623, b: 0.14124244, a: 1}
+  m_Color: {r: 1, g: 0.6207441, b: 0.20392156, a: 1}
   m_Intensity: 0
   m_Range: 10
   m_SpotAngle: 30
@@ -5061,7 +5061,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 0.9019608, g: 0.71999985, b: 0.44313726, a: 0.6}
-      maxColor: {r: 0.24353687, g: 0.9716981, b: 0.2062567, a: 1}
+      maxColor: {r: 0.69803923, g: 0.4392157, b: 0.20784314, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -9903,7 +9903,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.20069422, g: 0.7735849, b: 0.3069826, a: 1}
+      maxColor: {r: 0.825, g: 0.47235298, b: 0.22970591, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -19493,7 +19493,7 @@ GameObject:
   - component: {fileID: 8194992990867289332}
   - component: {fileID: 1347780276449787774}
   m_Layer: 0
-  m_Name: CFXR3 Fire Explosion B
+  m_Name: MonsterFireExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19709,7 +19709,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.1823845, g: 0.4245283, b: 0.17021182, a: 1}
+      maxColor: {r: 0.65699995, g: 0.44255736, b: 0.25294498, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

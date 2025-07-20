@@ -27,25 +27,27 @@ public class ProjectileDamage : MonoBehaviour
         if (collision.CompareTag("Monster") || collision.CompareTag("Player") || collision.CompareTag("Barricade"))
         {
             collision.GetComponent<EnemyHealth>().TakeDamage(damage);
+            if(impactPS != null) { Instantiate(impactPS,transform.position,Quaternion.identity);}
             Destroy(gameObject);
         }
         else if (collision.gameObject.layer == 7)
         {
+            if(impactPS != null) { Instantiate(impactPS,transform.position,Quaternion.identity);}
             Destroy(gameObject);
         }
-        if(impactPS != null) { Instantiate(impactPS,transform.position,Quaternion.identity);}
     }
     void DamageAdventerers(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
             collision.GetComponent<EnemyHealth>().TakeDamage(damage);
+            if(impactPS != null) { Instantiate(impactPS,transform.position,Quaternion.identity);}
             Destroy(gameObject);
         }
         else if (collision.gameObject.layer == 7)
         {
+            if(impactPS != null) { Instantiate(impactPS,transform.position,Quaternion.identity);}
             Destroy(gameObject);
         }
-        if (impactPS != null) { Instantiate(impactPS, transform.position, Quaternion.identity); }
     }
 }

@@ -49,13 +49,13 @@ public class TestRangeMonster : Monster
     IEnumerator RangeAttack()
     {
         animator.SetTrigger("OnAttacking");
-        Transform projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, target.position - transform.position, int.MaxValue, 1 << 7);
-        while (((Vector2)projectile.transform.position - hit.point).magnitude > 0.1f)
+        Transform projectile = Instantiate(projectilePrefab, new Vector3(transform.position.x,transform.position.y,0), Quaternion.identity);
+        Vector2 dir = (target.transform.position - transform.position).normalized;
+        while (projectile != null)
         {
-            projectile.transform.position += ((Vector3)hit.point - projectile.transform.position).normalized * projectileSpeed * Time.deltaTime;
+            Vector3 nextMove = dir * projectileSpeed * Time.deltaTime;
+            projectile.transform.position += new Vector3(nextMove.x,nextMove.y,0);
             yield return null;
         }
-        Destroy(projectile.gameObject);
     }
 }

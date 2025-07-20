@@ -6,6 +6,7 @@ public class MonsterPlaceable : Placeable
 {
     public override void OnPlace()
     {
+        base.OnPlace();
         GetComponent<Monster>().Activate();
     }
 }

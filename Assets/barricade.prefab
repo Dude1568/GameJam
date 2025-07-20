@@ -159,7 +159,7 @@ NavMeshObstacle:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907274802323104181}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 1
   m_Extents: {x: 0.5, y: 0.545, z: 0.1}
@@ -175,13 +175,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1907274802323104181}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fac8d1c7643cd244ab38a55cda06e24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxUses: 1
   IsActive: 0
+  navMeshObstacle: {fileID: 910850503284496408}
 --- !u!114 &-293811378212836625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,6 +197,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   diePS: {fileID: 2820499131243841027, guid: 29b3031a852fe814c9e0b9e718adb688, type: 3}
+  flashDuration: 0.1
+  flashCount: 3
 --- !u!50 &878223715208691133
 Rigidbody2D:
   serializedVersion: 4
