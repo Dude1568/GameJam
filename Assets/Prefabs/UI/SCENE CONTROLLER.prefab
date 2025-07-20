@@ -1,0 +1,86 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2842345539434259621
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2179019518464771090}
+  - component: {fileID: 3722441775071039438}
+  - component: {fileID: 77281618182064092}
+  - component: {fileID: 1341244166658601620}
+  m_Layer: 0
+  m_Name: SCENE CONTROLLER
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2179019518464771090
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2842345539434259621}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3722441775071039438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2842345539434259621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0d9692e7fdcb874d9cb87021f794230, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goldText: {fileID: 0}
+--- !u!114 &77281618182064092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2842345539434259621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35d8d9846f8214d4c9ab51b6aaafbf52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameState: 1
+  enemyTypes:
+  - enemyPrefab: {fileID: 2408683707494011358, guid: d9b78ec5abf0e014790c775291097654, type: 3}
+    spawnRatio: 0.6666667
+  - enemyPrefab: {fileID: 5392086767959956749, guid: 011d158e5d092eb48930972a40cdd950, type: 3}
+    spawnRatio: 0.33333334
+  spawnPoints:
+  - {fileID: 0}
+  baseEnemyCount: 3
+  enemyGrowthRate: 1.5
+  spawnInterval: 0.5
+--- !u!114 &1341244166658601620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2842345539434259621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91d711548bda3fe4faefed8ce5849e1f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameplayCanvasObject: {fileID: 0}
+  pauseMenuObject: {fileID: 0}
