@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7010045173130557277}
   - component: {fileID: -7939703900710577171}
   - component: {fileID: 8775498910943610092}
+  - component: {fileID: 6078822172632482033}
   m_Layer: 0
   m_Name: TestRangeMonster
   m_TagString: Monster
@@ -33,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -207,7 +208,6 @@ MonoBehaviour:
   spriteRenderer: {fileID: 135125049514448651}
   placementCollider: {fileID: 6110325577139547565}
   cost: 20
-  canAfford: 0
 --- !u!114 &-7939703900710577171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -256,3 +256,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6078822172632482033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142831109774715338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a46c5fd965ac9040beb9004ac303094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 10
+  diePS: {fileID: 0}
+  flashDuration: 0.1
+  flashCount: 3
