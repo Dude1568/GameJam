@@ -1,18 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using TMPro;
 
-public class DescriptionPopUp : MonoBehaviour
+public class ShopIconTooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    [TextArea]
+    public string descriptionText;  // This comes from your shop data
+
+    [SerializeField] private GameObject tooltipPanel; // Assign the tooltip panel
+    [SerializeField] private TMP_Text tooltipText;     // Assign the tooltip text
+
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        
+        tooltipPanel.SetActive(true);
+        tooltipText.text = descriptionText;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OnPointerExit(PointerEventData eventData)
     {
-        
+        tooltipPanel.SetActive(false);
     }
 }
