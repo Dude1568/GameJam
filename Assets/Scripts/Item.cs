@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Item : MonoBehaviour
 {
     public int Value;
-    public static event System.Action KeyReturned;
+    public static event Action KeyReturned;
     void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))

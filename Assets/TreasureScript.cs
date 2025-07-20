@@ -7,13 +7,22 @@ public class TreasureScript : MonoBehaviour
 {
     private void OnEnable()
     {
-        GameEvents.OnKeyCollected += SetToTreasure();
+        Item.KeyReturned += SetToTreasure;
     }
 
     private void OnDisable()
     {
-        GameEvents.OnKeyCollected -= SetToTreasure();
+        Item.KeyReturned -= SetToTreasure;
     }
+
+    void OpenChest()
+    {
+
+    }
+    void CloseChest (){
+        
+    }
+    
     public void SetToTreasure()
     {
         gameObject.tag = "Treasure";

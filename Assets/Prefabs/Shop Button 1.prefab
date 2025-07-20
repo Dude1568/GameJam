@@ -101,7 +101,6 @@ GameObject:
   - component: {fileID: 6275584713378925826}
   - component: {fileID: 2966904962401425446}
   - component: {fileID: 5921294389367149890}
-  - component: {fileID: 274342546514029407}
   m_Layer: 5
   m_Name: Shop Button 1
   m_TagString: Untagged
@@ -181,21 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   descriptionText: 
-  tooltipPanel: {fileID: 0}
-  tooltipText: {fileID: 0}
   placeablePrefab: {fileID: 2723311064397010640, guid: de0bfcf6d77da8049bee029fdca88738, type: 3}
---- !u!114 &274342546514029407
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8224071333648243034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 950398a6dc4aaa243b0b6112c43089d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &8890972787700162709
 GameObject:
   m_ObjectHideFlags: 0
