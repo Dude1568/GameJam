@@ -3,13 +3,14 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 using System.IO;
 using Unity.VisualScripting;
+using System.Collections;
 
 public class EnemyBehaviorController : MonoBehaviour
 {
     private EnemyStateController stateController;
     public GameObject player;
     private GameObject treasure;
-    private bool isAttacking;
+    private bool blocked;
     public bool isInRange;
     public Vector3 target;
     NavMeshAgent agent;
@@ -24,6 +25,7 @@ public class EnemyBehaviorController : MonoBehaviour
     EnemyAttack attack;
     [SerializeField] float attackDistance;
     List<Monster> monsters = new List<Monster>();
+    Coroutine barricadeRoutine;
 
     private void Awake()
     {
@@ -60,7 +62,7 @@ public class EnemyBehaviorController : MonoBehaviour
             monsters.RemoveAll(m => m == null || m.gameObject == null);
             foreach (Monster monster in monsters)
             {
-                if (monster == null || monster.gameObject == null) 
+                if (monster == null || monster.gameObject == null)
                     continue;
 
                 float distance = Vector3.Distance(transform.position, monster.transform.position);
@@ -85,7 +87,7 @@ public class EnemyBehaviorController : MonoBehaviour
 
             NavMeshPath pathToTreasure;
             // Priority: Player >Monster> Treasure 
-            if (playerDistance < detectionDistance) 
+            if (playerDistance < detectionDistance)
             {
                 SEARCHING = false;
                 SetTarget(player.transform.position);
@@ -106,14 +108,17 @@ public class EnemyBehaviorController : MonoBehaviour
             }
             else if (!HasPathToTreasure(out pathToTreasure))
             {
-                AttackBlockingBarricade();
+                if (!blocked && barricadeRoutine == null)
+                {
+                    barricadeRoutine = StartCoroutine(AttackBlockingBarricade());
+                }
             }
             else if (playerDistance > detectionDistance && treasureDistance > detectionDistance && SEARCHING)
             {
 
                 SearchForPath();
             }
-            if (!SEARCHING && !isInRange )
+            if (!SEARCHING && !isInRange)
             {
                 // If both are out of detection range, resume searching
                 if (playerDistance > detectionDistance && treasureDistance > detectionDistance)
@@ -124,16 +129,16 @@ public class EnemyBehaviorController : MonoBehaviour
                 }
             }
 
-            if (closestMonsterDistance<attackDistance || playerDistance<attackDistance)
+            if (closestMonsterDistance < attackDistance ||playerDistance < attackDistance)
             {
                 if (closestMonsterDistance < playerDistance)
                     EnemyClose(closestMonster.gameObject);
                 else
                     EnemyClose(player);
 
-                
+
             }
-            else
+            else if(!blocked)
             {
                 EnemyFar();
             }
@@ -141,7 +146,7 @@ public class EnemyBehaviorController : MonoBehaviour
 
 
             //handles state control
-            if (!stateController.IsDead && !stateController.IsAttacking)
+            if (!stateController.IsDead && !stateController.IsAttacking&& !blocked)
             {
                 if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
                 {
@@ -161,11 +166,11 @@ public class EnemyBehaviorController : MonoBehaviour
                 }
             }
 
-
         }
     }
     void EnemyClose(GameObject other)
     {
+            StopAllCoroutines();
         isInRange = true;
         SEARCHING = true;
         agent.isStopped = true;
@@ -185,14 +190,14 @@ public class EnemyBehaviorController : MonoBehaviour
     }
     void EnemyFar()
     {
-        stateController.SetState(EnemyState.IDLE);
         isInRange = false;
         SEARCHING = true;
         agent.isStopped=false;
+        setAttackTarget(null);
         if (!stateController.IsDead)
         {
             SetTarget(treasure.transform.position);
-            
+
         }
     }
 
@@ -272,8 +277,9 @@ public class EnemyBehaviorController : MonoBehaviour
 
 
 
-    void AttackBlockingBarricade()
+    IEnumerator AttackBlockingBarricade()
     {
+        blocked = true;
         Debug.Log("destroy the obstacles");
         List<GameObject> obstacles = FindBarricades();
         Vector3 nearest = treasure.transform.position;
@@ -283,18 +289,35 @@ public class EnemyBehaviorController : MonoBehaviour
             if (Vector3.Distance(barricade.transform.position, gameObject.transform.position) < Vector3.Distance(nearest, gameObject.transform.position))
             {
                 nearest = barricade.transform.position;
-                if (nearest == barricade.transform.position)
-                {
-                    attackTarget = barricade;
-                    setAttackTarget(attackTarget);
-                    target = attackTarget.transform.position;
-                    agent.SetDestination(attackTarget.transform.position);
-                }
+                attackTarget = barricade;
+                setAttackTarget(attackTarget);
+                target = attackTarget.transform.position;
+                Vector3 direction = (attackTarget.transform.position - transform.position).normalized;
+                agent.SetDestination(attackTarget.transform.position - (direction * attackDistance));
             }
         }
 
-
-
+        if (attackTarget != null)
+        {
+            setAttackTarget(attackTarget);
+            target = attackTarget.transform.position;
+            while(agent.pathPending)
+                yield return null;
+            while (agent.remainingDistance >1.5)
+                yield return null;
+            Debug.Log("reached obstacle");
+            while (attackTarget != null)
+            {
+                Debug.Log("attacking obstacle");
+                stateController.SetState(EnemyState.ATTACKING);
+                setAttackTarget(attackTarget);
+                yield return null;
+            }
+            Debug.Log("Barricade destroyed or gone");
+        }
+        setAttackTarget(null);
+        blocked = false;
+        Debug.Log("failed");
     }
     void setAttackTarget(GameObject attackTarget)
     {

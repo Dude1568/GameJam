@@ -49,11 +49,16 @@ public class EnemyHealth : MonoBehaviour
         if (gameObject.CompareTag("Enemy"))
         {
             GetComponent<AdventurerItems>().SpawnItemsByCost();
+            Destroy(gameObject);
         }
         else if (!gameObject.CompareTag("Player"))
         {
             Destroy(gameObject);
         }
-        else if(diePS != null) { Instantiate(diePS,transform.position,Quaternion.identity); }
+        else if (diePS != null)
+        {
+            Instantiate(diePS, transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
     }
 }

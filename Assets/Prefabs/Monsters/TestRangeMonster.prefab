@@ -225,7 +225,7 @@ MonoBehaviour:
   chaseDetectionRadius: 30
   damage: 2
   attackCooldown: 1
-  distanceBetweenEnemyToStop: 0
+  distanceBetweenEnemyToStop: 1
   attackDistance: 20
   navMeshAgent: {fileID: 9046920050301900867}
   patrolRadius: 30
