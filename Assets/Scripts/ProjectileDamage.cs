@@ -8,6 +8,7 @@ public class ProjectileDamage : MonoBehaviour
     enum ProjectileType { FRIENDLY, ENEMY };
     [SerializeField] ProjectileType projectiletype;
     [SerializeField] int damage;
+    [SerializeField] ParticleSystem impactPS;
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -32,6 +33,7 @@ public class ProjectileDamage : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if(impactPS != null) { Instantiate(impactPS,transform.position,Quaternion.identity);}
     }
     void DamageAdventerers(Collider2D collision)
     {
@@ -44,5 +46,6 @@ public class ProjectileDamage : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if (impactPS != null) { Instantiate(impactPS, transform.position, Quaternion.identity); }
     }
 }

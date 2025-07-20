@@ -4875,6 +4875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectiletype: 1
   damage: 1
+  impactPS: {fileID: 8194992990867289333, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
 --- !u!58 &1936344081423958595
 CircleCollider2D:
   m_ObjectHideFlags: 0

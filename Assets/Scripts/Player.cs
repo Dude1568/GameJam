@@ -23,6 +23,7 @@ public class PlayerMovement2D : MonoBehaviour
     Coroutine attackCoroutine;
     EnemyStateController state;
 
+    bool isInitialized;
     void Awake()
     {
         state =GetComponent<EnemyStateController>();
@@ -30,41 +31,52 @@ public class PlayerMovement2D : MonoBehaviour
         agent.updateUpAxis = false;
         transform.position = new Vector3(transform.position.x, transform.position.y, 0f);
     }
+    private IEnumerator Start()
+    {
+        yield return new WaitForSeconds(0.4f); isInitialized = true;
+    }
 
     void Update()
     {
+        if(state.IsDead || !isInitialized) return;
        // transform.rotation = Quaternion.identity;
 
-        movement = Vector2.zero;
-        if (Input.GetKey(KeyCode.W)) movement.y += 1;
-        if (Input.GetKey(KeyCode.S)) movement.y -= 1;
-        if (Input.GetKey(KeyCode.D)) movement.x += 1;
-        if (Input.GetKey(KeyCode.A)) movement.x -= 1;
+        //movement = Vector2.zero;
+        //if (Input.GetKey(KeyCode.W)) movement.y += 1;
+        //if (Input.GetKey(KeyCode.S)) movement.y -= 1;
+        //if (Input.GetKey(KeyCode.D)) movement.x += 1;
+        //if (Input.GetKey(KeyCode.A)) movement.x -= 1;
+        movement = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
 
-        movement = movement.normalized;
+        //movement = movement.normalized;
 
-        if (movement != Vector2.zero && !state.IsDead)
-        {
-            Vector3 currentNavPos = new Vector3(transform.position.x, transform.position.y, 0);
+        //if (movement != Vector2.zero && !state.IsDead)
+        //{
+        //    Vector3 currentNavPos = new Vector3(transform.position.x, transform.position.y, 0);
 
-            Vector3 targetNavPos = currentNavPos + new Vector3(movement.x,movement.y, 0 );
+        //    Vector3 targetNavPos = currentNavPos + new Vector3(movement.x, movement.y, 0);
 
-            agent.SetDestination(targetNavPos);
-            playerAnimator.SetBool("IsWalking", true);
-            if(isAttackReady)
+        //    agent.SetDestination(targetNavPos);
+        //    playerAnimator.SetBool("IsWalking", true);
+        //    if (isAttackReady)
+        //        spriteRenderer.flipX = movement.x <= 0;
+        //}
+        //else
+        //{
+        //    playerAnimator.SetBool("IsWalking", false);
+        //    agent.ResetPath();
+        //}
+
+        agent.SetDestination(transform.position + (Vector3)movement);
+        if (isAttackReady && movement != Vector2.zero)
             spriteRenderer.flipX = movement.x <= 0;
-        }
-        else
-        {
-            playerAnimator.SetBool("IsWalking", false);
-            agent.ResetPath();
-        }
-
-
+        playerAnimator.SetBool("IsWalking", agent.velocity.sqrMagnitude > 0.1f);
     }
     
  void FixedUpdate()
     {
+        if (state.IsDead) return;
+
         GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
         enemiesInRange.Clear();
 
@@ -80,7 +92,7 @@ public class PlayerMovement2D : MonoBehaviour
  
         if (enemiesInRange.Count > 0)
         {
-            if (attackCoroutine == null&&!state.IsDead)
+            if (attackCoroutine == null)
                 attackCoroutine = StartCoroutine(AttackCycle());
         }
         else
