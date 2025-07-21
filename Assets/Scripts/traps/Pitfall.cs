@@ -58,10 +58,14 @@ public class Pitfall : Trap
         Soundmanager.instance.PlaySoundEffect(trapOpen, gameObject.transform, 100);
         
         var enemy = target;
+        if(enemy.TryGetComponent(out EnemyHealth health))
+        {
+            health.TakeDamage(100);
+        }
         if (enemy != null)
         {
-            NavMeshAgent agent= enemy.GetComponent<NavMeshAgent>();
-            agent.enabled=false;
+            //NavMeshAgent agent= enemy.GetComponent<NavMeshAgent>();
+            //agent.enabled=false;
              ShrinkEnemy(enemy);
         }
 
@@ -85,6 +89,7 @@ public class Pitfall : Trap
         {
             time += Time.deltaTime;
             float t = time / fallDuration;
+            if(target == null) { yield break; }
             target.localScale = Vector3.Lerp(startScale, endScale, fallScaleCurve.Evaluate(t));
 
             target.position = Vector2.Lerp(targetStartPosition, finalPosition, fallPositionCurve.Evaluate(t));

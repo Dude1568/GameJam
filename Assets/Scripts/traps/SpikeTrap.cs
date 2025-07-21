@@ -17,6 +17,7 @@ public class SpikeTrap : Trap
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.sprite = normalSprite;
     }
 
 
@@ -44,18 +45,18 @@ public class SpikeTrap : Trap
             health.TakeDamage(damage);
         }
 
-        StartCoroutine(TriggerRoutine());
+        StartCoroutine(TriggerRoutine(target));
         Use(); // reduce usage count
     }
 
-    IEnumerator TriggerRoutine()
+    IEnumerator TriggerRoutine(GameObject target)
     {
         gotTriggered = true;
         spriteRenderer.sprite = triggeredSprite;
         if(Soundmanager.instance != null)
             Soundmanager.instance.PlaySoundEffect(triggeredClip, transform, clipVolume);
         if(triggeredPS != null)
-            Instantiate(triggeredPS,transform.position, Quaternion.identity);   
+            Instantiate(triggeredPS,target.transform.position, Quaternion.identity);   
 
         yield return new WaitForSeconds(retriggerDuration);
         spriteRenderer.sprite = normalSprite;
