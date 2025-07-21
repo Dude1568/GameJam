@@ -145,8 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d44f2a12ed0d2c45bc7ba6ec7214207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxUses: 3
-  damage: 10
+  maxUses: 4
+  damage: 5
   normalSprite: {fileID: 21300000, guid: 3dc4b896acb676d4f8a8c3bbc5132b3b, type: 3}
   triggeredSprite: {fileID: 21300000, guid: 9a6608a613c37c14998eb826c6aa1aef, type: 3}
   triggeredClip: {fileID: 8300000, guid: e5825563dd8ecb04686f514f4a52b0c6, type: 3}

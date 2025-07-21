@@ -245,7 +245,7 @@ public abstract class Monster : MonoBehaviour
             }
             navMeshAgent.SetDestination(driftPos);
         }
-        else
+        else if (gameObject)
         {
             navMeshAgent.SetDestination(targetPos);
         }

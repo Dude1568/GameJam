@@ -27,7 +27,7 @@ public class WaveSpawner : MonoBehaviour
     public float baseEnemyCount = 5;
     public float enemyGrowthRate = 1.5f;
     public float spawnInterval = 0.5f;
-    private GameObject buildMenu;
+    [SerializeField]private GameObject buildMenu;
     [SerializeField] Transform buttons;
     private List<GameObject> aliveEnemies = new List<GameObject>();
     void Awake()
@@ -39,14 +39,7 @@ public class WaveSpawner : MonoBehaviour
         // Clean up dead enemies
         aliveEnemies.RemoveAll(enemy => enemy == null);
 
-        // Only allow wave start when in BUILDING state
-        if (gameState == WaveSpawnerState.BUILDING && waveReady && !isSpawning && aliveEnemies.Count == 0)
-        {
-            if (Input.GetKeyDown(KeyCode.Return))
-            {
-                StartCoroutine(SpawnWave(currentWave));
-            }
-        }
+
 
         // Transition to BUILDING once all enemies are dead
         if (gameState == WaveSpawnerState.ACTIVERAID && aliveEnemies.Count == 0)

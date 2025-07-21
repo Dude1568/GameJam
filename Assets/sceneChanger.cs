@@ -4,9 +4,11 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
 
-    
+
     public void GoToNextSceneOrReload()
     {
+        EnemyBehaviorController.KEYFOUND = false;
+        EnemyBehaviorController.KEYHOLDER = null;
         int currentIndex = SceneManager.GetActiveScene().buildIndex;
         int totalScenes = SceneManager.sceneCountInBuildSettings;
 
