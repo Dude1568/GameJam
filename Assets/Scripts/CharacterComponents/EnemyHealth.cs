@@ -15,6 +15,7 @@ public class EnemyHealth : MonoBehaviour
     public float flashDuration = 0.1f;
     public int flashCount = 3;
     GameObject key;
+    Coroutine flashCoroutine;
 
     private void Awake()
     {
@@ -26,7 +27,9 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        StartCoroutine(FlashRed());
+        flashCoroutine = StartCoroutine(FlashRed());
+        if(flashCoroutine == null)
+            flashCoroutine = StartCoroutine(FlashRed());
         if (health <= 0)
         {
             gameObject.GetComponent<EnemyBehaviorController>().Stopall();
@@ -90,6 +93,7 @@ public class EnemyHealth : MonoBehaviour
             spriteRenderer.color = originalColor;
             yield return new WaitForSeconds(flashDuration);
         }
+        flashCoroutine = null;
     }
     void DropKey()
     {

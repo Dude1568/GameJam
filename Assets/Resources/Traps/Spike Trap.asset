@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Spike Trap
   m_EditorClassIdentifier: 
   prefab: {fileID: -8357820954228962304, guid: c714d8c46dd56524085d0f3c75878933, type: 3}
-  cost: 10
+  cost: 35
   description: Spike Trap when in doubt stab em this trap sure to scewer your foes.
   Type: 1

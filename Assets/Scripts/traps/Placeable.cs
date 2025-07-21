@@ -27,8 +27,6 @@ public class Placeable : MonoBehaviour
     public virtual bool CheckPlacmentRequirments()
     {
         RaycastHit2D hit2D = Physics2D.Raycast(transform.position, Vector2.zero, int.MaxValue, 1 << 7);
-        Debug.DrawRay(transform.position, Vector2.zero, Color.magenta, 10f);
-        Debug.Log(hit2D.collider == null);
         if (hit2D.collider != null)
         {
             spriteRenderer.color = Color.red;

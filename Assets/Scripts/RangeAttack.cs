@@ -6,12 +6,14 @@ public class RangeAttack : EnemyAttack
 {
     public GameObject projectile;
     public float projectileSpeed = 10f;
+    [SerializeField] AudioSource audioSource;
     public override void Attack(GameObject attacked)
     {
+        audioSource.Play();
         attacked = currentTarget;
         if (attacked == null) return;
 
-        
+
         GameObject bullet = Instantiate(projectile, transform.position, Quaternion.identity);
 
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();

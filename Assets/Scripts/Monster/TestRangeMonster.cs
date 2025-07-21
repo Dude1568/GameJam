@@ -7,12 +7,12 @@ public class TestRangeMonster : Monster
 {
     [SerializeField] float projectileSpeed;
     [SerializeField] Transform projectilePrefab;
+    [SerializeField] AudioSource audioSource;
     protected override void MoveAggro()
     {
         NoTargetCheck();
         if (target == null)
             return;
-        Debug.Log("test");
         if (Physics2D.Raycast(transform.position, target.position - transform.position, (target.position - transform.position).magnitude, 1 << 7))
         {
             if (isAbilityCycleActive)
@@ -49,6 +49,7 @@ public class TestRangeMonster : Monster
     IEnumerator RangeAttack()
     {
         animator.SetTrigger("OnAttacking");
+        audioSource.Play();
         Transform projectile = Instantiate(projectilePrefab, new Vector3(transform.position.x,transform.position.y,0), Quaternion.identity);
         Vector2 dir = (target.transform.position - transform.position).normalized;
         while (projectile != null)
