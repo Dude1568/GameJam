@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6372568480502580261}
   - component: {fileID: -3490767725543456318}
   m_Layer: 0
-  m_Name: SceletonTest
+  m_Name: SkeletonWarrior
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 38852e1c71614a84eb428d1559ae4fe1, type: 3}
+  m_Sprite: {fileID: 1090047030, guid: 5b32dbcc52abd1248b3e70fac0897292, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -122,18 +122,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1.254323}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.8, y: 9.6}
+    oldSize: {x: 5.001221, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 5.26, y: 8.65}
+  m_Size: {x: 5.26, y: 6.1413536}
   m_EdgeRadius: 0
 --- !u!114 &6303926147316751049
 MonoBehaviour:
@@ -147,11 +147,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99bc824afe9464a48bdd9faf1168ce6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseSpeed: 3
-  patrolSpeed: 3
+  chaseSpeed: 7
+  patrolSpeed: 7
   chaseDetectionRadius: 20
-  damage: 2
-  attackCooldown: 1
+  damage: 4
+  attackCooldown: 1.5
   distanceBetweenEnemyToStop: 3
   attackDistance: 4.2
   navMeshAgent: {fileID: 225837312190623102}
@@ -169,17 +169,17 @@ NavMeshAgent:
   m_GameObject: {fileID: 8715401943379548026}
   m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 2.39
-  m_Speed: 5
-  m_Acceleration: 8
+  m_Radius: 1.28
+  m_Speed: 7
+  m_Acceleration: 20
   avoidancePriority: 50
   m_AngularSpeed: 240
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 7.72
-  m_BaseOffset: 4
+  m_Height: 2.66
+  m_BaseOffset: 1.49
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &7919730782276588721
@@ -196,7 +196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 4286020963110652297}
   placementCollider: {fileID: 5027533059372524897}
-  cost: 15
+  cost: 30
 --- !u!95 &6372568480502580261
 Animator:
   serializedVersion: 5
@@ -207,7 +207,7 @@ Animator:
   m_GameObject: {fileID: 8715401943379548026}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 76c5e8fc1baee9b46b38e6f57365eb90, type: 2}
+  m_Controller: {fileID: 22100000, guid: 75768ed0c80c3c6479c30b5b6b6cd5ab, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
