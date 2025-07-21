@@ -339,7 +339,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 3745948097202789499, guid: c83424a0901fe8e4e8e71536aec79973, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 0.2
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2199,9 +2199,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1201501512}
     - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: enemyTypes.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
       propertyPath: spawnPoints.Array.data[0]
       value: 
       objectReference: {fileID: 1621790714}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: enemyTypes.Array.data[0].spawnRatio
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: enemyTypes.Array.data[1].spawnRatio
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: enemyTypes.Array.data[2].spawnRatio
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: enemyTypes.Array.data[3].spawnRatio
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: enemyTypes.Array.data[2].enemyPrefab
+      value: 
+      objectReference: {fileID: 7724929100228776486, guid: 5d51458b2f0ced04c8a5f5f8de16bc34, type: 3}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: enemyTypes.Array.data[3].enemyPrefab
+      value: 
+      objectReference: {fileID: 3824861269462096609, guid: ff661b5de0ee56c4aae9602d14355ec3, type: 3}
     - target: {fileID: 1341244166658601620, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
       propertyPath: pauseMenuObject
       value: 

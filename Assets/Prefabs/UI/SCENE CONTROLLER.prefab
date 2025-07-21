@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   goldText: {fileID: 0}
+  startingCold: 120
+  rewardClip: {fileID: 8300000, guid: c7388463d080bef4a9e498c09296d09a, type: 3}
 --- !u!114 &77281618182064092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59,7 +61,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d8d9846f8214d4c9ab51b6aaafbf52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: 1
   enemyTypes:
   - enemyPrefab: {fileID: 2408683707494011358, guid: d9b78ec5abf0e014790c775291097654, type: 3}
     spawnRatio: 0.6666667
@@ -70,6 +71,7 @@ MonoBehaviour:
   baseEnemyCount: 3
   enemyGrowthRate: 1.5
   spawnInterval: 0.5
+  buttons: {fileID: 0}
 --- !u!114 &1341244166658601620
 MonoBehaviour:
   m_ObjectHideFlags: 0
