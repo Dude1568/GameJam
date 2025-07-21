@@ -89,7 +89,7 @@ public class Pitfall : Trap
         {
             time += Time.deltaTime;
             float t = time / fallDuration;
-            if(target == null) { yield break; }
+            if(target == null) { gotTriggered = false; yield break; }
             target.localScale = Vector3.Lerp(startScale, endScale, fallScaleCurve.Evaluate(t));
 
             target.position = Vector2.Lerp(targetStartPosition, finalPosition, fallPositionCurve.Evaluate(t));
@@ -99,7 +99,8 @@ public class Pitfall : Trap
             yield return null;
         }
 
-        Destroy(target.gameObject);
+        if(target != null)
+            Destroy(target.gameObject);
         gotTriggered = false; // ToDO: removelater.
     }
 
