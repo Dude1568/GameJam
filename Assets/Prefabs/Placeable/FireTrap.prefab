@@ -19564,7 +19564,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 1564443021890222917}
   placementCollider: {fileID: 6841239906139379964}
-  cost: 0
+  cost: 30
 --- !u!61 &6841239906139379964
 BoxCollider2D:
   m_ObjectHideFlags: 0

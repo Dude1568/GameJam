@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Skeleton
   m_EditorClassIdentifier: 
   prefab: {fileID: 7919730782276588721, guid: 0475f576da55a7048913ef903ff13318, type: 3}
-  cost: 15
+  cost: 20
   description: Skeleton Warrior if he was a great warrior he would not be dead would
     he
   Type: 0
