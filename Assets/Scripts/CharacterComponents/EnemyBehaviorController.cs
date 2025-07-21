@@ -9,6 +9,7 @@ using System;
 
 public class EnemyBehaviorController : MonoBehaviour
 {
+    public static event Action GAMEOVER;
     public static event Action KeyStolen;
     [SerializeField] Transform spawnpoint;
     static public bool KEYFOUND;
@@ -37,7 +38,6 @@ public class EnemyBehaviorController : MonoBehaviour
     Coroutine takingKey;
     private void Awake()
     {
-
         spawnpoint = GameObject.FindGameObjectWithTag("Respawn").transform;
         attack = GetComponent<EnemyAttack>();
         agent = GetComponent<NavMeshAgent>();
@@ -360,8 +360,9 @@ public class EnemyBehaviorController : MonoBehaviour
         if (agent.enabled)
             agent.SetDestination(spawnpoint.position);
         yield return new WaitUntil(() => Vector3.Distance(transform.position, spawnpoint.position) < 4f);
-        Debug.Log("GameOver");
+
         GameOver = true;
+        GAMEOVER?.Invoke();
 
     }
     void ProtectKeyholder()

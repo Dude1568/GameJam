@@ -13,6 +13,7 @@ TagManager:
   - ToolTipPanel
   - Key
   - Item
+  - SCENES
   layers:
   - Default
   - TransparentFX
