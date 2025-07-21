@@ -20,7 +20,7 @@ GameObject:
   m_TagString: Trap
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1594187246738431095
 Transform:
@@ -256,7 +256,12 @@ MonoBehaviour:
   feedbackPS: {fileID: 2820499131243841027, guid: 7e82192b9ad867c4882ab0ddefa89454, type: 3}
   targetOffset: {x: 0, y: -0.15}
   trapOpen: {fileID: 8300000, guid: 9057c0c4622ab8f43ab6faafe17aa9b6, type: 3}
-  screams: []
+  screams:
+  - {fileID: 8300000, guid: 5136dbd1df5bf8046bec0bd11a5096d2, type: 3}
+  - {fileID: 8300000, guid: b590be062f3c7014bb05c19c2a7dd365, type: 3}
+  - {fileID: 8300000, guid: 19121ad2bb96f8b4ba3db7854500c466, type: 3}
+  - {fileID: 8300000, guid: 70c5a73df2a402c4595ddc9587b48acd, type: 3}
+  - {fileID: 8300000, guid: 662e94f4bd802f6488cac0fff63534a7, type: 3}
 --- !u!50 &-8253539558796772143
 Rigidbody2D:
   serializedVersion: 4
