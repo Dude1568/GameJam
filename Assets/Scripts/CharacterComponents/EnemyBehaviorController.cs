@@ -22,6 +22,7 @@ public class EnemyBehaviorController : MonoBehaviour
     public Vector3 target;
     NavMeshAgent agent;
     public bool SEARCHING = true;
+    public static bool GameOver;
 
     [SerializeField] float searchRadius = 5f;
     float currentSearchRadius;
@@ -356,10 +357,11 @@ public class EnemyBehaviorController : MonoBehaviour
     IEnumerator Escape()
     {
         //Debug.Log("escaping");
-        if(agent.enabled)
+        if (agent.enabled)
             agent.SetDestination(spawnpoint.position);
         yield return new WaitUntil(() => Vector3.Distance(transform.position, spawnpoint.position) < 4f);
-        //Debug.Log("GameOver");
+        Debug.Log("GameOver");
+        GameOver = true;
 
     }
     void ProtectKeyholder()
