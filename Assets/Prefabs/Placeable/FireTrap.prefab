@@ -19549,6 +19549,7 @@ MonoBehaviour:
   AfterburnDuration: 5
   TimeToTakeTheDamageFromAfterburn: 1
   AfterburnDamage: 1
+  flamesound: {fileID: 8300000, guid: e22cac621a6cce5449580489955b13b1, type: 3}
 --- !u!114 &7263828431896091891
 MonoBehaviour:
   m_ObjectHideFlags: 0

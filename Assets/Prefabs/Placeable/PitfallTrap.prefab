@@ -255,6 +255,8 @@ MonoBehaviour:
     m_RotationOrder: 4
   feedbackPS: {fileID: 2820499131243841027, guid: 7e82192b9ad867c4882ab0ddefa89454, type: 3}
   targetOffset: {x: 0, y: -0.15}
+  trapOpen: {fileID: 8300000, guid: 9057c0c4622ab8f43ab6faafe17aa9b6, type: 3}
+  screams: []
 --- !u!50 &-8253539558796772143
 Rigidbody2D:
   serializedVersion: 4
