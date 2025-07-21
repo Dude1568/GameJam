@@ -1162,6 +1162,7 @@ GameObject:
   m_Component:
   - component: {fileID: 394148857}
   - component: {fileID: 394148858}
+  - component: {fileID: 394148859}
   m_Layer: 5
   m_Name: DifficultySlider
   m_TagString: Untagged
@@ -1241,7 +1242,32 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 394148859}
+        m_TargetAssemblyTypeName: DifficultyMultiplierSlider, Assembly-CSharp
+        m_MethodName: OnValueChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &394148859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 394148856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25244aedcf891e847ba257260fcfa87d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slider: {fileID: 394148858}
 --- !u!1 &396884272
 GameObject:
   m_ObjectHideFlags: 0
@@ -5679,7 +5705,7 @@ Tilemap:
       - {fileID: 2008256738, guid: d1540289e34dca542a4d02aaaf323a13, type: 3}
       - {fileID: 1414512455, guid: d1540289e34dca542a4d02aaaf323a13, type: 3}
       - {fileID: 1156803306, guid: d1540289e34dca542a4d02aaaf323a13, type: 3}
-      m_AnimationSpeed: 6.0247965
+      m_AnimationSpeed: 5.7539225
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:

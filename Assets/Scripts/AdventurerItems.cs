@@ -14,7 +14,9 @@ public class AdventurerItems : MonoBehaviour
     
     void Start()
     {
-        adventurerValue = Random.Range(5, 45);
+        float difficultyMultiplier = PlayerPrefs.GetFloat("Difficulty");
+        Debug.Log(difficultyMultiplier);
+        adventurerValue = Random.Range(5, (int)Mathf.Round(45/difficultyMultiplier));
         if (ItemPool == ItemType.KnightItem)
         {
             possibleItems = new List<Item>(Resources.LoadAll<Item>("KnightLoot"));
