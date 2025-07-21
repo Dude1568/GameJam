@@ -27,7 +27,6 @@ public class EnemyHealth : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        flashCoroutine = StartCoroutine(FlashRed());
         if(flashCoroutine == null)
             flashCoroutine = StartCoroutine(FlashRed());
         if (health <= 0)
