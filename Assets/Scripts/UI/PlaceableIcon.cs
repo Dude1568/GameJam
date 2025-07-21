@@ -11,7 +11,7 @@ public class PlaceableIcon : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
     [TextArea]
     public string descriptionText;  // This comes from your shop data
 
-
+    [SerializeField] AudioClip placementClip;
     public Placeable placeablePrefab;
     Placeable placeable;
     static bool itemHeld = false;
@@ -58,6 +58,7 @@ public class PlaceableIcon : MonoBehaviour, IPointerClickHandler,IPointerEnterHa
                     itemHeld = false;
                     break;
                 }
+                if(placementClip != null) { Soundmanager.instance.PlaySound(placementClip); }
             }
 
             if (Input.GetMouseButtonDown(1)) // Right-click cancels
