@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using UnityEngine.AI;
 
 public class EnemyHealth : MonoBehaviour
 {
@@ -54,9 +55,11 @@ public class EnemyHealth : MonoBehaviour
         }
 
         // freeze movement 
-        EnemyMovement movement = GetComponent<EnemyMovement>();
-        if (movement != null)
-            movement.freeze(true);
+        //EnemyMovement movement = GetComponent<EnemyMovement>();
+        //if (movement != null)
+        //    movement.freeze(true);
+        NavMeshAgent agent = GetComponent<NavMeshAgent>();
+        if(agent != null) { agent.enabled = false; }
 
         // Wait for animation to finish d
         yield return new WaitForSeconds(2f);
