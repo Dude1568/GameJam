@@ -19,6 +19,7 @@ public class Pitfall : Trap
     SpriteRenderer spriteRenderer;
     [SerializeField]AudioClip trapOpen;
     [SerializeField]AudioClip[] screams;
+    NavMeshObstacle obstacle;
     bool gotTriggered;
     private void Awake()
     {
@@ -58,7 +59,8 @@ public class Pitfall : Trap
         Soundmanager.instance.PlaySoundEffect(trapOpen, gameObject.transform, 100);
         
         var enemy = target;
-        if(enemy.TryGetComponent(out EnemyHealth health))
+        obstacle.carving = true;
+        if (enemy.TryGetComponent(out EnemyHealth health))
         {
             health.TakeDamage(100);
         }

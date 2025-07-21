@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -72,7 +73,8 @@ public class WaveSpawner : MonoBehaviour
         isSpawning = true;
         waveReady = false;
         gameState = WaveSpawnerState.SPAWNING;
-
+        GameObject.FindGameObjectWithTag("Player").GetComponent<EnemyHealth>().health=30;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<EnemyStateController>().SetState(EnemyState.IDLE);
         int totalEnemies = Mathf.RoundToInt(baseEnemyCount + waveNumber * enemyGrowthRate);
         Debug.Log($"Spawning Wave {waveNumber + 1} - {totalEnemies} enemies");
 
