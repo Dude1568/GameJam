@@ -29,6 +29,7 @@ public class EnemyHealth : MonoBehaviour
         StartCoroutine(FlashRed());
         if (health <= 0)
         {
+            gameObject.GetComponent<EnemyBehaviorController>().Stopall();
             if (gameObject == EnemyBehaviorController.KEYHOLDER)
             {
                 DropKey();

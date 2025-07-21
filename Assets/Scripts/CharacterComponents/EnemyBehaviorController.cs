@@ -61,7 +61,7 @@ public class EnemyBehaviorController : MonoBehaviour
             return;
         }
         if (takingKey != null)
-                return;
+            return;
         if (!stateController.IsDead)
         {
             float playerDistance = Vector3.Distance(transform.position, player.transform.position);
@@ -102,7 +102,7 @@ public class EnemyBehaviorController : MonoBehaviour
             else
             {
                 closestMonsterDistance = 10000;
-                
+
             }
 
             NavMeshPath pathToTreasure;
@@ -142,15 +142,15 @@ public class EnemyBehaviorController : MonoBehaviour
                 }
                 else
                 {
-                    if (!KEYHOLDER && !KEYFOUND&& !KEYBEINGTAKEN)
+                    if (!KEYHOLDER && !KEYFOUND && !KEYBEINGTAKEN)
                     {
                         SetTarget(treasure.transform.position);
                         agent.SetDestination(treasure.transform.position);
                         takingKey = StartCoroutine(TakeKey());
                     }
-                    else if(takingKey != null)
+                    else if (takingKey != null)
                     {
-                        
+
                     }
                 }
             }
@@ -336,7 +336,7 @@ public class EnemyBehaviorController : MonoBehaviour
     {
         //Debug.Log("key beingTaken");
         KEYBEINGTAKEN = true;
-        while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance )
+        while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance)
             yield return null;
 
         yield return new WaitForSeconds(2f);
@@ -446,6 +446,10 @@ public class EnemyBehaviorController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, currentSearchRadius);
 
 
+    }
+    public void Stopall()
+    {
+        StopAllCoroutines();
     }
 
 }
