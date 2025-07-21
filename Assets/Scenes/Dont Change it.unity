@@ -6917,7 +6917,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 61.65
+  m_fontSize: 35.1
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7525,6 +7525,10 @@ PrefabInstance:
       propertyPath: buildMenu
       value: 
       objectReference: {fileID: 1545769735}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: spawnInterval
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
       propertyPath: baseEnemyCount
       value: 5

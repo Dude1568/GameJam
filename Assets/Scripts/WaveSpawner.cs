@@ -61,6 +61,8 @@ public class WaveSpawner : MonoBehaviour
 
     IEnumerator SpawnWave(int waveNumber)
     {
+        if (GridManager.treasuryPlaced==false)
+            yield break;
         buttons.gameObject.SetActive(false);
         buildMenu.SetActive(false);
         isSpawning = true;

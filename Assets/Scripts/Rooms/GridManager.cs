@@ -16,7 +16,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] NavMeshSurface navMeshSurface;
     [SerializeField] Transform buttons;
     [SerializeField] float cellSpacing = 1f; // <-- added
-
+    public static bool treasuryPlaced=false;
     bool isDecisionMade;
 
     public List<Cell> DefaultCells = new List<Cell>();
@@ -71,6 +71,7 @@ public class GridManager : MonoBehaviour
     {
         if (treasury != null)
         {
+            treasuryPlaced = false;   
             Destroy(treasury.gameObject);
             buttons.gameObject.SetActive(false);
         }
@@ -83,9 +84,12 @@ public class GridManager : MonoBehaviour
             if (Input.GetMouseButtonDown(0) && treasury.CheckPlacmentRequirments())
             {
                 isDecisionMade = true;
+                treasuryPlaced = true;
             }
             yield return null;
         }
+        
+        Debug.Log("treasry placed ="+treasuryPlaced);
         buttons.gameObject.SetActive(true);
     }
 

@@ -9,6 +9,10 @@ public class SceneController : MonoBehaviour
     {
         EnemyBehaviorController.KEYFOUND = false;
         EnemyBehaviorController.KEYHOLDER = null;
+        GridManager.treasuryPlaced = false;
+        EnemyBehaviorController.GameOver = false;
+        WaveSpawner.gameState = WaveSpawner.WaveSpawnerState.BUILDING;
+
         int currentIndex = SceneManager.GetActiveScene().buildIndex;
         int totalScenes = SceneManager.sceneCountInBuildSettings;
 

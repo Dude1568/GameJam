@@ -108,14 +108,17 @@ public class EnemyBehaviorController : MonoBehaviour
 
             NavMeshPath pathToTreasure;
             // Priority: Player >Monster> Treasure 
-            if (playerDistance < detectionDistance && gameObject != KEYHOLDER&&!player.GetComponent<EnemyStateController>().IsDead)
+            if (playerDistance < detectionDistance && gameObject != KEYHOLDER && !player.GetComponent<EnemyStateController>().IsDead)
             {
+                bool hmm = playerDistance < detectionDistance && gameObject != KEYHOLDER && !player.GetComponent<EnemyStateController>().IsDead;
+                Debug.Log("z1");
                 SEARCHING = false;
                 SetTarget(player.transform.position);
                 agent.SetDestination(player.transform.position);
             }
             else if (closestMonsterDistance < detectionDistance && gameObject != KEYHOLDER)
             {
+                Debug.Log("z2");
                 SEARCHING = false;
                 SetTarget(closestMonster.transform.position);
                 agent.SetDestination(closestMonster.transform.position);
@@ -123,6 +126,7 @@ public class EnemyBehaviorController : MonoBehaviour
             }
             else if (treasureDistance < detectionDistance || (KEYHOLDER != null && Vector3.Distance(KEYHOLDER.transform.position, gameObject.transform.position) < detectionDistance))
             {
+                Debug.Log("z3");
                 SEARCHING = false;
                 if (KEYFOUND)
                 {
@@ -143,6 +147,7 @@ public class EnemyBehaviorController : MonoBehaviour
                 }
                 else
                 {
+
                     if (!KEYHOLDER && !KEYFOUND && !KEYBEINGTAKEN)
                     {
                         SetTarget(treasure.transform.position);
@@ -157,20 +162,28 @@ public class EnemyBehaviorController : MonoBehaviour
             }
             else if (!HasPathToTreasure(out pathToTreasure))
             {
+                Debug.Log("z4");
                 if (!blocked && barricadeRoutine == null)
                 {
                     barricadeRoutine = StartCoroutine(AttackBlockingBarricade());
                 }
             }
-            else if (playerDistance > detectionDistance && ((treasureDistance > detectionDistance && !KEYFOUND) || KEYFOUND) && SEARCHING)
+            else if ((playerDistance > detectionDistance||player.GetComponent<EnemyStateController>().IsDead) && ((treasureDistance > detectionDistance && !KEYFOUND) || KEYFOUND) && SEARCHING)
             {
-
+                Debug.Log("z4");
                 SearchForPath();
+            }
+            else
+            {
+                bool playercheck =playerDistance > detectionDistance||player.GetComponent<EnemyStateController>().IsDead;
+                bool treasurecheck = (treasureDistance > detectionDistance && !KEYFOUND) || KEYFOUND;
+                Debug.Log("z4Falloff searching "+SEARCHING+" player distance check "+playercheck+" treasure check "+treasurecheck);
             }
             if (!SEARCHING && !isInRange)
             {
+                Debug.Log("z5");
                 // If both are out of detection range, resume searching
-                if (playerDistance > detectionDistance && treasureDistance > detectionDistance)
+                if ((playerDistance > detectionDistance || !player.GetComponent<EnemyStateController>().IsDead) && treasureDistance > detectionDistance)
                 {
                     SEARCHING = true;
                     if (!KEYFOUND)
@@ -180,8 +193,9 @@ public class EnemyBehaviorController : MonoBehaviour
                 }
             }
             // catch to set a enemy as a target if in distance to attack
-            if ((closestMonsterDistance < attackDistance || playerDistance < attackDistance) && gameObject != KEYHOLDER)
+            if ((closestMonsterDistance < attackDistance || (playerDistance < attackDistance&&!player.GetComponent<EnemyStateController>().IsDead)) && gameObject != KEYHOLDER)
             {
+                Debug.Log("z6");
                 if (closestMonsterDistance < playerDistance)
                     EnemyClose(closestMonster.gameObject);
                 else
@@ -189,26 +203,32 @@ public class EnemyBehaviorController : MonoBehaviour
             }
             else if (!blocked)
             {
+                Debug.Log("z6.1");
                 EnemyFar();
             }
+        
 
 
 
             //handles state control
             if (!stateController.IsDead && !stateController.IsAttacking && !blocked)
             {
+                Debug.Log("z7");
                 if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
                 {
                     if (!agent.hasPath || agent.velocity.sqrMagnitude == 0f)
                         stateController.SetState(EnemyState.IDLE);
+                    Debug.Log("z7.1");
                 }
                 else
                 {
+                    Debug.Log("z7.2");
                     stateController.SetState(EnemyState.WALKING);
                 }
             }
             else if (stateController.IsAttacking)
             {
+                Debug.Log("z8");
                 if (attack.currentTarget == null)
                 {
                     stateController.SetState(EnemyState.IDLE);
