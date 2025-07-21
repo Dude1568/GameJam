@@ -6917,7 +6917,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.2
+  m_fontSize: 61.65
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7522,6 +7522,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1201501512}
     - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: buildMenu
+      value: 
+      objectReference: {fileID: 1545769735}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: baseEnemyCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
       propertyPath: enemyTypes.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -7617,6 +7625,10 @@ PrefabInstance:
       propertyPath: goldText
       value: 
       objectReference: {fileID: 41423598}
+    - target: {fileID: 3722441775071039438, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: startingCold
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

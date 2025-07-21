@@ -23,6 +23,7 @@ public class Pitfall : Trap
     bool gotTriggered;
     private void Awake()
     {
+        obstacle=GetComponent<NavMeshObstacle>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
     //private void OnTriggerStay2D(Collider2D other)
@@ -59,7 +60,8 @@ public class Pitfall : Trap
         Soundmanager.instance.PlaySoundEffect(trapOpen, gameObject.transform, 100);
         
         var enemy = target;
-        obstacle.carving = true;
+
+        obstacle.enabled = true;
         if (enemy.TryGetComponent(out EnemyHealth health))
         {
             health.TakeDamage(100);

@@ -920,6 +920,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1755447570977716710, guid: a511beae7213ec04b803372768adfbf9, type: 3}
   m_PrefabInstance: {fileID: 1749156493}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1520936666 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2994368572064316934, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
+  m_PrefabInstance: {fileID: 934541922}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1545769735 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 695836398964328776, guid: 07502b419ba47c042a24cfdc0edcb05d, type: 3}
@@ -6609,7 +6614,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menu: {fileID: 1180795097}
-  goldMenu: {fileID: 1545769735}
+  goldMenu: {fileID: 1520936666}
   sounds:
   - {fileID: 8300000, guid: 7b6fa39ea1dfe2b4e97d6c762b027e2a, type: 3}
   - {fileID: 8300000, guid: 3be63a4465a2d674d98263018cbe3639, type: 3}
@@ -6917,7 +6922,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 56.2
+  m_fontSize: 61.65
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -7059,7 +7064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &3907516250689203243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7522,6 +7527,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1201501512}
     - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: buildMenu
+      value: 
+      objectReference: {fileID: 1545769735}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: baseEnemyCount
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 77281618182064092, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
       propertyPath: enemyTypes.Array.size
       value: 4
       objectReference: {fileID: 0}
@@ -7617,6 +7630,10 @@ PrefabInstance:
       propertyPath: goldText
       value: 
       objectReference: {fileID: 41423598}
+    - target: {fileID: 3722441775071039438, guid: b809182b8abf26d489b191c6a8e77f90, type: 3}
+      propertyPath: startingCold
+      value: 100
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
