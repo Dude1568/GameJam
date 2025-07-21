@@ -17,6 +17,8 @@ public class Pitfall : Trap
     [SerializeField] ParticleSystem feedbackPS;
     [SerializeField] Vector2 targetOffset = new Vector2(0f, -0.1f);
     SpriteRenderer spriteRenderer;
+    [SerializeField]AudioClip trapOpen;
+    [SerializeField]AudioClip[] screams;
     bool gotTriggered;
     private void Awake()
     {
@@ -53,6 +55,8 @@ public class Pitfall : Trap
 
     public override void Trigger(GameObject target)
     {
+        Soundmanager.instance.PlaySoundEffect(trapOpen, gameObject.transform, 100);
+        
         var enemy = target;
         if (enemy != null)
         {
@@ -63,7 +67,7 @@ public class Pitfall : Trap
 
         // Play trap effects.
         spriteRenderer.sprite = triggeredSprite;
-        //ToDO: Trigger sound.
+        Soundmanager.instance.PlayRandomSoundEffect(screams, gameObject.transform, 80);
         if(feedbackPS != null) { Instantiate(feedbackPS, transform.position, Quaternion.identity); }
     }
     public void ShrinkEnemy(GameObject enemy) => StartCoroutine(ShrinkOverTime(enemy.transform));
