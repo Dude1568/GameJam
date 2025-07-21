@@ -15,14 +15,10 @@ public class Item : MonoBehaviour
         {
             TreasureCheck(other);
             GoldTracker.GainGold(Value);
-
+            Destroy(gameObject);
         }
-        if (other.CompareTag("Enemy"))
-        {
-            TreasureCheck(other);
 
-        }
-        Destroy(gameObject);
+        
     }
     void TreasureCheck(Collider2D other)
     {
