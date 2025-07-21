@@ -108,7 +108,7 @@ public class EnemyBehaviorController : MonoBehaviour
 
             NavMeshPath pathToTreasure;
             // Priority: Player >Monster> Treasure 
-            if (playerDistance < detectionDistance && gameObject != KEYHOLDER)
+            if (playerDistance < detectionDistance && gameObject != KEYHOLDER&&!player.GetComponent<EnemyStateController>().IsDead)
             {
                 SEARCHING = false;
                 SetTarget(player.transform.position);
