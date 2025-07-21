@@ -45,6 +45,7 @@ public class EnemyMovement : MonoBehaviour
 
     public void freeze(bool Freeze)
     {
+        if (stateController.IsDead) return;
         agent.isStopped = Freeze; 
         isFrozen = Freeze;
     }

@@ -59,6 +59,7 @@ public class FireTrap : Trap
             while (timer < AfterburnDuration)
             {
                 yield return new WaitForSeconds(TimeToTakeTheDamageFromAfterburn);
+                if(target == null) { yield break; }
                 timer += TimeToTakeTheDamageFromAfterburn;
                 var health = target.GetComponent<EnemyHealth>();
                 health.TakeDamage(AfterburnDamage);
