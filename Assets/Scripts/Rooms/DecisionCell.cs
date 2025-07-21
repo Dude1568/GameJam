@@ -14,6 +14,8 @@ public class DecisionCell : MonoBehaviour, IPointerClickHandler,IPointerEnterHan
     [SerializeField] Transform imagePrefab;
     float spacing;
 
+    [SerializeField] AudioClip hoverClip;
+    [SerializeField] AudioClip pressClip;
     [SerializeField] Sprite normalImage;
     [SerializeField] Sprite hoverImage;
     [SerializeField] Sprite downImage;
@@ -37,12 +39,14 @@ public class DecisionCell : MonoBehaviour, IPointerClickHandler,IPointerEnterHan
     public void OnPointerClick(PointerEventData eventData)
     {
         OnCellClick?.Invoke(this);
+        Soundmanager.instance.PlaySound(pressClip);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (expansionButton == null) return;
         expansionButton.sprite = hoverImage;
+        Soundmanager.instance.PlaySound(hoverClip);
     }
 
     public void OnPointerExit(PointerEventData eventData)

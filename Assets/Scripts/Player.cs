@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 public class PlayerMovement2D : MonoBehaviour
 {
     public float moveSpeed = 5f;
@@ -24,6 +25,10 @@ public class PlayerMovement2D : MonoBehaviour
     EnemyStateController state;
 
     bool isInitialized;
+    [SerializeField] Vector2 footStepPitch = new Vector2(0.85f, 1.1f);
+    [SerializeField] AudioSource footstepSource;
+    [SerializeField] AudioClip[] footStepClipsLeft;
+    [SerializeField] AudioClip[] footStepClipsRight;
     void Awake()
     {
         state =GetComponent<EnemyStateController>();
@@ -143,4 +148,7 @@ public class PlayerMovement2D : MonoBehaviour
             
         }
     }
+
+    public void PlayFootStepClipLeft()=> Soundmanager.instance.PlaySound(footStepClipsLeft[Random.Range(0, footStepClipsLeft.Length)], footStepPitch,footstepSource);
+    public void PlayFootStepClipRight()=> Soundmanager.instance.PlaySound(footStepClipsRight[Random.Range(0, footStepClipsRight.Length)], footStepPitch,footstepSource);
 }
