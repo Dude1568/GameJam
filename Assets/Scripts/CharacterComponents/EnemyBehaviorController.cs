@@ -54,8 +54,14 @@ public class EnemyBehaviorController : MonoBehaviour
 
     void Update()
     {
-        if (takingKey != null)
+
+        if (gameObject == KEYHOLDER)
+        {
+            Escape();
             return;
+        }
+        if (takingKey != null)
+                return;
         if (!stateController.IsDead)
         {
             float playerDistance = Vector3.Distance(transform.position, player.transform.position);
@@ -91,12 +97,12 @@ public class EnemyBehaviorController : MonoBehaviour
             // Final result: only use closestMonster if it's valid
             if (closestMonster != null)
             {
-                Debug.Log("Closest monster: " + closestMonster.name + " at distance: " + closestMonsterDistance);
+                //Debug.Log("Closest monster: " + closestMonster.name + " at distance: " + closestMonsterDistance);
             }
             else
             {
                 closestMonsterDistance = 10000;
-                Debug.Log("No alive monsters found.");
+                
             }
 
             NavMeshPath pathToTreasure;
@@ -265,7 +271,7 @@ public class EnemyBehaviorController : MonoBehaviour
     }
     void SearchForPath()
     {
-        Debug.Log("searching" + this);
+        //Debug.Log("searching" + this);
         exploreTimer += Time.deltaTime;
         if (exploreTimer < exploreInterval) return;
 
@@ -328,7 +334,7 @@ public class EnemyBehaviorController : MonoBehaviour
 
     IEnumerator TakeKey()
     {
-        Debug.Log("key beingTaken");
+        //Debug.Log("key beingTaken");
         KEYBEINGTAKEN = true;
         while (Vector3.Distance(gameObject.transform.position, agent.destination) < agent.stoppingDistance )
             yield return null;
@@ -336,7 +342,7 @@ public class EnemyBehaviorController : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if (KEYHOLDER == null)
         {
-            Debug.Log("Took key");
+            //Debug.Log("Took key");
             KEYHOLDER = gameObject;
             KEYFOUND = true;
             takingKey = StartCoroutine(Escape());
@@ -349,10 +355,10 @@ public class EnemyBehaviorController : MonoBehaviour
     }
     IEnumerator Escape()
     {
-        Debug.Log("escaping");
+        //Debug.Log("escaping");
         agent.SetDestination(spawnpoint.position);
         yield return new WaitUntil(() => Vector3.Distance(transform.position, spawnpoint.position) < 4f);
-        Debug.Log("GameOver");
+        //Debug.Log("GameOver");
 
     }
     void ProtectKeyholder()
@@ -369,7 +375,7 @@ public class EnemyBehaviorController : MonoBehaviour
     IEnumerator AttackBlockingBarricade()
     {
         blocked = true;
-        Debug.Log("destroy the obstacles");
+        //Debug.Log("destroy the obstacles");
         List<GameObject> obstacles = FindBarricades();
         Vector3 nearest = treasure.transform.position;
         GameObject attackTarget = null;
@@ -394,19 +400,19 @@ public class EnemyBehaviorController : MonoBehaviour
                 yield return null;
             while (agent.remainingDistance > 1.5)
                 yield return null;
-            Debug.Log("reached obstacle");
+            //Debug.Log("reached obstacle");
             while (attackTarget != null)
             {
-                Debug.Log("attacking obstacle");
+                //Debug.Log("attacking obstacle");
                 stateController.SetState(EnemyState.ATTACKING);
                 setAttackTarget(attackTarget);
                 yield return null;
             }
-            Debug.Log("Barricade destroyed or gone");
+            //Debug.Log("Barricade destroyed or gone");
         }
         setAttackTarget(null);
         blocked = false;
-        Debug.Log("failed");
+        //Debug.Log("failed");
     }
     void setAttackTarget(GameObject attackTarget)
     {

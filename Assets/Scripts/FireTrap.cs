@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FireTrap : Trap
@@ -10,6 +11,8 @@ public class FireTrap : Trap
     public int AfterburnDuration;
     public int TimeToTakeTheDamageFromAfterburn;
     public int AfterburnDamage;
+    [SerializeField]AudioClip flamesound;
+    
     List<GameObject> currentTargets = new List<GameObject>();
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -18,10 +21,12 @@ public class FireTrap : Trap
         {
             Trigger(other.gameObject);
         }
+   
     }
 
     public override void Trigger(GameObject target)
     {
+        Soundmanager.instance.PlaySoundEffect(flamesound,gameObject.transform,100);
         if (!gameObject.activeSelf)
             return;
         if (!burnParticleSystems[0].isPlaying)

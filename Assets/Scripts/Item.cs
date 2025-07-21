@@ -7,10 +7,10 @@ public class Item : MonoBehaviour
 {
     public int Value;
     public static event Action KeyReturned;
-    public static event Action KeyTaken;
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("treasure touched" + gameObject.name);
+       Debug.Log("Other tag: " + other.tag);
         if (other.CompareTag("Player"))
         {
             TreasureCheck(other);
@@ -22,25 +22,24 @@ public class Item : MonoBehaviour
             TreasureCheck(other);
 
         }
-        
+        Destroy(gameObject);
     }
     void TreasureCheck(Collider2D other)
     {
-            if (gameObject.CompareTag("Treasure"))
+            if (gameObject.CompareTag("Key"))
             {
 
-            if (other.gameObject.CompareTag("Enemy"))
-            {
-                EnemyBehaviorController.KEYHOLDER = other.gameObject;
-                KeyTaken.Invoke();
-                Destroy(gameObject);
-            }
-            else if (other.CompareTag("Player"))
-            {
-                KeyReturned?.Invoke();
-                Destroy(gameObject);
+                if (other.gameObject.CompareTag("Enemy"))
+                {
+                    EnemyBehaviorController.KEYHOLDER = other.gameObject;
+                    
+                    Destroy(gameObject);
+                }
+                else if (other.CompareTag("Player"))
+                {
+                    KeyReturned?.Invoke();
 
-            }
+                }
                 
             }
     }
