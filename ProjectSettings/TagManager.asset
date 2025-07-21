@@ -11,6 +11,8 @@ TagManager:
   - UI
   - Monster
   - ToolTipPanel
+  - Key
+  - Item
   layers:
   - Default
   - TransparentFX
