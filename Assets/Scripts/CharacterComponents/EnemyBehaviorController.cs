@@ -356,7 +356,8 @@ public class EnemyBehaviorController : MonoBehaviour
     IEnumerator Escape()
     {
         //Debug.Log("escaping");
-        agent.SetDestination(spawnpoint.position);
+        if(agent.enabled)
+            agent.SetDestination(spawnpoint.position);
         yield return new WaitUntil(() => Vector3.Distance(transform.position, spawnpoint.position) < 4f);
         //Debug.Log("GameOver");
 
